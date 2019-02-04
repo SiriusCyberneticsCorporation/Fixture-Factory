@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="FixtureFactoryDataSet" targetNamespace="http://tempuri.org/FixtureFactoryDataSet.xsd" xmlns:mstns="http://tempuri.org/FixtureFactoryDataSet.xsd" xmlns="http://tempuri.org/FixtureFactoryDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="FixtureFactoryDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="FixtureFactoryDataSet" msprop:Generator_UserDSName="FixtureFactoryDataSet">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Leagues" msprop:Generator_TableClassName="LeaguesDataTable" msprop:Generator_TableVarName="tableLeagues" msprop:Generator_TablePropName="Leagues" msprop:Generator_RowDeletingName="LeaguesRowDeleting" msprop:Generator_RowChangingName="LeaguesRowChanging" msprop:Generator_RowEvHandlerName="LeaguesRowChangeEventHandler" msprop:Generator_RowDeletedName="LeaguesRowDeleted" msprop:Generator_UserTableName="Leagues" msprop:Generator_RowChangedName="LeaguesRowChanged" msprop:Generator_RowEvArgName="LeaguesRowChangeEvent" msprop:Generator_RowClassName="LeaguesRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ID" msdata:AutoIncrement="true" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_UserColumnName="ID" type="xs:int" />
+              <xs:element name="LeagueName" msprop:Generator_ColumnVarNameInTable="columnLeagueName" msprop:Generator_ColumnPropNameInRow="LeagueName" msprop:Generator_ColumnPropNameInTable="LeagueNameColumn" msprop:Generator_UserColumnName="LeagueName" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Teams" msprop:Generator_TableClassName="TeamsDataTable" msprop:Generator_TableVarName="tableTeams" msprop:Generator_TablePropName="Teams" msprop:Generator_RowDeletingName="TeamsRowDeleting" msprop:Generator_RowChangingName="TeamsRowChanging" msprop:Generator_RowEvHandlerName="TeamsRowChangeEventHandler" msprop:Generator_RowDeletedName="TeamsRowDeleted" msprop:Generator_UserTableName="Teams" msprop:Generator_RowChangedName="TeamsRowChanged" msprop:Generator_RowEvArgName="TeamsRowChangeEvent" msprop:Generator_RowClassName="TeamsRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ID" msdata:AutoIncrement="true" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_UserColumnName="ID" type="xs:int" />
+              <xs:element name="LeagueID" msprop:Generator_ColumnVarNameInTable="columnLeagueID" msprop:Generator_ColumnPropNameInRow="LeagueID" msprop:Generator_ColumnPropNameInTable="LeagueIDColumn" msprop:Generator_UserColumnName="LeagueID" type="xs:int" minOccurs="0" />
+              <xs:element name="TeamName" msprop:Generator_ColumnVarNameInTable="columnTeamName" msprop:Generator_ColumnPropNameInRow="TeamName" msprop:Generator_ColumnPropNameInTable="TeamNameColumn" msprop:Generator_UserColumnName="TeamName" type="xs:string" minOccurs="0" />
+              <xs:element name="AvailableDays" msprop:Generator_ColumnVarNameInTable="columnAvailableDays" msprop:Generator_ColumnPropNameInRow="AvailableDays" msprop:Generator_ColumnPropNameInTable="AvailableDaysColumn" msprop:Generator_UserColumnName="AvailableDays" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Fixtures" msprop:Generator_TableClassName="FixturesDataTable" msprop:Generator_TableVarName="tableFixtures" msprop:Generator_TablePropName="Fixtures" msprop:Generator_RowDeletingName="FixturesRowDeleting" msprop:Generator_RowChangingName="FixturesRowChanging" msprop:Generator_RowEvHandlerName="FixturesRowChangeEventHandler" msprop:Generator_RowDeletedName="FixturesRowDeleted" msprop:Generator_UserTableName="Fixtures" msprop:Generator_RowChangedName="FixturesRowChanged" msprop:Generator_RowEvArgName="FixturesRowChangeEvent" msprop:Generator_RowClassName="FixturesRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ID" msdata:AutoIncrement="true" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_UserColumnName="ID" type="xs:int" />
+              <xs:element name="TeamID" msprop:Generator_ColumnVarNameInTable="columnTeamID" msprop:Generator_ColumnPropNameInRow="TeamID" msprop:Generator_ColumnPropNameInTable="TeamIDColumn" msprop:Generator_UserColumnName="TeamID" type="xs:int" minOccurs="0" />
+              <xs:element name="GameStart" msprop:Generator_ColumnVarNameInTable="columnGameStart" msprop:Generator_ColumnPropNameInRow="GameStart" msprop:Generator_ColumnPropNameInTable="GameStartColumn" msprop:Generator_UserColumnName="GameStart" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="IsBye" msprop:Generator_ColumnVarNameInTable="columnIsBye" msprop:Generator_ColumnPropNameInRow="IsBye" msprop:Generator_ColumnPropNameInTable="IsByeColumn" msprop:Generator_UserColumnName="IsBye" type="xs:boolean" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="FixtureSettings" msprop:Generator_TableClassName="FixtureSettingsDataTable" msprop:Generator_TableVarName="tableFixtureSettings" msprop:Generator_TablePropName="FixtureSettings" msprop:Generator_RowDeletingName="FixtureSettingsRowDeleting" msprop:Generator_RowChangingName="FixtureSettingsRowChanging" msprop:Generator_RowEvHandlerName="FixtureSettingsRowChangeEventHandler" msprop:Generator_RowDeletedName="FixtureSettingsRowDeleted" msprop:Generator_UserTableName="FixtureSettings" msprop:Generator_RowChangedName="FixtureSettingsRowChanged" msprop:Generator_RowEvArgName="FixtureSettingsRowChangeEvent" msprop:Generator_RowClassName="FixtureSettingsRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ID" msdata:AutoIncrement="true" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_UserColumnName="ID" type="xs:int" />
+              <xs:element name="LeagueID" msprop:Generator_ColumnVarNameInTable="columnLeagueID" msprop:Generator_ColumnPropNameInRow="LeagueID" msprop:Generator_ColumnPropNameInTable="LeagueIDColumn" msprop:Generator_UserColumnName="LeagueID" type="xs:int" minOccurs="0" />
+              <xs:element name="SeasonStart" msprop:Generator_ColumnVarNameInTable="columnSeasonStart" msprop:Generator_ColumnPropNameInRow="SeasonStart" msprop:Generator_ColumnPropNameInTable="SeasonStartColumn" msprop:Generator_UserColumnName="SeasonStart" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="SeasonEnd" msprop:Generator_ColumnVarNameInTable="columnSeasonEnd" msprop:Generator_ColumnPropNameInRow="SeasonEnd" msprop:Generator_ColumnPropNameInTable="SeasonEndColumn" msprop:Generator_UserColumnName="SeasonEnd" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="GameDayOfWeek" msprop:Generator_ColumnVarNameInTable="columnGameDayOfWeek" msprop:Generator_ColumnPropNameInRow="GameDayOfWeek" msprop:Generator_ColumnPropNameInTable="GameDayOfWeekColumn" msprop:Generator_UserColumnName="GameDayOfWeek" type="xs:short" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="NonPlayingDates" msprop:Generator_TableClassName="NonPlayingDatesDataTable" msprop:Generator_TableVarName="tableNonPlayingDates" msprop:Generator_TablePropName="NonPlayingDates" msprop:Generator_RowDeletingName="NonPlayingDatesRowDeleting" msprop:Generator_RowChangingName="NonPlayingDatesRowChanging" msprop:Generator_RowEvHandlerName="NonPlayingDatesRowChangeEventHandler" msprop:Generator_RowDeletedName="NonPlayingDatesRowDeleted" msprop:Generator_UserTableName="NonPlayingDates" msprop:Generator_RowChangedName="NonPlayingDatesRowChanged" msprop:Generator_RowEvArgName="NonPlayingDatesRowChangeEvent" msprop:Generator_RowClassName="NonPlayingDatesRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ID" msdata:AutoIncrement="true" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_UserColumnName="ID" type="xs:int" />
+              <xs:element name="LeagueID" msprop:Generator_ColumnVarNameInTable="columnLeagueID" msprop:Generator_ColumnPropNameInRow="LeagueID" msprop:Generator_ColumnPropNameInTable="LeagueIDColumn" msprop:Generator_UserColumnName="LeagueID" type="xs:int" minOccurs="0" />
+              <xs:element name="NonPlayingDate" msprop:Generator_ColumnVarNameInTable="columnNonPlayingDate" msprop:Generator_ColumnPropNameInRow="NonPlayingDate" msprop:Generator_ColumnPropNameInTable="NonPlayingDateColumn" msprop:Generator_UserColumnName="NonPlayingDate" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Leagues" />
+      <xs:field xpath="mstns:ID" />
+    </xs:unique>
+    <xs:unique name="Teams_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Teams" />
+      <xs:field xpath="mstns:ID" />
+    </xs:unique>
+    <xs:unique name="Fixtures_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Fixtures" />
+      <xs:field xpath="mstns:ID" />
+    </xs:unique>
+    <xs:unique name="FixtureSettings_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:FixtureSettings" />
+      <xs:field xpath="mstns:ID" />
+    </xs:unique>
+    <xs:unique name="NonPlayingDates_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:NonPlayingDates" />
+      <xs:field xpath="mstns:ID" />
+    </xs:unique>
+    <xs:keyref name="FK_Leagues_FixtureSettings" refer="Constraint1" msdata:ConstraintOnly="true">
+      <xs:selector xpath=".//mstns:FixtureSettings" />
+      <xs:field xpath="mstns:LeagueID" />
+    </xs:keyref>
+    <xs:keyref name="FK_Teams_Fixtures" refer="Teams_Constraint1" msdata:ConstraintOnly="true">
+      <xs:selector xpath=".//mstns:Fixtures" />
+      <xs:field xpath="mstns:TeamID" />
+    </xs:keyref>
+    <xs:keyref name="Teams_Leagues" refer="Constraint1" msdata:ConstraintOnly="true" msdata:UpdateRule="None" msdata:DeleteRule="None">
+      <xs:selector xpath=".//mstns:Teams" />
+      <xs:field xpath="mstns:LeagueID" />
+    </xs:keyref>
+  </xs:element>
+  <xs:annotation>
+    <xs:appinfo>
+      <msdata:Relationship name="Leagues_NonPlayingDates" msdata:parent="Leagues" msdata:child="NonPlayingDates" msdata:parentkey="ID" msdata:childkey="LeagueID" msprop:Generator_UserChildTable="NonPlayingDates" msprop:Generator_ChildPropName="GetNonPlayingDatesRows" msprop:Generator_UserRelationName="Leagues_NonPlayingDates" msprop:Generator_ParentPropName="LeaguesRow" msprop:Generator_RelationVarName="relationLeagues_NonPlayingDates" msprop:Generator_UserParentTable="Leagues" />
+    </xs:appinfo>
+  </xs:annotation>
+</xs:schema>
