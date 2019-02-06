@@ -17,5 +17,6 @@ namespace Fixture_Factory.Data_Classes
 		public List<Guid> PairedLeagues { get; set; }
 		public List<Team> Teams { get; set; }
 		public List<NonPlayingDate> NonPlayingDates { get; set; }
+		public string Grade { get; set; }
 	}
 }

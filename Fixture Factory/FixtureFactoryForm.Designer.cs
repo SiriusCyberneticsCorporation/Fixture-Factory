@@ -33,9 +33,12 @@
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.FixtureMenuStrip = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.seasonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.newSeasonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.TeamsDataGridView = new System.Windows.Forms.DataGridView();
 			this.TeamIDColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.TeamNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -51,6 +54,9 @@
 			this.StartTimeColumn = new Fixture_Factory.TimeColumn();
 			this.GameTimePriorityColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.SeasonPlayingFieldsDataGridView = new System.Windows.Forms.DataGridView();
+			this.PlayingFieldIDColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.PlayingFieldNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.FieldPriorityColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.SeasonEndDateTimePicker = new System.Windows.Forms.DateTimePicker();
 			this.SeasonStartDateTimePicker = new System.Windows.Forms.DateTimePicker();
 			this.label3 = new System.Windows.Forms.Label();
@@ -61,6 +67,8 @@
 			this.label6 = new System.Windows.Forms.Label();
 			this.label7 = new System.Windows.Forms.Label();
 			this.LeagueDetailsGroupBox = new System.Windows.Forms.GroupBox();
+			this.LeagueGradeComboBox = new System.Windows.Forms.ComboBox();
+			this.label20 = new System.Windows.Forms.Label();
 			this.label15 = new System.Windows.Forms.Label();
 			this.LeagueNonPlayingDatesDataGridView = new System.Windows.Forms.DataGridView();
 			this.calendarColumn1 = new Fixture_Factory.CalendarColumn();
@@ -76,6 +84,8 @@
 			this.label8 = new System.Windows.Forms.Label();
 			this.label12 = new System.Windows.Forms.Label();
 			this.TeamDetailsGroupBox = new System.Windows.Forms.GroupBox();
+			this.TeamGameTimesCheckedListBox = new System.Windows.Forms.CheckedListBox();
+			this.label17 = new System.Windows.Forms.Label();
 			this.label16 = new System.Windows.Forms.Label();
 			this.TeamNonPlayingDatesDataGridView = new System.Windows.Forms.DataGridView();
 			this.calendarColumn2 = new Fixture_Factory.CalendarColumn();
@@ -97,9 +107,21 @@
 			this.NonPlayingDatesColumn = new Fixture_Factory.CalendarColumn();
 			this.ReasonColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.GenerateFixturesButton = new System.Windows.Forms.Button();
-			this.PlayingFieldIDColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.PlayingFieldNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.FieldPriorityColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.label18 = new System.Windows.Forms.Label();
+			this.OtherFixturesDataGridView = new System.Windows.Forms.DataGridView();
+			this.OtherFixtureIDColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.OtherFixtureGameTimeColumn = new Fixture_Factory.CalendarColumn();
+			this.OtherFixtureFieldColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
+			this.OtherFixtureGradeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.OtherFixtureHomeTeamColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.OtherFixtureAwayTeamColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.FixtureTabControl = new System.Windows.Forms.TabControl();
+			this.SeasonTabPage = new System.Windows.Forms.TabPage();
+			this.label19 = new System.Windows.Forms.Label();
+			this.SeasonGradesDataGridView = new System.Windows.Forms.DataGridView();
+			this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.tabPage1 = new System.Windows.Forms.TabPage();
+			this.fixtureDisplayUserControl1 = new Fixture_Factory.FixtureDisplayUserControl();
 			this.FixtureMenuStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.TeamsDataGridView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.LeaguesDataGridView)).BeginInit();
@@ -110,15 +132,21 @@
 			this.TeamDetailsGroupBox.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.TeamNonPlayingDatesDataGridView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.SeasonNonPlayingDatesDataGridView)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.OtherFixturesDataGridView)).BeginInit();
+			this.FixtureTabControl.SuspendLayout();
+			this.SeasonTabPage.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.SeasonGradesDataGridView)).BeginInit();
+			this.tabPage1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// FixtureMenuStrip
 			// 
 			this.FixtureMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
+            this.fileToolStripMenuItem,
+            this.seasonToolStripMenuItem});
 			this.FixtureMenuStrip.Location = new System.Drawing.Point(0, 0);
 			this.FixtureMenuStrip.Name = "FixtureMenuStrip";
-			this.FixtureMenuStrip.Size = new System.Drawing.Size(1163, 24);
+			this.FixtureMenuStrip.Size = new System.Drawing.Size(1296, 24);
 			this.FixtureMenuStrip.TabIndex = 0;
 			this.FixtureMenuStrip.Text = "menuStrip1";
 			// 
@@ -136,6 +164,21 @@
 			this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
 			this.exitToolStripMenuItem.Text = "Exit";
 			// 
+			// seasonToolStripMenuItem
+			// 
+			this.seasonToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newSeasonToolStripMenuItem});
+			this.seasonToolStripMenuItem.Name = "seasonToolStripMenuItem";
+			this.seasonToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
+			this.seasonToolStripMenuItem.Text = "Season";
+			// 
+			// newSeasonToolStripMenuItem
+			// 
+			this.newSeasonToolStripMenuItem.Name = "newSeasonToolStripMenuItem";
+			this.newSeasonToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+			this.newSeasonToolStripMenuItem.Text = "New Season";
+			this.newSeasonToolStripMenuItem.Click += new System.EventHandler(this.newSeasonToolStripMenuItem_Click);
+			// 
 			// TeamsDataGridView
 			// 
 			this.TeamsDataGridView.BackgroundColor = System.Drawing.SystemColors.Window;
@@ -143,7 +186,7 @@
 			this.TeamsDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.TeamIDColumn,
             this.TeamNameColumn});
-			this.TeamsDataGridView.Location = new System.Drawing.Point(14, 402);
+			this.TeamsDataGridView.Location = new System.Drawing.Point(237, 236);
 			this.TeamsDataGridView.MultiSelect = false;
 			this.TeamsDataGridView.Name = "TeamsDataGridView";
 			this.TeamsDataGridView.RowHeadersWidth = 30;
@@ -151,6 +194,7 @@
 			this.TeamsDataGridView.TabIndex = 7;
 			this.TeamsDataGridView.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.TeamsDataGridView_CellEnter);
 			this.TeamsDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.TeamsDataGridView_CellValueChanged);
+			this.TeamsDataGridView.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.TeamsDataGridView_RowsRemoved);
 			// 
 			// TeamIDColumn
 			// 
@@ -199,7 +243,7 @@
 			this.LeaguesDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.LeagueIDColumn,
             this.LeagueNameColumn});
-			this.LeaguesDataGridView.Location = new System.Drawing.Point(13, 185);
+			this.LeaguesDataGridView.Location = new System.Drawing.Point(237, 18);
 			this.LeaguesDataGridView.MultiSelect = false;
 			this.LeaguesDataGridView.Name = "LeaguesDataGridView";
 			this.LeaguesDataGridView.RowHeadersWidth = 30;
@@ -207,6 +251,7 @@
 			this.LeaguesDataGridView.TabIndex = 6;
 			this.LeaguesDataGridView.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.LeagueDataGridView_CellEnter);
 			this.LeaguesDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.LeaguesDataGridView_CellValueChanged);
+			this.LeaguesDataGridView.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.LeaguesDataGridView_RowsRemoved);
 			// 
 			// LeagueIDColumn
 			// 
@@ -238,6 +283,7 @@
 			this.LeagueGameTimesDataGridView.TabIndex = 9;
 			this.LeagueGameTimesDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.LeagueGameTimesDataGridView_CellValueChanged);
 			this.LeagueGameTimesDataGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.LeagueGameTimesDataGridView_DataError);
+			this.LeagueGameTimesDataGridView.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.LeagueGameTimesDataGridView_RowsRemoved);
 			// 
 			// SessionIDColumn
 			// 
@@ -287,19 +333,42 @@
             this.PlayingFieldIDColumn,
             this.PlayingFieldNameColumn,
             this.FieldPriorityColumn});
-			this.SeasonPlayingFieldsDataGridView.Location = new System.Drawing.Point(218, 49);
+			this.SeasonPlayingFieldsDataGridView.Location = new System.Drawing.Point(3, 236);
 			this.SeasonPlayingFieldsDataGridView.Name = "SeasonPlayingFieldsDataGridView";
 			this.SeasonPlayingFieldsDataGridView.RowHeadersWidth = 30;
-			this.SeasonPlayingFieldsDataGridView.Size = new System.Drawing.Size(226, 114);
+			this.SeasonPlayingFieldsDataGridView.Size = new System.Drawing.Size(226, 157);
 			this.SeasonPlayingFieldsDataGridView.TabIndex = 11;
 			this.SeasonPlayingFieldsDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.SeasonPlayingFieldsDataGridView_CellValueChanged);
 			this.SeasonPlayingFieldsDataGridView.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.SeasonPlayingFieldsDataGridView_RowEnter);
+			this.SeasonPlayingFieldsDataGridView.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.SeasonPlayingFieldsDataGridView_RowsRemoved);
+			// 
+			// PlayingFieldIDColumn
+			// 
+			this.PlayingFieldIDColumn.DataPropertyName = "ID";
+			this.PlayingFieldIDColumn.HeaderText = "ID";
+			this.PlayingFieldIDColumn.Name = "PlayingFieldIDColumn";
+			this.PlayingFieldIDColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+			this.PlayingFieldIDColumn.Visible = false;
+			// 
+			// PlayingFieldNameColumn
+			// 
+			this.PlayingFieldNameColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+			this.PlayingFieldNameColumn.DataPropertyName = "FieldName";
+			this.PlayingFieldNameColumn.HeaderText = "Field Name";
+			this.PlayingFieldNameColumn.Name = "PlayingFieldNameColumn";
+			// 
+			// FieldPriorityColumn
+			// 
+			this.FieldPriorityColumn.DataPropertyName = "Priority";
+			this.FieldPriorityColumn.HeaderText = "Priority";
+			this.FieldPriorityColumn.Name = "FieldPriorityColumn";
+			this.FieldPriorityColumn.Width = 50;
 			// 
 			// SeasonEndDateTimePicker
 			// 
 			this.SeasonEndDateTimePicker.CustomFormat = "dd-MMM-yyyy";
 			this.SeasonEndDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-			this.SeasonEndDateTimePicker.Location = new System.Drawing.Point(82, 82);
+			this.SeasonEndDateTimePicker.Location = new System.Drawing.Point(78, 60);
 			this.SeasonEndDateTimePicker.Name = "SeasonEndDateTimePicker";
 			this.SeasonEndDateTimePicker.Size = new System.Drawing.Size(126, 20);
 			this.SeasonEndDateTimePicker.TabIndex = 5;
@@ -309,7 +378,7 @@
 			// 
 			this.SeasonStartDateTimePicker.CustomFormat = "dd-MMM-yyyy";
 			this.SeasonStartDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-			this.SeasonStartDateTimePicker.Location = new System.Drawing.Point(82, 56);
+			this.SeasonStartDateTimePicker.Location = new System.Drawing.Point(78, 34);
 			this.SeasonStartDateTimePicker.Name = "SeasonStartDateTimePicker";
 			this.SeasonStartDateTimePicker.Size = new System.Drawing.Size(126, 20);
 			this.SeasonStartDateTimePicker.TabIndex = 4;
@@ -318,7 +387,7 @@
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(11, 87);
+			this.label3.Location = new System.Drawing.Point(7, 65);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(65, 13);
 			this.label3.TabIndex = 3;
@@ -327,7 +396,7 @@
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(8, 61);
+			this.label2.Location = new System.Drawing.Point(4, 39);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(68, 13);
 			this.label2.TabIndex = 2;
@@ -335,16 +404,17 @@
 			// 
 			// SeasonTitleTextBox
 			// 
-			this.SeasonTitleTextBox.Location = new System.Drawing.Point(82, 30);
+			this.SeasonTitleTextBox.Location = new System.Drawing.Point(78, 8);
 			this.SeasonTitleTextBox.Name = "SeasonTitleTextBox";
 			this.SeasonTitleTextBox.Size = new System.Drawing.Size(126, 20);
 			this.SeasonTitleTextBox.TabIndex = 1;
+			this.SeasonTitleTextBox.TextChanged += new System.EventHandler(this.SeasonTitleTextBox_TextChanged);
 			this.SeasonTitleTextBox.Leave += new System.EventHandler(this.SeasonTextBox_Leave);
 			// 
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(10, 33);
+			this.label1.Location = new System.Drawing.Point(6, 11);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(66, 13);
 			this.label1.TabIndex = 0;
@@ -353,7 +423,7 @@
 			// label5
 			// 
 			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(215, 33);
+			this.label5.Location = new System.Drawing.Point(0, 220);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(117, 13);
 			this.label5.TabIndex = 12;
@@ -362,7 +432,7 @@
 			// label6
 			// 
 			this.label6.AutoSize = true;
-			this.label6.Location = new System.Drawing.Point(447, 33);
+			this.label6.Location = new System.Drawing.Point(0, 405);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(136, 13);
 			this.label6.TabIndex = 13;
@@ -371,7 +441,7 @@
 			// label7
 			// 
 			this.label7.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.label7.Location = new System.Drawing.Point(13, 169);
+			this.label7.Location = new System.Drawing.Point(237, 2);
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(240, 15);
 			this.label7.TabIndex = 14;
@@ -379,6 +449,8 @@
 			// 
 			// LeagueDetailsGroupBox
 			// 
+			this.LeagueDetailsGroupBox.Controls.Add(this.LeagueGradeComboBox);
+			this.LeagueDetailsGroupBox.Controls.Add(this.label20);
 			this.LeagueDetailsGroupBox.Controls.Add(this.label15);
 			this.LeagueDetailsGroupBox.Controls.Add(this.LeagueNonPlayingDatesDataGridView);
 			this.LeagueDetailsGroupBox.Controls.Add(this.PairedLeaguesCheckedListBox);
@@ -391,12 +463,30 @@
 			this.LeagueDetailsGroupBox.Controls.Add(this.LeagueNameTextBox);
 			this.LeagueDetailsGroupBox.Controls.Add(this.label8);
 			this.LeagueDetailsGroupBox.Controls.Add(this.LeagueGameTimesDataGridView);
-			this.LeagueDetailsGroupBox.Location = new System.Drawing.Point(259, 169);
+			this.LeagueDetailsGroupBox.Location = new System.Drawing.Point(483, 3);
 			this.LeagueDetailsGroupBox.Name = "LeagueDetailsGroupBox";
 			this.LeagueDetailsGroupBox.Size = new System.Drawing.Size(801, 214);
 			this.LeagueDetailsGroupBox.TabIndex = 15;
 			this.LeagueDetailsGroupBox.TabStop = false;
 			this.LeagueDetailsGroupBox.Text = "League Details";
+			// 
+			// LeagueGradeComboBox
+			// 
+			this.LeagueGradeComboBox.FormattingEnabled = true;
+			this.LeagueGradeComboBox.Location = new System.Drawing.Point(287, 18);
+			this.LeagueGradeComboBox.Name = "LeagueGradeComboBox";
+			this.LeagueGradeComboBox.Size = new System.Drawing.Size(121, 21);
+			this.LeagueGradeComboBox.TabIndex = 24;
+			this.LeagueGradeComboBox.SelectedIndexChanged += new System.EventHandler(this.LeagueGradeComboBox_SelectedIndexChanged);
+			// 
+			// label20
+			// 
+			this.label20.AutoSize = true;
+			this.label20.Location = new System.Drawing.Point(245, 21);
+			this.label20.Name = "label20";
+			this.label20.Size = new System.Drawing.Size(36, 13);
+			this.label20.TabIndex = 23;
+			this.label20.Text = "Grade";
 			// 
 			// label15
 			// 
@@ -420,6 +510,7 @@
 			this.LeagueNonPlayingDatesDataGridView.Size = new System.Drawing.Size(304, 148);
 			this.LeagueNonPlayingDatesDataGridView.TabIndex = 21;
 			this.LeagueNonPlayingDatesDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.LeagueNonPlayingDatesDataGridView_CellValueChanged);
+			this.LeagueNonPlayingDatesDataGridView.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.LeagueNonPlayingDatesDataGridView_RowsRemoved);
 			// 
 			// calendarColumn1
 			// 
@@ -490,7 +581,7 @@
 			// 
 			// GameDurationTextBox
 			// 
-			this.GameDurationTextBox.Location = new System.Drawing.Point(376, 18);
+			this.GameDurationTextBox.Location = new System.Drawing.Point(600, 18);
 			this.GameDurationTextBox.Name = "GameDurationTextBox";
 			this.GameDurationTextBox.Size = new System.Drawing.Size(41, 20);
 			this.GameDurationTextBox.TabIndex = 14;
@@ -499,7 +590,7 @@
 			// label9
 			// 
 			this.label9.AutoSize = true;
-			this.label9.Location = new System.Drawing.Point(262, 21);
+			this.label9.Location = new System.Drawing.Point(486, 21);
 			this.label9.Name = "label9";
 			this.label9.Size = new System.Drawing.Size(108, 13);
 			this.label9.TabIndex = 13;
@@ -525,7 +616,7 @@
 			// label12
 			// 
 			this.label12.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.label12.Location = new System.Drawing.Point(14, 386);
+			this.label12.Location = new System.Drawing.Point(237, 217);
 			this.label12.Name = "label12";
 			this.label12.Size = new System.Drawing.Size(240, 15);
 			this.label12.TabIndex = 16;
@@ -533,6 +624,8 @@
 			// 
 			// TeamDetailsGroupBox
 			// 
+			this.TeamDetailsGroupBox.Controls.Add(this.TeamGameTimesCheckedListBox);
+			this.TeamDetailsGroupBox.Controls.Add(this.label17);
 			this.TeamDetailsGroupBox.Controls.Add(this.label16);
 			this.TeamDetailsGroupBox.Controls.Add(this.TeamNonPlayingDatesDataGridView);
 			this.TeamDetailsGroupBox.Controls.Add(this.PairedTeamsCheckedListBox);
@@ -541,17 +634,36 @@
 			this.TeamDetailsGroupBox.Controls.Add(this.TeamNameLabel);
 			this.TeamDetailsGroupBox.Controls.Add(this.label4);
 			this.TeamDetailsGroupBox.Controls.Add(this.TeamNameTextBox);
-			this.TeamDetailsGroupBox.Location = new System.Drawing.Point(260, 386);
+			this.TeamDetailsGroupBox.Location = new System.Drawing.Point(481, 220);
 			this.TeamDetailsGroupBox.Name = "TeamDetailsGroupBox";
-			this.TeamDetailsGroupBox.Size = new System.Drawing.Size(588, 173);
+			this.TeamDetailsGroupBox.Size = new System.Drawing.Size(801, 173);
 			this.TeamDetailsGroupBox.TabIndex = 17;
 			this.TeamDetailsGroupBox.TabStop = false;
 			this.TeamDetailsGroupBox.Text = "Team Details";
 			// 
+			// TeamGameTimesCheckedListBox
+			// 
+			this.TeamGameTimesCheckedListBox.FormattingEnabled = true;
+			this.TeamGameTimesCheckedListBox.IntegralHeight = false;
+			this.TeamGameTimesCheckedListBox.Location = new System.Drawing.Point(165, 55);
+			this.TeamGameTimesCheckedListBox.Name = "TeamGameTimesCheckedListBox";
+			this.TeamGameTimesCheckedListBox.Size = new System.Drawing.Size(148, 114);
+			this.TeamGameTimesCheckedListBox.TabIndex = 24;
+			this.TeamGameTimesCheckedListBox.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.TeamGameTimesCheckedListBox_ItemCheck);
+			// 
+			// label17
+			// 
+			this.label17.AutoSize = true;
+			this.label17.Location = new System.Drawing.Point(162, 39);
+			this.label17.Name = "label17";
+			this.label17.Size = new System.Drawing.Size(66, 13);
+			this.label17.TabIndex = 23;
+			this.label17.Text = "Game Times";
+			// 
 			// label16
 			// 
 			this.label16.AutoSize = true;
-			this.label16.Location = new System.Drawing.Point(162, 39);
+			this.label16.Location = new System.Drawing.Point(486, 39);
 			this.label16.Name = "label16";
 			this.label16.Size = new System.Drawing.Size(125, 13);
 			this.label16.TabIndex = 22;
@@ -564,12 +676,13 @@
 			this.TeamNonPlayingDatesDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.calendarColumn2,
             this.dataGridViewTextBoxColumn11});
-			this.TeamNonPlayingDatesDataGridView.Location = new System.Drawing.Point(165, 55);
+			this.TeamNonPlayingDatesDataGridView.Location = new System.Drawing.Point(489, 55);
 			this.TeamNonPlayingDatesDataGridView.Name = "TeamNonPlayingDatesDataGridView";
 			this.TeamNonPlayingDatesDataGridView.RowHeadersWidth = 30;
 			this.TeamNonPlayingDatesDataGridView.Size = new System.Drawing.Size(304, 114);
 			this.TeamNonPlayingDatesDataGridView.TabIndex = 21;
 			this.TeamNonPlayingDatesDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.TeamNonPlayingDatesDataGridView_CellValueChanged);
+			this.TeamNonPlayingDatesDataGridView.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.TeamNonPlayingDatesDataGridView_RowsRemoved);
 			// 
 			// calendarColumn2
 			// 
@@ -695,12 +808,13 @@
 			this.SeasonNonPlayingDatesDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.NonPlayingDatesColumn,
             this.ReasonColumn});
-			this.SeasonNonPlayingDatesDataGridView.Location = new System.Drawing.Point(450, 49);
+			this.SeasonNonPlayingDatesDataGridView.Location = new System.Drawing.Point(3, 418);
 			this.SeasonNonPlayingDatesDataGridView.Name = "SeasonNonPlayingDatesDataGridView";
 			this.SeasonNonPlayingDatesDataGridView.RowHeadersWidth = 30;
-			this.SeasonNonPlayingDatesDataGridView.Size = new System.Drawing.Size(304, 114);
+			this.SeasonNonPlayingDatesDataGridView.Size = new System.Drawing.Size(304, 163);
 			this.SeasonNonPlayingDatesDataGridView.TabIndex = 12;
 			this.SeasonNonPlayingDatesDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.SeasonNonPlayingDatesDataGridView_CellValueChanged);
+			this.SeasonNonPlayingDatesDataGridView.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.SeasonNonPlayingDatesDataGridView_RowsRemoved);
 			// 
 			// NonPlayingDatesColumn
 			// 
@@ -724,7 +838,7 @@
 			// 
 			// GenerateFixturesButton
 			// 
-			this.GenerateFixturesButton.Location = new System.Drawing.Point(773, 49);
+			this.GenerateFixturesButton.Location = new System.Drawing.Point(1074, 425);
 			this.GenerateFixturesButton.Name = "GenerateFixturesButton";
 			this.GenerateFixturesButton.Size = new System.Drawing.Size(164, 23);
 			this.GenerateFixturesButton.TabIndex = 18;
@@ -732,51 +846,176 @@
 			this.GenerateFixturesButton.UseVisualStyleBackColor = true;
 			this.GenerateFixturesButton.Click += new System.EventHandler(this.GenerateFixturesButton_Click);
 			// 
-			// PlayingFieldIDColumn
+			// label18
 			// 
-			this.PlayingFieldIDColumn.DataPropertyName = "ID";
-			this.PlayingFieldIDColumn.HeaderText = "ID";
-			this.PlayingFieldIDColumn.Name = "PlayingFieldIDColumn";
-			this.PlayingFieldIDColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-			this.PlayingFieldIDColumn.Visible = false;
+			this.label18.AutoSize = true;
+			this.label18.Location = new System.Drawing.Point(312, 402);
+			this.label18.Name = "label18";
+			this.label18.Size = new System.Drawing.Size(69, 13);
+			this.label18.TabIndex = 20;
+			this.label18.Text = "OtherFixtures";
 			// 
-			// PlayingFieldNameColumn
+			// OtherFixturesDataGridView
 			// 
-			this.PlayingFieldNameColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			this.PlayingFieldNameColumn.DataPropertyName = "FieldName";
-			this.PlayingFieldNameColumn.HeaderText = "Field Name";
-			this.PlayingFieldNameColumn.Name = "PlayingFieldNameColumn";
+			this.OtherFixturesDataGridView.BackgroundColor = System.Drawing.SystemColors.Window;
+			this.OtherFixturesDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.OtherFixturesDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.OtherFixtureIDColumn,
+            this.OtherFixtureGameTimeColumn,
+            this.OtherFixtureFieldColumn,
+            this.OtherFixtureGradeColumn,
+            this.OtherFixtureHomeTeamColumn,
+            this.OtherFixtureAwayTeamColumn});
+			this.OtherFixturesDataGridView.Location = new System.Drawing.Point(315, 418);
+			this.OtherFixturesDataGridView.Name = "OtherFixturesDataGridView";
+			this.OtherFixturesDataGridView.RowHeadersWidth = 30;
+			this.OtherFixturesDataGridView.Size = new System.Drawing.Size(550, 163);
+			this.OtherFixturesDataGridView.TabIndex = 19;
+			this.OtherFixturesDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.OtherFixturesDataGridView_CellValueChanged);
+			this.OtherFixturesDataGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.OtherFixturesDataGridView_DataError);
+			this.OtherFixturesDataGridView.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.OtherFixturesDataGridView_RowsRemoved);
 			// 
-			// FieldPriorityColumn
+			// OtherFixtureIDColumn
 			// 
-			this.FieldPriorityColumn.DataPropertyName = "Priority";
-			this.FieldPriorityColumn.HeaderText = "Priority";
-			this.FieldPriorityColumn.Name = "FieldPriorityColumn";
-			this.FieldPriorityColumn.Width = 50;
+			this.OtherFixtureIDColumn.DataPropertyName = "ID";
+			this.OtherFixtureIDColumn.HeaderText = "ID";
+			this.OtherFixtureIDColumn.Name = "OtherFixtureIDColumn";
+			this.OtherFixtureIDColumn.Visible = false;
+			// 
+			// OtherFixtureGameTimeColumn
+			// 
+			this.OtherFixtureGameTimeColumn.DataPropertyName = "GameTime";
+			dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+			dataGridViewCellStyle6.Format = "dd-MMM-yyyy HH:mm";
+			dataGridViewCellStyle6.NullValue = " ";
+			this.OtherFixtureGameTimeColumn.DefaultCellStyle = dataGridViewCellStyle6;
+			this.OtherFixtureGameTimeColumn.Format = "dd-MMM-yyyy HH:mm";
+			this.OtherFixtureGameTimeColumn.HeaderText = "Game Time";
+			this.OtherFixtureGameTimeColumn.Name = "OtherFixtureGameTimeColumn";
+			this.OtherFixtureGameTimeColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+			this.OtherFixtureGameTimeColumn.Width = 120;
+			// 
+			// OtherFixtureFieldColumn
+			// 
+			this.OtherFixtureFieldColumn.DataPropertyName = "FieldID";
+			this.OtherFixtureFieldColumn.HeaderText = "Field";
+			this.OtherFixtureFieldColumn.Name = "OtherFixtureFieldColumn";
+			// 
+			// OtherFixtureGradeColumn
+			// 
+			this.OtherFixtureGradeColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+			this.OtherFixtureGradeColumn.DataPropertyName = "Grade";
+			this.OtherFixtureGradeColumn.HeaderText = "Grade";
+			this.OtherFixtureGradeColumn.Name = "OtherFixtureGradeColumn";
+			// 
+			// OtherFixtureHomeTeamColumn
+			// 
+			this.OtherFixtureHomeTeamColumn.DataPropertyName = "HomeTeam";
+			this.OtherFixtureHomeTeamColumn.HeaderText = "Home";
+			this.OtherFixtureHomeTeamColumn.Name = "OtherFixtureHomeTeamColumn";
+			// 
+			// OtherFixtureAwayTeamColumn
+			// 
+			this.OtherFixtureAwayTeamColumn.DataPropertyName = "AwayTeam";
+			this.OtherFixtureAwayTeamColumn.HeaderText = "Away";
+			this.OtherFixtureAwayTeamColumn.Name = "OtherFixtureAwayTeamColumn";
+			// 
+			// FixtureTabControl
+			// 
+			this.FixtureTabControl.Controls.Add(this.SeasonTabPage);
+			this.FixtureTabControl.Controls.Add(this.tabPage1);
+			this.FixtureTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.FixtureTabControl.Location = new System.Drawing.Point(0, 24);
+			this.FixtureTabControl.Name = "FixtureTabControl";
+			this.FixtureTabControl.SelectedIndex = 0;
+			this.FixtureTabControl.Size = new System.Drawing.Size(1296, 615);
+			this.FixtureTabControl.TabIndex = 21;
+			// 
+			// SeasonTabPage
+			// 
+			this.SeasonTabPage.Controls.Add(this.label19);
+			this.SeasonTabPage.Controls.Add(this.SeasonGradesDataGridView);
+			this.SeasonTabPage.Controls.Add(this.label1);
+			this.SeasonTabPage.Controls.Add(this.GenerateFixturesButton);
+			this.SeasonTabPage.Controls.Add(this.label18);
+			this.SeasonTabPage.Controls.Add(this.TeamDetailsGroupBox);
+			this.SeasonTabPage.Controls.Add(this.label2);
+			this.SeasonTabPage.Controls.Add(this.label12);
+			this.SeasonTabPage.Controls.Add(this.TeamsDataGridView);
+			this.SeasonTabPage.Controls.Add(this.OtherFixturesDataGridView);
+			this.SeasonTabPage.Controls.Add(this.LeagueDetailsGroupBox);
+			this.SeasonTabPage.Controls.Add(this.SeasonPlayingFieldsDataGridView);
+			this.SeasonTabPage.Controls.Add(this.label7);
+			this.SeasonTabPage.Controls.Add(this.SeasonTitleTextBox);
+			this.SeasonTabPage.Controls.Add(this.LeaguesDataGridView);
+			this.SeasonTabPage.Controls.Add(this.SeasonNonPlayingDatesDataGridView);
+			this.SeasonTabPage.Controls.Add(this.label3);
+			this.SeasonTabPage.Controls.Add(this.SeasonStartDateTimePicker);
+			this.SeasonTabPage.Controls.Add(this.SeasonEndDateTimePicker);
+			this.SeasonTabPage.Controls.Add(this.label5);
+			this.SeasonTabPage.Controls.Add(this.label6);
+			this.SeasonTabPage.Location = new System.Drawing.Point(4, 22);
+			this.SeasonTabPage.Name = "SeasonTabPage";
+			this.SeasonTabPage.Padding = new System.Windows.Forms.Padding(3);
+			this.SeasonTabPage.Size = new System.Drawing.Size(1288, 589);
+			this.SeasonTabPage.TabIndex = 0;
+			this.SeasonTabPage.Text = "Season Details";
+			this.SeasonTabPage.UseVisualStyleBackColor = true;
+			// 
+			// label19
+			// 
+			this.label19.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.label19.Location = new System.Drawing.Point(3, 83);
+			this.label19.Name = "label19";
+			this.label19.Size = new System.Drawing.Size(226, 15);
+			this.label19.TabIndex = 22;
+			this.label19.Text = "Grades";
+			// 
+			// SeasonGradesDataGridView
+			// 
+			this.SeasonGradesDataGridView.BackgroundColor = System.Drawing.SystemColors.Window;
+			this.SeasonGradesDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.SeasonGradesDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn13});
+			this.SeasonGradesDataGridView.Location = new System.Drawing.Point(3, 99);
+			this.SeasonGradesDataGridView.MultiSelect = false;
+			this.SeasonGradesDataGridView.Name = "SeasonGradesDataGridView";
+			this.SeasonGradesDataGridView.RowHeadersWidth = 30;
+			this.SeasonGradesDataGridView.Size = new System.Drawing.Size(226, 117);
+			this.SeasonGradesDataGridView.TabIndex = 21;
+			// 
+			// dataGridViewTextBoxColumn13
+			// 
+			this.dataGridViewTextBoxColumn13.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+			this.dataGridViewTextBoxColumn13.DataPropertyName = "Value";
+			this.dataGridViewTextBoxColumn13.HeaderText = "Grade";
+			this.dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
+			// 
+			// tabPage1
+			// 
+			this.tabPage1.Controls.Add(this.fixtureDisplayUserControl1);
+			this.tabPage1.Location = new System.Drawing.Point(4, 22);
+			this.tabPage1.Name = "tabPage1";
+			this.tabPage1.Size = new System.Drawing.Size(1288, 589);
+			this.tabPage1.TabIndex = 1;
+			this.tabPage1.Text = "tabPage1";
+			this.tabPage1.UseVisualStyleBackColor = true;
+			// 
+			// fixtureDisplayUserControl1
+			// 
+			this.fixtureDisplayUserControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.fixtureDisplayUserControl1.Location = new System.Drawing.Point(0, 0);
+			this.fixtureDisplayUserControl1.Name = "fixtureDisplayUserControl1";
+			this.fixtureDisplayUserControl1.Size = new System.Drawing.Size(1288, 589);
+			this.fixtureDisplayUserControl1.TabIndex = 0;
 			// 
 			// FixtureFactoryForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1163, 567);
-			this.Controls.Add(this.GenerateFixturesButton);
-			this.Controls.Add(this.TeamDetailsGroupBox);
-			this.Controls.Add(this.label12);
-			this.Controls.Add(this.LeagueDetailsGroupBox);
-			this.Controls.Add(this.label7);
-			this.Controls.Add(this.TeamsDataGridView);
-			this.Controls.Add(this.label6);
-			this.Controls.Add(this.label5);
-			this.Controls.Add(this.SeasonEndDateTimePicker);
-			this.Controls.Add(this.LeaguesDataGridView);
-			this.Controls.Add(this.SeasonStartDateTimePicker);
+			this.ClientSize = new System.Drawing.Size(1296, 639);
+			this.Controls.Add(this.FixtureTabControl);
 			this.Controls.Add(this.FixtureMenuStrip);
-			this.Controls.Add(this.label3);
-			this.Controls.Add(this.SeasonNonPlayingDatesDataGridView);
-			this.Controls.Add(this.SeasonTitleTextBox);
-			this.Controls.Add(this.SeasonPlayingFieldsDataGridView);
-			this.Controls.Add(this.label2);
-			this.Controls.Add(this.label1);
 			this.DoubleBuffered = true;
 			this.MainMenuStrip = this.FixtureMenuStrip;
 			this.Name = "FixtureFactoryForm";
@@ -797,6 +1036,12 @@
 			this.TeamDetailsGroupBox.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.TeamNonPlayingDatesDataGridView)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.SeasonNonPlayingDatesDataGridView)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.OtherFixturesDataGridView)).EndInit();
+			this.FixtureTabControl.ResumeLayout(false);
+			this.SeasonTabPage.ResumeLayout(false);
+			this.SeasonTabPage.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.SeasonGradesDataGridView)).EndInit();
+			this.tabPage1.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -871,6 +1116,27 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn PlayingFieldIDColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn PlayingFieldNameColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn FieldPriorityColumn;
+		private System.Windows.Forms.CheckedListBox TeamGameTimesCheckedListBox;
+		private System.Windows.Forms.Label label17;
+		private System.Windows.Forms.Label label18;
+		private System.Windows.Forms.DataGridView OtherFixturesDataGridView;
+		private System.Windows.Forms.DataGridViewTextBoxColumn OtherFixtureIDColumn;
+		private CalendarColumn OtherFixtureGameTimeColumn;
+		private System.Windows.Forms.DataGridViewComboBoxColumn OtherFixtureFieldColumn;
+		private System.Windows.Forms.DataGridViewTextBoxColumn OtherFixtureGradeColumn;
+		private System.Windows.Forms.DataGridViewTextBoxColumn OtherFixtureHomeTeamColumn;
+		private System.Windows.Forms.DataGridViewTextBoxColumn OtherFixtureAwayTeamColumn;
+		private System.Windows.Forms.ToolStripMenuItem seasonToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem newSeasonToolStripMenuItem;
+		private System.Windows.Forms.TabControl FixtureTabControl;
+		private System.Windows.Forms.TabPage SeasonTabPage;
+		private System.Windows.Forms.TabPage tabPage1;
+		private FixtureDisplayUserControl fixtureDisplayUserControl1;
+		private System.Windows.Forms.Label label19;
+		private System.Windows.Forms.DataGridView SeasonGradesDataGridView;
+		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn13;
+		private System.Windows.Forms.ComboBox LeagueGradeComboBox;
+		private System.Windows.Forms.Label label20;
 	}
 }
 

@@ -9,7 +9,6 @@ namespace Fixture_Factory.Data_Classes
 	public class FixtureGame : Fixture
 	{
 		public PlayingField Field { get; set; }
-		public League GameLeague { get; set; }
 		public Team HomeTeam { get; set; }
 		public Team AwayTeam { get; set; }
 		public Team UmpiringTeam { get; set; }

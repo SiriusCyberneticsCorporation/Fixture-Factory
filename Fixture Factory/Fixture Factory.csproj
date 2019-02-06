@@ -77,10 +77,19 @@
     <Compile Include="Data Classes\FixtureGame.cs" />
     <Compile Include="Data Classes\GameTime.cs" />
     <Compile Include="Data Classes\NonPlayingDate.cs" />
+    <Compile Include="Data Classes\OtherFixture.cs" />
     <Compile Include="Data Classes\Season.cs" />
     <Compile Include="Data Classes\League.cs" />
     <Compile Include="Data Classes\PlayingField.cs" />
+    <Compile Include="Data Classes\StringValue.cs" />
     <Compile Include="Data Classes\Team.cs" />
+    <Compile Include="FixtureDetails.cs" />
+    <Compile Include="FixtureDisplayUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FixtureDisplayUserControl.Designer.cs">
+      <DependentUpon>FixtureDisplayUserControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="FixtureFactoryDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -105,6 +114,9 @@
     </Compile>
     <Compile Include="TimeCell.cs" />
     <Compile Include="TimeColumn.cs" />
+    <EmbeddedResource Include="FixtureDisplayUserControl.resx">
+      <DependentUpon>FixtureDisplayUserControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FixtureFactoryForm.resx">
       <DependentUpon>FixtureFactoryForm.cs</DependentUpon>
     </EmbeddedResource>

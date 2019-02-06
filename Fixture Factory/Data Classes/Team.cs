@@ -12,7 +12,7 @@ namespace Fixture_Factory.Data_Classes
 		public Guid SeasonID { get; set; }
 		public Guid LeagueID { get; set; }
 		public string TeamName { get; set; }
-		public List<int> PlayingDays { get; set; }
+		public List<Guid> PlayingDays { get; set; }
 		public List<Guid> PairedTeams { get; set; }
 		public List<NonPlayingDate> NonPlayingDates { get; set; }
 	}

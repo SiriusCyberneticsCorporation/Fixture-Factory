@@ -15,5 +15,7 @@ namespace Fixture_Factory.Data_Classes
 		public List<PlayingField> PlayingFields { get; set; }
 		public List<NonPlayingDate> NonPlayingDates { get; set; }
 		public List<League> Leagues { get; set; }
+		public List<OtherFixture> OtherFixtures { get; set; }
+		public List<StringValue> Grades { get; set; }
 	}
 }
