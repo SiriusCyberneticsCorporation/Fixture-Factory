@@ -30,6 +30,10 @@
 		{
 			this.FixtureDataGridView = new System.Windows.Forms.DataGridView();
 			this.BreakdownDataGridView1 = new System.Windows.Forms.DataGridView();
+			this.BreakdownDataGridView2 = new System.Windows.Forms.DataGridView();
+			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+			this.TimeSlotDataGridView1 = new System.Windows.Forms.DataGridView();
+			this.TimeSlotDataGridView2 = new System.Windows.Forms.DataGridView();
 			this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -50,10 +54,12 @@
 			this.AwayTeamColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.UmpiringColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.TechBenchColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.BreakdownDataGridView2 = new System.Windows.Forms.DataGridView();
 			((System.ComponentModel.ISupportInitialize)(this.FixtureDataGridView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.BreakdownDataGridView1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.BreakdownDataGridView2)).BeginInit();
+			this.tableLayoutPanel1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.TimeSlotDataGridView1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.TimeSlotDataGridView2)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// FixtureDataGridView
@@ -80,14 +86,64 @@
 			// 
 			// BreakdownDataGridView1
 			// 
-			this.BreakdownDataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
 			this.BreakdownDataGridView1.BackgroundColor = System.Drawing.SystemColors.Window;
 			this.BreakdownDataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.BreakdownDataGridView1.Location = new System.Drawing.Point(828, 3);
+			this.BreakdownDataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.BreakdownDataGridView1.Location = new System.Drawing.Point(3, 3);
 			this.BreakdownDataGridView1.Name = "BreakdownDataGridView1";
-			this.BreakdownDataGridView1.Size = new System.Drawing.Size(380, 334);
+			this.BreakdownDataGridView1.Size = new System.Drawing.Size(377, 158);
 			this.BreakdownDataGridView1.TabIndex = 1;
+			// 
+			// BreakdownDataGridView2
+			// 
+			this.BreakdownDataGridView2.BackgroundColor = System.Drawing.SystemColors.Window;
+			this.BreakdownDataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.BreakdownDataGridView2.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.BreakdownDataGridView2.Location = new System.Drawing.Point(3, 167);
+			this.BreakdownDataGridView2.Name = "BreakdownDataGridView2";
+			this.BreakdownDataGridView2.Size = new System.Drawing.Size(377, 158);
+			this.BreakdownDataGridView2.TabIndex = 2;
+			// 
+			// tableLayoutPanel1
+			// 
+			this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.tableLayoutPanel1.ColumnCount = 1;
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.tableLayoutPanel1.Controls.Add(this.TimeSlotDataGridView2, 0, 3);
+			this.tableLayoutPanel1.Controls.Add(this.TimeSlotDataGridView1, 0, 2);
+			this.tableLayoutPanel1.Controls.Add(this.BreakdownDataGridView1, 0, 0);
+			this.tableLayoutPanel1.Controls.Add(this.BreakdownDataGridView2, 0, 1);
+			this.tableLayoutPanel1.Location = new System.Drawing.Point(828, 3);
+			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+			this.tableLayoutPanel1.RowCount = 4;
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(383, 659);
+			this.tableLayoutPanel1.TabIndex = 3;
+			// 
+			// TimeSlotDataGridView1
+			// 
+			this.TimeSlotDataGridView1.BackgroundColor = System.Drawing.SystemColors.Window;
+			this.TimeSlotDataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.TimeSlotDataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.TimeSlotDataGridView1.Location = new System.Drawing.Point(3, 331);
+			this.TimeSlotDataGridView1.Name = "TimeSlotDataGridView1";
+			this.TimeSlotDataGridView1.Size = new System.Drawing.Size(377, 158);
+			this.TimeSlotDataGridView1.TabIndex = 4;
+			// 
+			// TimeSlotDataGridView2
+			// 
+			this.TimeSlotDataGridView2.BackgroundColor = System.Drawing.SystemColors.Window;
+			this.TimeSlotDataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.TimeSlotDataGridView2.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.TimeSlotDataGridView2.Location = new System.Drawing.Point(3, 495);
+			this.TimeSlotDataGridView2.Name = "TimeSlotDataGridView2";
+			this.TimeSlotDataGridView2.Size = new System.Drawing.Size(377, 161);
+			this.TimeSlotDataGridView2.TabIndex = 4;
 			// 
 			// dataGridViewTextBoxColumn1
 			// 
@@ -221,29 +277,20 @@
 			this.TechBenchColumn.HeaderText = "Tech Bench";
 			this.TechBenchColumn.Name = "TechBenchColumn";
 			// 
-			// BreakdownDataGridView2
-			// 
-			this.BreakdownDataGridView2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.BreakdownDataGridView2.BackgroundColor = System.Drawing.SystemColors.Window;
-			this.BreakdownDataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.BreakdownDataGridView2.Location = new System.Drawing.Point(828, 343);
-			this.BreakdownDataGridView2.Name = "BreakdownDataGridView2";
-			this.BreakdownDataGridView2.Size = new System.Drawing.Size(380, 316);
-			this.BreakdownDataGridView2.TabIndex = 2;
-			// 
 			// FixtureDisplayUserControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.Controls.Add(this.BreakdownDataGridView2);
-			this.Controls.Add(this.BreakdownDataGridView1);
+			this.Controls.Add(this.tableLayoutPanel1);
 			this.Controls.Add(this.FixtureDataGridView);
 			this.Name = "FixtureDisplayUserControl";
 			this.Size = new System.Drawing.Size(1211, 662);
 			((System.ComponentModel.ISupportInitialize)(this.FixtureDataGridView)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.BreakdownDataGridView1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.BreakdownDataGridView2)).EndInit();
+			this.tableLayoutPanel1.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.TimeSlotDataGridView1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.TimeSlotDataGridView2)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -273,5 +320,8 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn TechBenchColumn;
 		private System.Windows.Forms.DataGridView BreakdownDataGridView1;
 		private System.Windows.Forms.DataGridView BreakdownDataGridView2;
+		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+		private System.Windows.Forms.DataGridView TimeSlotDataGridView2;
+		private System.Windows.Forms.DataGridView TimeSlotDataGridView1;
 	}
 }

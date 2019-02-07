@@ -83,6 +83,7 @@
     <Compile Include="Data Classes\PlayingField.cs" />
     <Compile Include="Data Classes\StringValue.cs" />
     <Compile Include="Data Classes\Team.cs" />
+    <Compile Include="FixtureCalculator.cs" />
     <Compile Include="FixtureDetails.cs" />
     <Compile Include="FixtureDisplayUserControl.cs">
       <SubType>UserControl</SubType>

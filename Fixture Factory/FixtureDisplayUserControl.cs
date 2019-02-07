@@ -39,7 +39,8 @@ namespace Fixture_Factory
 			m_fixtureDisplay = new List<FixtureDisplay>();
 
 			DateTime lastDate = DateTime.MinValue;
-			Dictionary < string, Dictionary<string, Dictionary<string, int>>> breakdown = new Dictionary<string, Dictionary<string, Dictionary<string, int>>>();
+			Dictionary<string, Dictionary<string, Dictionary<string, int>>> fieldBreakdown = new Dictionary<string, Dictionary<string, Dictionary<string, int>>>();
+			Dictionary<string, Dictionary<string, Dictionary<string, int>>> slotBreakdown = new Dictionary<string, Dictionary<string, Dictionary<string, int>>>();
 
 			foreach (Fixture iFixture in fixtures)
 			{
@@ -49,50 +50,77 @@ namespace Fixture_Factory
 					string homeTeam = ((FixtureGame)iFixture).HomeTeam.TeamName;
 					string awayTeam = ((FixtureGame)iFixture).AwayTeam.TeamName;
 					string field = ((FixtureGame)iFixture).Field.FieldName;
+					string slot = ((FixtureGame)iFixture).GameTime.ToString("ddd HH:mm");
 
-					if (!breakdown.ContainsKey(league))
+					if (!fieldBreakdown.ContainsKey(league))
 					{
-						breakdown.Add(league, new Dictionary<string, Dictionary<string, int>>());
+						fieldBreakdown.Add(league, new Dictionary<string, Dictionary<string, int>>());
 					}
 
-					if (!breakdown[league].ContainsKey(homeTeam))
+					if (!fieldBreakdown[league].ContainsKey(homeTeam))
 					{
-						breakdown[league].Add(homeTeam, new Dictionary<string, int>());
+						fieldBreakdown[league].Add(homeTeam, new Dictionary<string, int>());
 					}
-					if (!breakdown[league][homeTeam].ContainsKey(field))
+					if (!fieldBreakdown[league][homeTeam].ContainsKey(field))
 					{
-						breakdown[league][homeTeam].Add(field, 0);
+						fieldBreakdown[league][homeTeam].Add(field, 0);
 					}
-					breakdown[league][homeTeam][field]++;
+					fieldBreakdown[league][homeTeam][field]++;
 
-					if (!breakdown[league].ContainsKey(awayTeam))
+					if (!fieldBreakdown[league].ContainsKey(awayTeam))
 					{
-						breakdown[league].Add(awayTeam, new Dictionary<string, int>());
+						fieldBreakdown[league].Add(awayTeam, new Dictionary<string, int>());
 					}
-					if (!breakdown[league][awayTeam].ContainsKey(field))
+					if (!fieldBreakdown[league][awayTeam].ContainsKey(field))
 					{
-						breakdown[league][awayTeam].Add(field, 0);
+						fieldBreakdown[league][awayTeam].Add(field, 0);
 					}
-					breakdown[league][awayTeam][field]++;
+					fieldBreakdown[league][awayTeam][field]++;
+
+
+					if (!slotBreakdown.ContainsKey(league))
+					{
+						slotBreakdown.Add(league, new Dictionary<string, Dictionary<string, int>>());
+					}
+
+					if (!slotBreakdown[league].ContainsKey(homeTeam))
+					{
+						slotBreakdown[league].Add(homeTeam, new Dictionary<string, int>());
+					}
+					if (!slotBreakdown[league][homeTeam].ContainsKey(slot))
+					{
+						slotBreakdown[league][homeTeam].Add(slot, 0);
+					}
+					slotBreakdown[league][homeTeam][slot]++;
+
+					if (!slotBreakdown[league].ContainsKey(awayTeam))
+					{
+						slotBreakdown[league].Add(awayTeam, new Dictionary<string, int>());
+					}
+					if (!slotBreakdown[league][awayTeam].ContainsKey(slot))
+					{
+						slotBreakdown[league][awayTeam].Add(slot, 0);
+					}
+					slotBreakdown[league][awayTeam][slot]++;
 				}
 				if (iFixture is FixtureTeamBye)
 				{
 					string league = iFixture.GameLeague.LeagueName;
 					string teamWithBye = ((FixtureTeamBye)iFixture).TeamWithBye.TeamName;
 
-					if (!breakdown.ContainsKey(league))
+					if (!fieldBreakdown.ContainsKey(league))
 					{
-						breakdown.Add(league, new Dictionary<string, Dictionary<string, int>>());
+						fieldBreakdown.Add(league, new Dictionary<string, Dictionary<string, int>>());
 					}
-					if (!breakdown[league].ContainsKey(teamWithBye))
+					if (!fieldBreakdown[league].ContainsKey(teamWithBye))
 					{
-						breakdown[league].Add(teamWithBye, new Dictionary<string, int>());
+						fieldBreakdown[league].Add(teamWithBye, new Dictionary<string, int>());
 					}
-					if (!breakdown[league][teamWithBye].ContainsKey("Bye"))
+					if (!fieldBreakdown[league][teamWithBye].ContainsKey("Bye"))
 					{
-						breakdown[league][teamWithBye].Add("Bye", 0);
+						fieldBreakdown[league][teamWithBye].Add("Bye", 0);
 					}
-					breakdown[league][teamWithBye]["Bye"]++;
+					fieldBreakdown[league][teamWithBye]["Bye"]++;
 				}
 
 				if(iFixture.GameTime.Date != lastDate.Date && lastDate != DateTime.MinValue)
@@ -138,24 +166,26 @@ namespace Fixture_Factory
 			FixtureDataGridView.DataSource = fixtureBindingSource;
 
 			int display = 1;
-			foreach (string league in breakdown.Keys)
+			foreach (string league in fieldBreakdown.Keys)
 			{
 				DataTable fixtureBreakdown = new DataTable();
+				DataTable timeSlotBreakdown = new DataTable();
 				fixtureBreakdown.Columns.Add(new DataColumn(league));
+				timeSlotBreakdown.Columns.Add(new DataColumn(league));
 
-				foreach (string team in breakdown[league].Keys)
+				foreach (string team in fieldBreakdown[league].Keys)
 				{
 					DataRow teamRow = fixtureBreakdown.NewRow();
 
 					teamRow[league] = team;
 
-					foreach (string field in breakdown[league][team].Keys)
+					foreach (string field in fieldBreakdown[league][team].Keys)
 					{
 						if (!fixtureBreakdown.Columns.Contains(field))
 						{
 							fixtureBreakdown.Columns.Add(new DataColumn(field));
 						}
-						teamRow[field] = breakdown[league][team][field];
+						teamRow[field] = fieldBreakdown[league][team][field];
 					}
 					fixtureBreakdown.Rows.Add(teamRow);
 				}
@@ -166,6 +196,32 @@ namespace Fixture_Factory
 				else if (display == 2)
 				{
 					BreakdownDataGridView2.DataSource = fixtureBreakdown;
+				}
+
+
+				foreach (string team in slotBreakdown[league].Keys)
+				{
+					DataRow teamRow = timeSlotBreakdown.NewRow();
+
+					teamRow[league] = team;
+
+					foreach (string slot in slotBreakdown[league][team].Keys)
+					{
+						if (!timeSlotBreakdown.Columns.Contains(slot))
+						{
+							timeSlotBreakdown.Columns.Add(new DataColumn(slot));
+						}
+						teamRow[slot] = slotBreakdown[league][team][slot];
+					}
+					timeSlotBreakdown.Rows.Add(teamRow);
+				}
+				if (display == 1)
+				{
+					TimeSlotDataGridView1.DataSource = timeSlotBreakdown;
+				}
+				else if (display == 2)
+				{
+					TimeSlotDataGridView2.DataSource = timeSlotBreakdown;
 				}
 				display++;
 			}

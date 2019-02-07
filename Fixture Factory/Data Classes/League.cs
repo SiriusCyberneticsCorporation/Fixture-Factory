@@ -14,7 +14,6 @@ namespace Fixture_Factory.Data_Classes
 		public int GameDurationMinutes { get; set; }
 		public List<GameTime> GameTimes { get; set; }
 		public List<Guid> PlayingFields { get; set; }
-		public List<Guid> PairedLeagues { get; set; }
 		public List<Team> Teams { get; set; }
 		public List<NonPlayingDate> NonPlayingDates { get; set; }
 		public string Grade { get; set; }

@@ -73,8 +73,6 @@
 			this.LeagueNonPlayingDatesDataGridView = new System.Windows.Forms.DataGridView();
 			this.calendarColumn1 = new Fixture_Factory.CalendarColumn();
 			this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.PairedLeaguesCheckedListBox = new System.Windows.Forms.CheckedListBox();
-			this.label14 = new System.Windows.Forms.Label();
 			this.LeaguePlayingFieldsCheckedListBox = new System.Windows.Forms.CheckedListBox();
 			this.label11 = new System.Windows.Forms.Label();
 			this.label10 = new System.Windows.Forms.Label();
@@ -146,7 +144,7 @@
             this.seasonToolStripMenuItem});
 			this.FixtureMenuStrip.Location = new System.Drawing.Point(0, 0);
 			this.FixtureMenuStrip.Name = "FixtureMenuStrip";
-			this.FixtureMenuStrip.Size = new System.Drawing.Size(1296, 24);
+			this.FixtureMenuStrip.Size = new System.Drawing.Size(1171, 24);
 			this.FixtureMenuStrip.TabIndex = 0;
 			this.FixtureMenuStrip.Text = "menuStrip1";
 			// 
@@ -453,8 +451,6 @@
 			this.LeagueDetailsGroupBox.Controls.Add(this.label20);
 			this.LeagueDetailsGroupBox.Controls.Add(this.label15);
 			this.LeagueDetailsGroupBox.Controls.Add(this.LeagueNonPlayingDatesDataGridView);
-			this.LeagueDetailsGroupBox.Controls.Add(this.PairedLeaguesCheckedListBox);
-			this.LeagueDetailsGroupBox.Controls.Add(this.label14);
 			this.LeagueDetailsGroupBox.Controls.Add(this.LeaguePlayingFieldsCheckedListBox);
 			this.LeagueDetailsGroupBox.Controls.Add(this.label11);
 			this.LeagueDetailsGroupBox.Controls.Add(this.label10);
@@ -465,7 +461,7 @@
 			this.LeagueDetailsGroupBox.Controls.Add(this.LeagueGameTimesDataGridView);
 			this.LeagueDetailsGroupBox.Location = new System.Drawing.Point(483, 3);
 			this.LeagueDetailsGroupBox.Name = "LeagueDetailsGroupBox";
-			this.LeagueDetailsGroupBox.Size = new System.Drawing.Size(801, 214);
+			this.LeagueDetailsGroupBox.Size = new System.Drawing.Size(673, 214);
 			this.LeagueDetailsGroupBox.TabIndex = 15;
 			this.LeagueDetailsGroupBox.TabStop = false;
 			this.LeagueDetailsGroupBox.Text = "League Details";
@@ -491,7 +487,7 @@
 			// label15
 			// 
 			this.label15.AutoSize = true;
-			this.label15.Location = new System.Drawing.Point(484, 44);
+			this.label15.Location = new System.Drawing.Point(361, 44);
 			this.label15.Name = "label15";
 			this.label15.Size = new System.Drawing.Size(134, 13);
 			this.label15.TabIndex = 22;
@@ -504,7 +500,7 @@
 			this.LeagueNonPlayingDatesDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.calendarColumn1,
             this.dataGridViewTextBoxColumn10});
-			this.LeagueNonPlayingDatesDataGridView.Location = new System.Drawing.Point(487, 60);
+			this.LeagueNonPlayingDatesDataGridView.Location = new System.Drawing.Point(364, 60);
 			this.LeagueNonPlayingDatesDataGridView.Name = "LeagueNonPlayingDatesDataGridView";
 			this.LeagueNonPlayingDatesDataGridView.RowHeadersWidth = 30;
 			this.LeagueNonPlayingDatesDataGridView.Size = new System.Drawing.Size(304, 148);
@@ -531,25 +527,6 @@
 			this.dataGridViewTextBoxColumn10.DataPropertyName = "Reason";
 			this.dataGridViewTextBoxColumn10.HeaderText = "Reason";
 			this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
-			// 
-			// PairedLeaguesCheckedListBox
-			// 
-			this.PairedLeaguesCheckedListBox.FormattingEnabled = true;
-			this.PairedLeaguesCheckedListBox.IntegralHeight = false;
-			this.PairedLeaguesCheckedListBox.Location = new System.Drawing.Point(364, 60);
-			this.PairedLeaguesCheckedListBox.Name = "PairedLeaguesCheckedListBox";
-			this.PairedLeaguesCheckedListBox.Size = new System.Drawing.Size(114, 148);
-			this.PairedLeaguesCheckedListBox.TabIndex = 20;
-			this.PairedLeaguesCheckedListBox.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.PairedLeaguesCheckedListBox_ItemCheck);
-			// 
-			// label14
-			// 
-			this.label14.AutoSize = true;
-			this.label14.Location = new System.Drawing.Point(361, 44);
-			this.label14.Name = "label14";
-			this.label14.Size = new System.Drawing.Size(81, 13);
-			this.label14.TabIndex = 19;
-			this.label14.Text = "Paired Leagues";
 			// 
 			// LeaguePlayingFieldsCheckedListBox
 			// 
@@ -581,7 +558,7 @@
 			// 
 			// GameDurationTextBox
 			// 
-			this.GameDurationTextBox.Location = new System.Drawing.Point(600, 18);
+			this.GameDurationTextBox.Location = new System.Drawing.Point(550, 18);
 			this.GameDurationTextBox.Name = "GameDurationTextBox";
 			this.GameDurationTextBox.Size = new System.Drawing.Size(41, 20);
 			this.GameDurationTextBox.TabIndex = 14;
@@ -590,7 +567,7 @@
 			// label9
 			// 
 			this.label9.AutoSize = true;
-			this.label9.Location = new System.Drawing.Point(486, 21);
+			this.label9.Location = new System.Drawing.Point(436, 21);
 			this.label9.Name = "label9";
 			this.label9.Size = new System.Drawing.Size(108, 13);
 			this.label9.TabIndex = 13;
@@ -636,7 +613,7 @@
 			this.TeamDetailsGroupBox.Controls.Add(this.TeamNameTextBox);
 			this.TeamDetailsGroupBox.Location = new System.Drawing.Point(481, 220);
 			this.TeamDetailsGroupBox.Name = "TeamDetailsGroupBox";
-			this.TeamDetailsGroupBox.Size = new System.Drawing.Size(801, 173);
+			this.TeamDetailsGroupBox.Size = new System.Drawing.Size(675, 173);
 			this.TeamDetailsGroupBox.TabIndex = 17;
 			this.TeamDetailsGroupBox.TabStop = false;
 			this.TeamDetailsGroupBox.Text = "Team Details";
@@ -663,7 +640,7 @@
 			// label16
 			// 
 			this.label16.AutoSize = true;
-			this.label16.Location = new System.Drawing.Point(486, 39);
+			this.label16.Location = new System.Drawing.Point(363, 39);
 			this.label16.Name = "label16";
 			this.label16.Size = new System.Drawing.Size(125, 13);
 			this.label16.TabIndex = 22;
@@ -676,7 +653,7 @@
 			this.TeamNonPlayingDatesDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.calendarColumn2,
             this.dataGridViewTextBoxColumn11});
-			this.TeamNonPlayingDatesDataGridView.Location = new System.Drawing.Point(489, 55);
+			this.TeamNonPlayingDatesDataGridView.Location = new System.Drawing.Point(366, 55);
 			this.TeamNonPlayingDatesDataGridView.Name = "TeamNonPlayingDatesDataGridView";
 			this.TeamNonPlayingDatesDataGridView.RowHeadersWidth = 30;
 			this.TeamNonPlayingDatesDataGridView.Size = new System.Drawing.Size(304, 114);
@@ -838,7 +815,7 @@
 			// 
 			// GenerateFixturesButton
 			// 
-			this.GenerateFixturesButton.Location = new System.Drawing.Point(1074, 425);
+			this.GenerateFixturesButton.Location = new System.Drawing.Point(987, 429);
 			this.GenerateFixturesButton.Name = "GenerateFixturesButton";
 			this.GenerateFixturesButton.Size = new System.Drawing.Size(164, 23);
 			this.GenerateFixturesButton.TabIndex = 18;
@@ -928,7 +905,7 @@
 			this.FixtureTabControl.Location = new System.Drawing.Point(0, 24);
 			this.FixtureTabControl.Name = "FixtureTabControl";
 			this.FixtureTabControl.SelectedIndex = 0;
-			this.FixtureTabControl.Size = new System.Drawing.Size(1296, 615);
+			this.FixtureTabControl.Size = new System.Drawing.Size(1171, 615);
 			this.FixtureTabControl.TabIndex = 21;
 			// 
 			// SeasonTabPage
@@ -957,7 +934,7 @@
 			this.SeasonTabPage.Location = new System.Drawing.Point(4, 22);
 			this.SeasonTabPage.Name = "SeasonTabPage";
 			this.SeasonTabPage.Padding = new System.Windows.Forms.Padding(3);
-			this.SeasonTabPage.Size = new System.Drawing.Size(1288, 589);
+			this.SeasonTabPage.Size = new System.Drawing.Size(1163, 589);
 			this.SeasonTabPage.TabIndex = 0;
 			this.SeasonTabPage.Text = "Season Details";
 			this.SeasonTabPage.UseVisualStyleBackColor = true;
@@ -1013,7 +990,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1296, 639);
+			this.ClientSize = new System.Drawing.Size(1171, 639);
 			this.Controls.Add(this.FixtureTabControl);
 			this.Controls.Add(this.FixtureMenuStrip);
 			this.DoubleBuffered = true;
@@ -1096,8 +1073,6 @@
 		private System.Windows.Forms.TextBox TeamLeagueTextBox;
 		private System.Windows.Forms.CheckedListBox PairedTeamsCheckedListBox;
 		private System.Windows.Forms.Label label13;
-		private System.Windows.Forms.CheckedListBox PairedLeaguesCheckedListBox;
-		private System.Windows.Forms.Label label14;
 		private System.Windows.Forms.Label label15;
 		private System.Windows.Forms.DataGridView LeagueNonPlayingDatesDataGridView;
 		private System.Windows.Forms.Label label16;
