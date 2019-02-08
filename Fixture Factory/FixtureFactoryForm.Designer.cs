@@ -144,7 +144,7 @@
             this.seasonToolStripMenuItem});
 			this.FixtureMenuStrip.Location = new System.Drawing.Point(0, 0);
 			this.FixtureMenuStrip.Name = "FixtureMenuStrip";
-			this.FixtureMenuStrip.Size = new System.Drawing.Size(1171, 24);
+			this.FixtureMenuStrip.Size = new System.Drawing.Size(1322, 24);
 			this.FixtureMenuStrip.TabIndex = 0;
 			this.FixtureMenuStrip.Text = "menuStrip1";
 			// 
@@ -780,6 +780,8 @@
 			// 
 			// SeasonNonPlayingDatesDataGridView
 			// 
+			this.SeasonNonPlayingDatesDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
 			this.SeasonNonPlayingDatesDataGridView.BackgroundColor = System.Drawing.SystemColors.Window;
 			this.SeasonNonPlayingDatesDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.SeasonNonPlayingDatesDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -788,7 +790,7 @@
 			this.SeasonNonPlayingDatesDataGridView.Location = new System.Drawing.Point(3, 418);
 			this.SeasonNonPlayingDatesDataGridView.Name = "SeasonNonPlayingDatesDataGridView";
 			this.SeasonNonPlayingDatesDataGridView.RowHeadersWidth = 30;
-			this.SeasonNonPlayingDatesDataGridView.Size = new System.Drawing.Size(304, 163);
+			this.SeasonNonPlayingDatesDataGridView.Size = new System.Drawing.Size(345, 251);
 			this.SeasonNonPlayingDatesDataGridView.TabIndex = 12;
 			this.SeasonNonPlayingDatesDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.SeasonNonPlayingDatesDataGridView_CellValueChanged);
 			this.SeasonNonPlayingDatesDataGridView.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.SeasonNonPlayingDatesDataGridView_RowsRemoved);
@@ -804,7 +806,7 @@
 			this.NonPlayingDatesColumn.HeaderText = "Non-Playing Date";
 			this.NonPlayingDatesColumn.Name = "NonPlayingDatesColumn";
 			this.NonPlayingDatesColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-			this.NonPlayingDatesColumn.Width = 105;
+			this.NonPlayingDatesColumn.Width = 120;
 			// 
 			// ReasonColumn
 			// 
@@ -826,7 +828,7 @@
 			// label18
 			// 
 			this.label18.AutoSize = true;
-			this.label18.Location = new System.Drawing.Point(312, 402);
+			this.label18.Location = new System.Drawing.Point(403, 402);
 			this.label18.Name = "label18";
 			this.label18.Size = new System.Drawing.Size(69, 13);
 			this.label18.TabIndex = 20;
@@ -834,6 +836,8 @@
 			// 
 			// OtherFixturesDataGridView
 			// 
+			this.OtherFixturesDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
 			this.OtherFixturesDataGridView.BackgroundColor = System.Drawing.SystemColors.Window;
 			this.OtherFixturesDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.OtherFixturesDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -843,10 +847,10 @@
             this.OtherFixtureGradeColumn,
             this.OtherFixtureHomeTeamColumn,
             this.OtherFixtureAwayTeamColumn});
-			this.OtherFixturesDataGridView.Location = new System.Drawing.Point(315, 418);
+			this.OtherFixturesDataGridView.Location = new System.Drawing.Point(354, 418);
 			this.OtherFixturesDataGridView.Name = "OtherFixturesDataGridView";
 			this.OtherFixturesDataGridView.RowHeadersWidth = 30;
-			this.OtherFixturesDataGridView.Size = new System.Drawing.Size(550, 163);
+			this.OtherFixturesDataGridView.Size = new System.Drawing.Size(602, 251);
 			this.OtherFixturesDataGridView.TabIndex = 19;
 			this.OtherFixturesDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.OtherFixturesDataGridView_CellValueChanged);
 			this.OtherFixturesDataGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.OtherFixturesDataGridView_DataError);
@@ -905,7 +909,7 @@
 			this.FixtureTabControl.Location = new System.Drawing.Point(0, 24);
 			this.FixtureTabControl.Name = "FixtureTabControl";
 			this.FixtureTabControl.SelectedIndex = 0;
-			this.FixtureTabControl.Size = new System.Drawing.Size(1171, 615);
+			this.FixtureTabControl.Size = new System.Drawing.Size(1322, 703);
 			this.FixtureTabControl.TabIndex = 21;
 			// 
 			// SeasonTabPage
@@ -934,7 +938,7 @@
 			this.SeasonTabPage.Location = new System.Drawing.Point(4, 22);
 			this.SeasonTabPage.Name = "SeasonTabPage";
 			this.SeasonTabPage.Padding = new System.Windows.Forms.Padding(3);
-			this.SeasonTabPage.Size = new System.Drawing.Size(1163, 589);
+			this.SeasonTabPage.Size = new System.Drawing.Size(1314, 677);
 			this.SeasonTabPage.TabIndex = 0;
 			this.SeasonTabPage.Text = "Season Details";
 			this.SeasonTabPage.UseVisualStyleBackColor = true;
@@ -973,7 +977,7 @@
 			this.tabPage1.Controls.Add(this.fixtureDisplayUserControl1);
 			this.tabPage1.Location = new System.Drawing.Point(4, 22);
 			this.tabPage1.Name = "tabPage1";
-			this.tabPage1.Size = new System.Drawing.Size(1288, 589);
+			this.tabPage1.Size = new System.Drawing.Size(1163, 589);
 			this.tabPage1.TabIndex = 1;
 			this.tabPage1.Text = "tabPage1";
 			this.tabPage1.UseVisualStyleBackColor = true;
@@ -983,14 +987,14 @@
 			this.fixtureDisplayUserControl1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.fixtureDisplayUserControl1.Location = new System.Drawing.Point(0, 0);
 			this.fixtureDisplayUserControl1.Name = "fixtureDisplayUserControl1";
-			this.fixtureDisplayUserControl1.Size = new System.Drawing.Size(1288, 589);
+			this.fixtureDisplayUserControl1.Size = new System.Drawing.Size(1163, 589);
 			this.fixtureDisplayUserControl1.TabIndex = 0;
 			// 
 			// FixtureFactoryForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1171, 639);
+			this.ClientSize = new System.Drawing.Size(1322, 727);
 			this.Controls.Add(this.FixtureTabControl);
 			this.Controls.Add(this.FixtureMenuStrip);
 			this.DoubleBuffered = true;
@@ -1086,8 +1090,6 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
 		private CalendarColumn calendarColumn2;
 		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn11;
-		private CalendarColumn NonPlayingDatesColumn;
-		private System.Windows.Forms.DataGridViewTextBoxColumn ReasonColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn PlayingFieldIDColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn PlayingFieldNameColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn FieldPriorityColumn;
@@ -1112,6 +1114,8 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn13;
 		private System.Windows.Forms.ComboBox LeagueGradeComboBox;
 		private System.Windows.Forms.Label label20;
+		private CalendarColumn NonPlayingDatesColumn;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ReasonColumn;
 	}
 }
 

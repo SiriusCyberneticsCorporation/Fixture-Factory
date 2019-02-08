@@ -40,7 +40,7 @@ namespace Fixture_Factory
 
 			DateTime lastDate = DateTime.MinValue;
 			Dictionary<string, Dictionary<string, Dictionary<string, int>>> fieldBreakdown = new Dictionary<string, Dictionary<string, Dictionary<string, int>>>();
-			Dictionary<string, Dictionary<string, Dictionary<string, int>>> slotBreakdown = new Dictionary<string, Dictionary<string, Dictionary<string, int>>>();
+			Dictionary<string, Dictionary<string, SortedDictionary<GameTime, int>>> slotBreakdown = new Dictionary<string, Dictionary<string, SortedDictionary<GameTime, int>>>();
 
 			foreach (Fixture iFixture in fixtures)
 			{
@@ -50,7 +50,7 @@ namespace Fixture_Factory
 					string homeTeam = ((FixtureGame)iFixture).HomeTeam.TeamName;
 					string awayTeam = ((FixtureGame)iFixture).AwayTeam.TeamName;
 					string field = ((FixtureGame)iFixture).Field.FieldName;
-					string slot = ((FixtureGame)iFixture).GameTime.ToString("ddd HH:mm");
+					GameTime slot = new GameTime() { DayOfWeek = (int)((FixtureGame)iFixture).GameTime.DayOfWeek, StartTime = ((FixtureGame)iFixture).GameTime };
 
 					if (!fieldBreakdown.ContainsKey(league))
 					{
@@ -80,12 +80,12 @@ namespace Fixture_Factory
 
 					if (!slotBreakdown.ContainsKey(league))
 					{
-						slotBreakdown.Add(league, new Dictionary<string, Dictionary<string, int>>());
+						slotBreakdown.Add(league, new Dictionary<string, SortedDictionary<GameTime, int>>());
 					}
 
 					if (!slotBreakdown[league].ContainsKey(homeTeam))
 					{
-						slotBreakdown[league].Add(homeTeam, new Dictionary<string, int>());
+						slotBreakdown[league].Add(homeTeam, new SortedDictionary<GameTime, int>());
 					}
 					if (!slotBreakdown[league][homeTeam].ContainsKey(slot))
 					{
@@ -95,7 +95,7 @@ namespace Fixture_Factory
 
 					if (!slotBreakdown[league].ContainsKey(awayTeam))
 					{
-						slotBreakdown[league].Add(awayTeam, new Dictionary<string, int>());
+						slotBreakdown[league].Add(awayTeam, new SortedDictionary<GameTime, int>());
 					}
 					if (!slotBreakdown[league][awayTeam].ContainsKey(slot))
 					{
@@ -205,13 +205,14 @@ namespace Fixture_Factory
 
 					teamRow[league] = team;
 
-					foreach (string slot in slotBreakdown[league][team].Keys)
+					foreach (GameTime slot in slotBreakdown[league][team].Keys)
 					{
-						if (!timeSlotBreakdown.Columns.Contains(slot))
+						string slotText = slot.ToString();
+						if (!timeSlotBreakdown.Columns.Contains(slotText))
 						{
-							timeSlotBreakdown.Columns.Add(new DataColumn(slot));
+							timeSlotBreakdown.Columns.Add(new DataColumn(slotText));
 						}
-						teamRow[slot] = slotBreakdown[league][team][slot];
+						teamRow[slotText] = slotBreakdown[league][team][slot];
 					}
 					timeSlotBreakdown.Rows.Add(teamRow);
 				}
