@@ -53,23 +53,27 @@ namespace Fixture_Factory.Data_Classes
 		}
 		public override int GetHashCode()
 		{
-			return DayOfWeek.GetHashCode() ^ StartTime.GetHashCode();
+			return DayOfWeek.GetHashCode() ^ StartTime.Hour.GetHashCode() ^ StartTime.Minute.GetHashCode();
 		}
 		public static int Comparison(GameTime gameTime1, GameTime gameTime2)
 		{
-			if ((gameTime1.DayOfWeek < gameTime2.DayOfWeek) ||
-				(gameTime1.DayOfWeek == gameTime2.DayOfWeek && gameTime1.StartTime.Hour < gameTime2.StartTime.Hour) ||
-				(gameTime1.DayOfWeek == gameTime2.DayOfWeek && gameTime1.StartTime.Hour == gameTime2.StartTime.Hour && gameTime1.StartTime.Minute < gameTime2.StartTime.Minute))
+			// Sunday is greater than all other days
+			int dow1 = gameTime1.DayOfWeek == 0 ? 7 : gameTime1.DayOfWeek;
+			int dow2 = gameTime2.DayOfWeek == 0 ? 7 : gameTime2.DayOfWeek;
+
+			if ((dow1 < dow2) ||
+				(dow1 == dow2 && gameTime1.StartTime.Hour < gameTime2.StartTime.Hour) ||
+				(dow1 == dow2 && gameTime1.StartTime.Hour == gameTime2.StartTime.Hour && gameTime1.StartTime.Minute < gameTime2.StartTime.Minute))
 			{
 				return -1;
 			}
-			else if (gameTime1.DayOfWeek == gameTime2.DayOfWeek && gameTime1.StartTime.Hour < gameTime2.StartTime.Hour && gameTime1.StartTime.Minute < gameTime2.StartTime.Minute)
+			else if (dow1 == dow2 && gameTime1.StartTime.Hour < gameTime2.StartTime.Hour && gameTime1.StartTime.Minute < gameTime2.StartTime.Minute)
 			{
 				return 0;
 			}
-			else if ((gameTime1.DayOfWeek > gameTime2.DayOfWeek) ||
-				(gameTime1.DayOfWeek == gameTime2.DayOfWeek && gameTime1.StartTime.Hour > gameTime2.StartTime.Hour) ||
-				(gameTime1.DayOfWeek == gameTime2.DayOfWeek && gameTime1.StartTime.Hour == gameTime2.StartTime.Hour && gameTime1.StartTime.Minute > gameTime2.StartTime.Minute))
+			else if ((dow1 > dow2) ||
+				(dow1 == dow2 && gameTime1.StartTime.Hour > gameTime2.StartTime.Hour) ||
+				(dow1 == dow2 && gameTime1.StartTime.Hour == gameTime2.StartTime.Hour && gameTime1.StartTime.Minute > gameTime2.StartTime.Minute))
 			{
 				return 1;
 			}

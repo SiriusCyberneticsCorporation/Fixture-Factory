@@ -8,11 +8,11 @@ namespace Fixture_Factory.Data_Classes
 {
 	public class FixtureGame : Fixture
 	{
-		public PlayingField Field { get; set; }
-		public Team HomeTeam { get; set; }
-		public Team AwayTeam { get; set; }
-		public Team UmpiringTeam { get; set; }
-		public Team TechBenchTeam { get; set; }
+		public string Field { get; set; }
+		public string HomeTeam { get; set; }
+		public string AwayTeam { get; set; }
+		public string UmpiringTeam { get; set; }
+		public string TechBenchTeam { get; set; }
 		public bool IsFriendly { get; set; }
 	}
 }

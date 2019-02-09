@@ -11,6 +11,6 @@ namespace Fixture_Factory.Data_Classes
 		public Guid ID { get; set; }
 		public DateTime GameTime { get; set; }
 		public int Round { get; set; }
-		public League GameLeague { get; set; }
+		public string Grade { get; set; }
 	}
 }

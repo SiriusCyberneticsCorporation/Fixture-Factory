@@ -15,7 +15,9 @@ namespace Fixture_Factory
 		public int Round = 1;
 		public int PreviousRound = 1;
 		public int Rounds = 0;
-		public int Friendlies = 0;
+		public bool Friendly = false;
+		//public int Friendlies = 0;
+		public DateTime FirstGameDate;
 		public List<Team> RoundTeams = new List<Team>();
 		public Dictionary<int, List<KeyValuePair<int, int>>> Fixtures;
 	}

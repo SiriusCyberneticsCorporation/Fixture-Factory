@@ -34,7 +34,7 @@ namespace Fixture_Factory
 			InitializeComponent();
 		}
 
-		public void Initialise(List<Fixture> fixtures)
+		public void Initialise(SortedDictionary<DateTime, List<Fixture>> fixtures)
 		{
 			m_fixtureDisplay = new List<FixtureDisplay>();
 
@@ -42,124 +42,135 @@ namespace Fixture_Factory
 			Dictionary<string, Dictionary<string, Dictionary<string, int>>> fieldBreakdown = new Dictionary<string, Dictionary<string, Dictionary<string, int>>>();
 			Dictionary<string, Dictionary<string, SortedDictionary<GameTime, int>>> slotBreakdown = new Dictionary<string, Dictionary<string, SortedDictionary<GameTime, int>>>();
 
-			foreach (Fixture iFixture in fixtures)
+			foreach (DateTime fixtureTime in fixtures.Keys)
 			{
-				if (iFixture is FixtureGame)
+				foreach (Fixture iFixture in fixtures[fixtureTime])
 				{
-					string league = iFixture.GameLeague.LeagueName;
-					string homeTeam = ((FixtureGame)iFixture).HomeTeam.TeamName;
-					string awayTeam = ((FixtureGame)iFixture).AwayTeam.TeamName;
-					string field = ((FixtureGame)iFixture).Field.FieldName;
-					GameTime slot = new GameTime() { DayOfWeek = (int)((FixtureGame)iFixture).GameTime.DayOfWeek, StartTime = ((FixtureGame)iFixture).GameTime };
+					if (iFixture.Round > 0)
+					{
+						if (iFixture is FixtureGame)
+						{
+							string league = iFixture.Grade;
+							string homeTeam = ((FixtureGame)iFixture).HomeTeam;
+							string awayTeam = ((FixtureGame)iFixture).AwayTeam;
+							string field = ((FixtureGame)iFixture).Field;
+							GameTime slot = new GameTime() { DayOfWeek = (int)((FixtureGame)iFixture).GameTime.DayOfWeek, StartTime = ((FixtureGame)iFixture).GameTime };
 
-					if (!fieldBreakdown.ContainsKey(league))
-					{
-						fieldBreakdown.Add(league, new Dictionary<string, Dictionary<string, int>>());
+							if (!fieldBreakdown.ContainsKey(league))
+							{
+								fieldBreakdown.Add(league, new Dictionary<string, Dictionary<string, int>>());
+							}
+
+							if (!fieldBreakdown[league].ContainsKey(homeTeam))
+							{
+								fieldBreakdown[league].Add(homeTeam, new Dictionary<string, int>());
+							}
+							if (!fieldBreakdown[league][homeTeam].ContainsKey(field))
+							{
+								fieldBreakdown[league][homeTeam].Add(field, 0);
+							}
+							fieldBreakdown[league][homeTeam][field]++;
+
+							if (awayTeam != null)
+							{
+								if (!fieldBreakdown[league].ContainsKey(awayTeam))
+								{
+									fieldBreakdown[league].Add(awayTeam, new Dictionary<string, int>());
+								}
+								if (!fieldBreakdown[league][awayTeam].ContainsKey(field))
+								{
+									fieldBreakdown[league][awayTeam].Add(field, 0);
+								}
+								fieldBreakdown[league][awayTeam][field]++;
+							}
+
+							if (!slotBreakdown.ContainsKey(league))
+							{
+								slotBreakdown.Add(league, new Dictionary<string, SortedDictionary<GameTime, int>>());
+							}
+
+							if (!slotBreakdown[league].ContainsKey(homeTeam))
+							{
+								slotBreakdown[league].Add(homeTeam, new SortedDictionary<GameTime, int>());
+							}
+							if (!slotBreakdown[league][homeTeam].ContainsKey(slot))
+							{
+								slotBreakdown[league][homeTeam].Add(slot, 0);
+							}
+							slotBreakdown[league][homeTeam][slot]++;
+
+							if (awayTeam != null)
+							{
+								if (!slotBreakdown[league].ContainsKey(awayTeam))
+								{
+									slotBreakdown[league].Add(awayTeam, new SortedDictionary<GameTime, int>());
+								}
+								if (!slotBreakdown[league][awayTeam].ContainsKey(slot))
+								{
+									slotBreakdown[league][awayTeam].Add(slot, 0);
+								}
+								slotBreakdown[league][awayTeam][slot]++;
+							}
+						}
+						else if (iFixture is FixtureTeamBye)
+						{
+							string league = iFixture.Grade;
+							string teamWithBye = ((FixtureTeamBye)iFixture).TeamWithBye.TeamName;
+
+							if (!fieldBreakdown.ContainsKey(league))
+							{
+								fieldBreakdown.Add(league, new Dictionary<string, Dictionary<string, int>>());
+							}
+							if (!fieldBreakdown[league].ContainsKey(teamWithBye))
+							{
+								fieldBreakdown[league].Add(teamWithBye, new Dictionary<string, int>());
+							}
+							if (!fieldBreakdown[league][teamWithBye].ContainsKey("Bye"))
+							{
+								fieldBreakdown[league][teamWithBye].Add("Bye", 0);
+							}
+							fieldBreakdown[league][teamWithBye]["Bye"]++;
+						}
 					}
 
-					if (!fieldBreakdown[league].ContainsKey(homeTeam))
+					if (iFixture.GameTime.Date != lastDate.Date && lastDate != DateTime.MinValue)
 					{
-						fieldBreakdown[league].Add(homeTeam, new Dictionary<string, int>());
+						m_fixtureDisplay.Add(new FixtureDisplay());
 					}
-					if (!fieldBreakdown[league][homeTeam].ContainsKey(field))
-					{
-						fieldBreakdown[league][homeTeam].Add(field, 0);
-					}
-					fieldBreakdown[league][homeTeam][field]++;
+					lastDate = iFixture.GameTime;
 
-					if (!fieldBreakdown[league].ContainsKey(awayTeam))
-					{
-						fieldBreakdown[league].Add(awayTeam, new Dictionary<string, int>());
-					}
-					if (!fieldBreakdown[league][awayTeam].ContainsKey(field))
-					{
-						fieldBreakdown[league][awayTeam].Add(field, 0);
-					}
-					fieldBreakdown[league][awayTeam][field]++;
+					FixtureDisplay row = new FixtureDisplay();
 
-
-					if (!slotBreakdown.ContainsKey(league))
+					row.Day = iFixture.GameTime.ToString("ddd");
+					row.Date = iFixture.GameTime.ToString("dd-MMM");
+					if (iFixture is FixtureGame)
 					{
-						slotBreakdown.Add(league, new Dictionary<string, SortedDictionary<GameTime, int>>());
+						row.Time = iFixture.GameTime.ToString("HH:mm");
+						row.Grade = iFixture.Grade;
+						row.Round = iFixture.Round > 0 ? iFixture.Round.ToString() : "";
+						row.Field = ((FixtureGame)iFixture).Field;
+						row.Home = ((FixtureGame)iFixture).HomeTeam;
+						row.Away = ((FixtureGame)iFixture).AwayTeam;
 					}
-
-					if (!slotBreakdown[league].ContainsKey(homeTeam))
+					else if (iFixture is FixtureGeneralBye)
 					{
-						slotBreakdown[league].Add(homeTeam, new SortedDictionary<GameTime, int>());
+						if (iFixture.Grade != null)
+						{
+							row.Grade = iFixture.Grade;
+						}
+						row.Home = "General";
+						row.Away = "Bye";
+						row.Umpiring = ((FixtureGeneralBye)iFixture).Reason; ;
 					}
-					if (!slotBreakdown[league][homeTeam].ContainsKey(slot))
+					else if (iFixture is FixtureTeamBye)
 					{
-						slotBreakdown[league][homeTeam].Add(slot, 0);
+						row.Grade = iFixture.Grade;
+						row.Round = iFixture.Round > 0 ? iFixture.Round.ToString() : "";
+						row.Home = ((FixtureTeamBye)iFixture).TeamWithBye.TeamName;
+						row.Away = "Bye";
 					}
-					slotBreakdown[league][homeTeam][slot]++;
-
-					if (!slotBreakdown[league].ContainsKey(awayTeam))
-					{
-						slotBreakdown[league].Add(awayTeam, new SortedDictionary<GameTime, int>());
-					}
-					if (!slotBreakdown[league][awayTeam].ContainsKey(slot))
-					{
-						slotBreakdown[league][awayTeam].Add(slot, 0);
-					}
-					slotBreakdown[league][awayTeam][slot]++;
+					m_fixtureDisplay.Add(row);
 				}
-				if (iFixture is FixtureTeamBye)
-				{
-					string league = iFixture.GameLeague.LeagueName;
-					string teamWithBye = ((FixtureTeamBye)iFixture).TeamWithBye.TeamName;
-
-					if (!fieldBreakdown.ContainsKey(league))
-					{
-						fieldBreakdown.Add(league, new Dictionary<string, Dictionary<string, int>>());
-					}
-					if (!fieldBreakdown[league].ContainsKey(teamWithBye))
-					{
-						fieldBreakdown[league].Add(teamWithBye, new Dictionary<string, int>());
-					}
-					if (!fieldBreakdown[league][teamWithBye].ContainsKey("Bye"))
-					{
-						fieldBreakdown[league][teamWithBye].Add("Bye", 0);
-					}
-					fieldBreakdown[league][teamWithBye]["Bye"]++;
-				}
-
-				if(iFixture.GameTime.Date != lastDate.Date && lastDate != DateTime.MinValue)
-				{
-					m_fixtureDisplay.Add(new FixtureDisplay());
-				}
-				lastDate = iFixture.GameTime;
-
-				FixtureDisplay row = new FixtureDisplay();
-
-				row.Day = iFixture.GameTime.ToString("ddd");
-				row.Date = iFixture.GameTime.ToString("dd-MMM");
-				if (iFixture is FixtureGame)
-				{
-					row.Time = iFixture.GameTime.ToString("HH:mm");
-					row.Grade = iFixture.GameLeague.LeagueName;
-					row.Round = iFixture.Round.ToString();
-					row.Field = ((FixtureGame)iFixture).Field.FieldName;
-					row.Home = ((FixtureGame)iFixture).HomeTeam.TeamName;
-					row.Away = ((FixtureGame)iFixture).AwayTeam.TeamName;
-				}
-				else if (iFixture is FixtureGeneralBye)
-				{
-					if(iFixture.GameLeague != null)
-					{
-						row.Grade = iFixture.GameLeague.LeagueName;
-					}
-					row.Home = "General";
-					row.Away = "Bye";
-					row.Umpiring = ((FixtureGeneralBye)iFixture).Reason; ;
-				}
-				else if (iFixture is FixtureTeamBye)
-				{
-					row.Grade = iFixture.GameLeague.LeagueName;
-					row.Round = iFixture.Round.ToString();
-					row.Home = ((FixtureTeamBye)iFixture).TeamWithBye.TeamName;
-					row.Away = "Bye";
-				}
-				m_fixtureDisplay.Add(row);
 			}
 
 			BindingSource fixtureBindingSource = new BindingSource() { DataSource = m_fixtureDisplay };
