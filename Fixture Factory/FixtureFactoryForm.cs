@@ -1067,6 +1067,8 @@ namespace Fixture_Factory
 				}
 			}
 
+			int swapCounter = 0;
+
 			foreach (string leagueName in leagueDictionary.Keys)
 			{
 				Dictionary<Guid, FixtureDetails> fixtureDetailsList = leagueDictionary[leagueName];
@@ -1202,6 +1204,11 @@ namespace Fixture_Factory
 					}
 					else if (teamPairLists.Count == 2)
 					{
+						if (swapCounter % 2 == 1)
+						{
+							Swap(teamPairLists, 0, 1);
+						}
+
 						int sourceLeague = 0;
 						int pairedLeague = 1;
 
@@ -1211,8 +1218,25 @@ namespace Fixture_Factory
 
 							// Ignore byes
 							if (teamPair.Value != null)
-							{
+							{								
 								// Try to match paired teams...
+								for (int pi = 0; pi < teamPairLists[pairedLeague].Count; pi++)
+								{
+									KeyValuePair<Team, Team> possiblePair = teamPairLists[pairedLeague][pi];
+
+									// Ignore byes
+									if (possiblePair.Value != null)
+									{
+										// If both teams have a paired team of the source league then add them as the next pair.
+										if ((possiblePair.Key.PairedTeams.Contains(teamPair.Key.ID) && possiblePair.Value.PairedTeams.Contains(teamPair.Value.ID)) ||
+											(possiblePair.Key.PairedTeams.Contains(teamPair.Value.ID) && possiblePair.Value.PairedTeams.Contains(teamPair.Key.ID)))
+										{
+											pairedTeams.Add(possiblePair);
+											teamPairLists[pairedLeague].RemoveAt(pi);
+											break;
+										}
+									}
+								}
 								for (int pi = 0; pi < teamPairLists[pairedLeague].Count; pi++)
 								{
 									KeyValuePair<Team, Team> possiblePair = teamPairLists[pairedLeague][pi];
@@ -1226,7 +1250,7 @@ namespace Fixture_Factory
 										{
 											pairedTeams.Add(possiblePair);											
 											teamPairLists[pairedLeague].RemoveAt(pi);
-											break;
+											//break;
 										}
 									}
 								}
@@ -1420,6 +1444,7 @@ namespace Fixture_Factory
 
 					if (roundComplete)
 					{
+						swapCounter++;
 						roundComplete = false;
 						// Increment the round.
 						foreach (Guid leagueID in leagueDictionary[leagueName].Keys)
@@ -1429,11 +1454,6 @@ namespace Fixture_Factory
 								fixtureDetailsList[leagueID].Round++;
 							}
 							fixtureDetailsList[leagueID].Friendly = false;
-						}
-
-						if (teamPairLists.Count > 1)
-						{
-							Swap(teamPairLists, 0, 1);
 						}
 					}
 				}
@@ -1457,6 +1477,8 @@ namespace Fixture_Factory
 				FixtureTabControl.TabPages.Add(newTabPage);
 
 				fixtureDisplay.Initialise(m_fixtures[leagueName]);
+
+				DocumentGenerator iDocumentGenerator = new DocumentGenerator(leagueName, m_fixtures[leagueName]);
 			}
 
 			foreach (string leagueName in leagueDictionary.Keys)

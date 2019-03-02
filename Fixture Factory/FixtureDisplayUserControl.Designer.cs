@@ -32,8 +32,8 @@
 			this.BreakdownDataGridView1 = new System.Windows.Forms.DataGridView();
 			this.BreakdownDataGridView2 = new System.Windows.Forms.DataGridView();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-			this.TimeSlotDataGridView1 = new System.Windows.Forms.DataGridView();
 			this.TimeSlotDataGridView2 = new System.Windows.Forms.DataGridView();
+			this.TimeSlotDataGridView1 = new System.Windows.Forms.DataGridView();
 			this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -58,8 +58,8 @@
 			((System.ComponentModel.ISupportInitialize)(this.BreakdownDataGridView1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.BreakdownDataGridView2)).BeginInit();
 			this.tableLayoutPanel1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.TimeSlotDataGridView1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.TimeSlotDataGridView2)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.TimeSlotDataGridView1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// FixtureDataGridView
@@ -125,16 +125,6 @@
 			this.tableLayoutPanel1.Size = new System.Drawing.Size(383, 659);
 			this.tableLayoutPanel1.TabIndex = 3;
 			// 
-			// TimeSlotDataGridView1
-			// 
-			this.TimeSlotDataGridView1.BackgroundColor = System.Drawing.SystemColors.Window;
-			this.TimeSlotDataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.TimeSlotDataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.TimeSlotDataGridView1.Location = new System.Drawing.Point(3, 331);
-			this.TimeSlotDataGridView1.Name = "TimeSlotDataGridView1";
-			this.TimeSlotDataGridView1.Size = new System.Drawing.Size(377, 158);
-			this.TimeSlotDataGridView1.TabIndex = 4;
-			// 
 			// TimeSlotDataGridView2
 			// 
 			this.TimeSlotDataGridView2.BackgroundColor = System.Drawing.SystemColors.Window;
@@ -144,6 +134,16 @@
 			this.TimeSlotDataGridView2.Name = "TimeSlotDataGridView2";
 			this.TimeSlotDataGridView2.Size = new System.Drawing.Size(377, 161);
 			this.TimeSlotDataGridView2.TabIndex = 4;
+			// 
+			// TimeSlotDataGridView1
+			// 
+			this.TimeSlotDataGridView1.BackgroundColor = System.Drawing.SystemColors.Window;
+			this.TimeSlotDataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.TimeSlotDataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.TimeSlotDataGridView1.Location = new System.Drawing.Point(3, 331);
+			this.TimeSlotDataGridView1.Name = "TimeSlotDataGridView1";
+			this.TimeSlotDataGridView1.Size = new System.Drawing.Size(377, 158);
+			this.TimeSlotDataGridView1.TabIndex = 4;
 			// 
 			// dataGridViewTextBoxColumn1
 			// 
@@ -230,7 +230,7 @@
 			this.TimeColumn.DataPropertyName = "Time";
 			this.TimeColumn.HeaderText = "Time";
 			this.TimeColumn.Name = "TimeColumn";
-			this.TimeColumn.Width = 50;
+			this.TimeColumn.Width = 60;
 			// 
 			// FieldColumn
 			// 
@@ -289,8 +289,8 @@
 			((System.ComponentModel.ISupportInitialize)(this.BreakdownDataGridView1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.BreakdownDataGridView2)).EndInit();
 			this.tableLayoutPanel1.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.TimeSlotDataGridView1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.TimeSlotDataGridView2)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.TimeSlotDataGridView1)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -308,6 +308,11 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
 		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
 		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
+		private System.Windows.Forms.DataGridView BreakdownDataGridView1;
+		private System.Windows.Forms.DataGridView BreakdownDataGridView2;
+		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+		private System.Windows.Forms.DataGridView TimeSlotDataGridView2;
+		private System.Windows.Forms.DataGridView TimeSlotDataGridView1;
 		private System.Windows.Forms.DataGridViewTextBoxColumn DayColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn DateColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn TimeColumn;
@@ -318,10 +323,5 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn AwayTeamColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn UmpiringColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn TechBenchColumn;
-		private System.Windows.Forms.DataGridView BreakdownDataGridView1;
-		private System.Windows.Forms.DataGridView BreakdownDataGridView2;
-		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-		private System.Windows.Forms.DataGridView TimeSlotDataGridView2;
-		private System.Windows.Forms.DataGridView TimeSlotDataGridView1;
 	}
 }

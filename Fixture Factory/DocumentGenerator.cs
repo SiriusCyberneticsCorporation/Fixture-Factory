@@ -1,17 +1,14 @@
-﻿using System;
+﻿using Fixture_Factory.Data_Classes;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Fixture_Factory.Data_Classes;
 
 namespace Fixture_Factory
 {
-	public partial class FixtureDisplayUserControl : UserControl
+	public class DocumentGenerator
 	{
 		private class FixtureDisplay
 		{
@@ -26,17 +23,26 @@ namespace Fixture_Factory
 			public string Umpiring { get; set; }
 			public string TechBench { get; set; }
 		}
+		//private static Excel.Application m_excel = new Excel.Application();
 
-		List<FixtureDisplay> m_fixtureDisplay = new List<FixtureDisplay>();
-
-		public FixtureDisplayUserControl()
+		public DocumentGenerator(string grade, SortedDictionary<DateTime, List<Fixture>> fixtures)
 		{
-			InitializeComponent();
-		}
+			List<float> columnWidths = new List<float>() { 8, 6, 10, 10, 8, 15, 16, 16, 16, 16 };
+			ExcelExporter iExcelExporter = new ExcelExporter(grade + ".xlsx", "Fixtures", grade + " Fixtures", "", DateTime.Now.ToLongDateString(), true, columnWidths);
 
-		public void Initialise(SortedDictionary<DateTime, List<Fixture>> fixtures)
-		{
-			m_fixtureDisplay = new List<FixtureDisplay>();
+			iExcelExporter.AddRow();
+			iExcelExporter.AddText("", 1, true, false, false, HorizontalAlignment.Center);
+			iExcelExporter.AddText("Day", 1, true, false, false, HorizontalAlignment.Center);
+			iExcelExporter.AddText("Date", 1, true, false, false, HorizontalAlignment.Center);
+			iExcelExporter.AddText("Time", 1, true, false, false, HorizontalAlignment.Center);
+			iExcelExporter.AddText("Field", 1, true, false, false, HorizontalAlignment.Center);
+			iExcelExporter.AddText("Grade", 1, true, false, false, HorizontalAlignment.Center);
+			iExcelExporter.AddText("Home", 1, true, false, false, HorizontalAlignment.Center);
+			iExcelExporter.AddText("Away", 1, true, false, false, HorizontalAlignment.Center);
+			iExcelExporter.AddText("Umpiring", 1, true, false, false, HorizontalAlignment.Center);
+			iExcelExporter.AddText("Tech Bench", 1, true, false, false, HorizontalAlignment.Center);
+
+			List<FixtureDisplay> m_fixtureDisplay = new List<FixtureDisplay>();
 
 			DateTime lastDate = DateTime.MinValue;
 			DateTime roundDate = DateTime.MinValue;
@@ -179,73 +185,46 @@ namespace Fixture_Factory
 						row.Away = "Bye";
 						byes.Add(row);
 					}
-				}				
+				}
 			}
 
-			BindingSource fixtureBindingSource = new BindingSource() { DataSource = m_fixtureDisplay };
-			FixtureDataGridView.DataSource = fixtureBindingSource;
-
-			int display = 1;
-			foreach (string league in fieldBreakdown.Keys)
+			foreach(FixtureDisplay row in m_fixtureDisplay)
 			{
-				DataTable fixtureBreakdown = new DataTable();
-				DataTable timeSlotBreakdown = new DataTable();
-				fixtureBreakdown.Columns.Add(new DataColumn(league));
-				timeSlotBreakdown.Columns.Add(new DataColumn(league));
-
-				foreach (string team in fieldBreakdown[league].Keys)
+				System.Drawing.Color backgroundColour = System.Drawing.Color.White;
+				if (row.Grade != null)
 				{
-					DataRow teamRow = fixtureBreakdown.NewRow();
-
-					teamRow[league] = team;
-
-					foreach (string field in fieldBreakdown[league][team].Keys)
+					if (row.Grade.Contains("Boys"))
 					{
-						if (!fixtureBreakdown.Columns.Contains(field))
-						{
-							fixtureBreakdown.Columns.Add(new DataColumn(field));
-						}
-						teamRow[field] = fieldBreakdown[league][team][field];
+						backgroundColour = System.Drawing.Color.LightGreen;
 					}
-					fixtureBreakdown.Rows.Add(teamRow);
-				}
-				if (display == 1)
-				{
-					BreakdownDataGridView1.DataSource = fixtureBreakdown;
-				}
-				else if (display == 2)
-				{
-					BreakdownDataGridView2.DataSource = fixtureBreakdown;
-				}
-
-
-				foreach (string team in slotBreakdown[league].Keys)
-				{
-					DataRow teamRow = timeSlotBreakdown.NewRow();
-
-					teamRow[league] = team;
-
-					foreach (GameTime slot in slotBreakdown[league][team].Keys)
+					else if (row.Grade.Contains("Girls"))
 					{
-						string slotText = slot.ToString();
-						if (!timeSlotBreakdown.Columns.Contains(slotText))
-						{
-							timeSlotBreakdown.Columns.Add(new DataColumn(slotText));
-						}
-						teamRow[slotText] = slotBreakdown[league][team][slot];
+						backgroundColour = System.Drawing.Color.LightYellow;
 					}
-					timeSlotBreakdown.Rows.Add(teamRow);
+					else if (row.Grade.Contains("Men"))
+					{
+						backgroundColour = System.Drawing.Color.LightBlue;
+					}
+					else if (row.Grade.Contains("Women"))
+					{
+						backgroundColour = System.Drawing.Color.LightPink;
+					}
 				}
-				if (display == 1)
-				{
-					TimeSlotDataGridView1.DataSource = timeSlotBreakdown;
-				}
-				else if (display == 2)
-				{
-					TimeSlotDataGridView2.DataSource = timeSlotBreakdown;
-				}
-				display++;
+
+				iExcelExporter.AddRow();
+				iExcelExporter.AddText("", 1, false, false, false, HorizontalAlignment.Center, backgroundColour);
+				iExcelExporter.AddText(row.Day, 1, false, false, false, HorizontalAlignment.Center, backgroundColour);
+				iExcelExporter.AddText(row.Date, 1, false, false, false, HorizontalAlignment.Center, backgroundColour);
+				iExcelExporter.AddText(row.Time, 1, false, false, false, HorizontalAlignment.Center, backgroundColour);
+				iExcelExporter.AddText(row.Field, 1, false, false, false, HorizontalAlignment.Center, backgroundColour);
+				iExcelExporter.AddText(row.Grade, 1, false, false, false, HorizontalAlignment.Center, backgroundColour);
+				iExcelExporter.AddText(row.Home, 1, false, false, false, HorizontalAlignment.Center, backgroundColour);
+				iExcelExporter.AddText(row.Away, 1, false, false, false, HorizontalAlignment.Center, backgroundColour);
+				iExcelExporter.AddText(row.Umpiring, 1, false, false, false, HorizontalAlignment.Center, backgroundColour);
+				iExcelExporter.AddText(row.TechBench, 1, false, false, false, HorizontalAlignment.Center, backgroundColour);
 			}
+
+			iExcelExporter.Finish();
 		}
 	}
 }

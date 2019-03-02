@@ -118,8 +118,6 @@
 			this.label19 = new System.Windows.Forms.Label();
 			this.SeasonGradesDataGridView = new System.Windows.Forms.DataGridView();
 			this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.tabPage1 = new System.Windows.Forms.TabPage();
-			this.fixtureDisplayUserControl1 = new Fixture_Factory.FixtureDisplayUserControl();
 			this.FixtureMenuStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.TeamsDataGridView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.LeaguesDataGridView)).BeginInit();
@@ -134,7 +132,6 @@
 			this.FixtureTabControl.SuspendLayout();
 			this.SeasonTabPage.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.SeasonGradesDataGridView)).BeginInit();
-			this.tabPage1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// FixtureMenuStrip
@@ -904,7 +901,6 @@
 			// FixtureTabControl
 			// 
 			this.FixtureTabControl.Controls.Add(this.SeasonTabPage);
-			this.FixtureTabControl.Controls.Add(this.tabPage1);
 			this.FixtureTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.FixtureTabControl.Location = new System.Drawing.Point(0, 24);
 			this.FixtureTabControl.Name = "FixtureTabControl";
@@ -972,24 +968,6 @@
 			this.dataGridViewTextBoxColumn13.HeaderText = "Grade";
 			this.dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
 			// 
-			// tabPage1
-			// 
-			this.tabPage1.Controls.Add(this.fixtureDisplayUserControl1);
-			this.tabPage1.Location = new System.Drawing.Point(4, 22);
-			this.tabPage1.Name = "tabPage1";
-			this.tabPage1.Size = new System.Drawing.Size(1163, 589);
-			this.tabPage1.TabIndex = 1;
-			this.tabPage1.Text = "tabPage1";
-			this.tabPage1.UseVisualStyleBackColor = true;
-			// 
-			// fixtureDisplayUserControl1
-			// 
-			this.fixtureDisplayUserControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.fixtureDisplayUserControl1.Location = new System.Drawing.Point(0, 0);
-			this.fixtureDisplayUserControl1.Name = "fixtureDisplayUserControl1";
-			this.fixtureDisplayUserControl1.Size = new System.Drawing.Size(1163, 589);
-			this.fixtureDisplayUserControl1.TabIndex = 0;
-			// 
 			// FixtureFactoryForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1022,7 +1000,6 @@
 			this.SeasonTabPage.ResumeLayout(false);
 			this.SeasonTabPage.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.SeasonGradesDataGridView)).EndInit();
-			this.tabPage1.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -1107,8 +1084,6 @@
 		private System.Windows.Forms.ToolStripMenuItem newSeasonToolStripMenuItem;
 		private System.Windows.Forms.TabControl FixtureTabControl;
 		private System.Windows.Forms.TabPage SeasonTabPage;
-		private System.Windows.Forms.TabPage tabPage1;
-		private FixtureDisplayUserControl fixtureDisplayUserControl1;
 		private System.Windows.Forms.Label label19;
 		private System.Windows.Forms.DataGridView SeasonGradesDataGridView;
 		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn13;
