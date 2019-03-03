@@ -975,6 +975,20 @@ namespace Fixture_Factory
 					break;
 				}
 			}
+			// Make sure the game time is not in the Team non-playing times.
+			if (slotAvailable && iTeam.NonPlayingDates != null)
+			{
+				foreach(NonPlayingDate npd in iTeam.NonPlayingDates)
+				{
+					if (gameSlot.Date == npd.Date.Date &&
+						gameSlot.Hour == npd.Date.Hour &&
+						gameSlot.Minute == npd.Date.Minute)
+					{
+						slotAvailable = false;
+						break;
+					}
+				}
+			}
 			if (!slotAvailable && iTeam.TeamName != "Margaret River")
 			{
 				int x = 0;
@@ -1041,7 +1055,8 @@ namespace Fixture_Factory
 						else if (!iFixtureDetails.nonPlayingDates.ContainsKey(gameDate.Date))
 						{
 							iFixtureDetails.nonPlayingDates.Add(gameDate.Date, reason);
-							AddFixture(iFixtureDetails.m_league.Grade, gameDate, new FixtureGeneralBye() { GameTime = gameDate, Reason = reason });
+							FixtureGeneralBye bye = new FixtureGeneralBye() { GameTime = gameDate, Reason = reason, Grade = iLeague.LeagueName };
+							AddFixture(iFixtureDetails.m_league.Grade, gameDate, bye);
 						}
 					}
 				}
@@ -1267,6 +1282,8 @@ namespace Fixture_Factory
 						throw new NotImplementedException();
 					}
 
+					ShuffleTeamsToMeetNonPlayingDays(pairedTeams, gameSlots);
+
 					foreach (KeyValuePair<DateTime, Guid> slot in gameSlots)
 					{
 						DateTime gameSlot = slot.Key;
@@ -1275,7 +1292,11 @@ namespace Fixture_Factory
 
 						gameDate = gameSlot.Date;
 
-						if (fixtureDetailsList[leagueID].FirstGameDate.Date > gameSlot.Date)
+						if(LeagueNonPlayingDate(gameSlot, leagueID))
+						{
+							pairedTeams.RemoveAt(0);
+						}
+						else if (EvenRoundsOnlyCheckBox.Checked && fixtureDetailsList[leagueID].FirstGameDate.Date > gameSlot.Date)
 						{
 							Fixture friendly = new FixtureGeneralBye() { GameTime = gameDate, Reason = "Friendly", Grade = fixtureDetailsList[leagueID].m_league.LeagueName };
 
@@ -1305,7 +1326,7 @@ namespace Fixture_Factory
 							{
 								leagueID = pairedTeams[0].Key.LeagueID;
 
-								if (fixtureDetailsList[leagueID].FirstGameDate.Date > gameSlot.Date)
+								if (EvenRoundsOnlyCheckBox.Checked && fixtureDetailsList[leagueID].FirstGameDate.Date > gameSlot.Date)
 								{
 									friendly = new FixtureGeneralBye() { GameTime = gameDate, Reason = "Friendly", Grade = fixtureDetailsList[leagueID].m_league.LeagueName };
 
@@ -1375,7 +1396,11 @@ namespace Fixture_Factory
 							{
 								for (int pti = 1; pti < pairedTeams.Count; pti++)
 								{
-									if (DesignatedGameTime(pairedTeams[pti].Key, gameSlot) && DesignatedGameTime(pairedTeams[pti].Value, gameSlot))
+									if (pairedTeams[pti].Value != null &&
+										!LeagueNonPlayingDate(gameSlot, pairedTeams[pti].Key.LeagueID) &&
+										!LeagueNonPlayingDate(gameSlot, pairedTeams[pti].Value.LeagueID) &&
+										DesignatedGameTime(pairedTeams[pti].Key, gameSlot) &&
+										DesignatedGameTime(pairedTeams[pti].Value, gameSlot))
 									{
 										Swap(pairedTeams, 0, pti);
 										break;
@@ -1548,6 +1573,101 @@ namespace Fixture_Factory
 			}
 		}
 
+		// If a team cannot play in one of the game slots them move that team pair to the front of the line in the
+		// hope that we can find a slot before they are all used up.
+		private void ShuffleTeamsToMeetNonPlayingDays(List<KeyValuePair<Team, Team>> pairedTeams, List<KeyValuePair<DateTime, Guid>> gameSlots)
+		{
+			int startIndex = 0;
+			while (startIndex < pairedTeams.Count)
+			{
+				int npdIndex = -1;
+				for (int index = startIndex; index < pairedTeams.Count; index++)
+				{
+					KeyValuePair<Team, Team> teamPair = pairedTeams[index];
+
+					if (teamPair.Key.NonPlayingDates.Count > 0)
+					{
+						foreach (NonPlayingDate npd in teamPair.Key.NonPlayingDates)
+						{
+							foreach (KeyValuePair<DateTime, Guid> slot in gameSlots)
+							{
+								if (slot.Key.Date == npd.Date.Date &&
+									slot.Key.Hour == npd.Date.Hour &&
+									slot.Key.Minute == npd.Date.Minute)
+								{
+									npdIndex = index;
+									break;
+								}
+							}
+							if(npdIndex > 0)
+							{
+								break;
+							}
+						}
+					}
+					if (npdIndex > 0)
+					{
+						break;
+					}
+					if (teamPair.Value != null && teamPair.Value.NonPlayingDates.Count > 0)
+					{
+						foreach (NonPlayingDate npd in teamPair.Value.NonPlayingDates)
+						{
+							foreach (KeyValuePair<DateTime, Guid> slot in gameSlots)
+							{
+								if (slot.Key.Date == npd.Date.Date &&
+									slot.Key.Hour == npd.Date.Hour &&
+									slot.Key.Minute == npd.Date.Minute)
+								{
+									npdIndex = index;
+									break;
+								}
+							}
+							if (npdIndex > 0)
+							{
+								break;
+							}
+						}
+					}
+					if (npdIndex > 0)
+					{
+						break;
+					}
+				}
+				if (npdIndex > 0)
+				{
+					KeyValuePair<Team, Team> teamPair = pairedTeams[npdIndex];
+					pairedTeams.RemoveAt(npdIndex);
+					pairedTeams.Insert(0, teamPair);
+					startIndex++;
+				}
+				else
+				{
+					break;
+				}
+			}
+		}
+
+		private bool LeagueNonPlayingDate(DateTime gameDate, Guid leagueID)
+		{
+			bool nonPlayingDate = false;
+			League iLeague = GetLeague(leagueID);
+
+			foreach (NonPlayingDate skipDate in iLeague.NonPlayingDates)
+			{
+				if (skipDate.Date.Date == gameDate.Date)
+				{
+					if ((skipDate.Date.Hour == 0 && skipDate.Date.Minute == 0) ||
+						(skipDate.Date.Hour == gameDate.Hour && skipDate.Date.Minute == gameDate.Minute))
+					{
+						nonPlayingDate = true;
+						break;
+					}
+				}
+			}
+			return nonPlayingDate;
+		}
+
 		private PlayingField GetField(Guid fieldID)
 		{
 			foreach (PlayingField field in m_currentSeason.PlayingFields)
@@ -1574,7 +1694,7 @@ namespace Fixture_Factory
 						addDate = false;
 						break;
 					}
-					else
+					
 					{
 						foreach (GameTime iGameTime in iLeague.GameTimes)
 						{

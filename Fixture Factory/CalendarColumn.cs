@@ -16,7 +16,7 @@ namespace Fixture_Factory
 
 		[Description("Format string for the date."),
 		Category("Appearance"),
-		DefaultValue("dd-MM-yyyy"),
+		DefaultValue("dd-MMM-yyyy"),
 		Browsable(true)]
 		public string Format
 		{

@@ -193,13 +193,21 @@ namespace Fixture_Factory
 				System.Drawing.Color backgroundColour = System.Drawing.Color.White;
 				if (row.Grade != null)
 				{
-					if (row.Grade.Contains("Boys"))
+					if (row.Grade.Contains("6-8 Boys"))
 					{
 						backgroundColour = System.Drawing.Color.LightGreen;
 					}
-					else if (row.Grade.Contains("Girls"))
+					else if (row.Grade.Contains("6-8 Girls"))
 					{
 						backgroundColour = System.Drawing.Color.LightYellow;
+					}
+					if (row.Grade.Contains("9-12 Boys"))
+					{
+						backgroundColour = System.Drawing.Color.Violet;
+					}
+					else if (row.Grade.Contains("9-12 Girls"))
+					{
+						backgroundColour = System.Drawing.Color.Turquoise;
 					}
 					else if (row.Grade.Contains("Men"))
 					{
@@ -222,6 +230,130 @@ namespace Fixture_Factory
 				iExcelExporter.AddText(row.Away, 1, false, false, false, HorizontalAlignment.Center, backgroundColour);
 				iExcelExporter.AddText(row.Umpiring, 1, false, false, false, HorizontalAlignment.Center, backgroundColour);
 				iExcelExporter.AddText(row.TechBench, 1, false, false, false, HorizontalAlignment.Center, backgroundColour);
+			}
+
+			List<float> breakdownColumnWidths = new List<float>() { 20, 12, 12, 12, 12, 12, 12, 12 };
+			iExcelExporter.AddWorkSheet("Breakdown", grade + " Breakdown", "", DateTime.Now.ToLongDateString(), true, breakdownColumnWidths);
+
+			iExcelExporter.AddRow();
+
+			foreach (string league in fieldBreakdown.Keys)
+			{
+				iExcelExporter.AddText(league, 1, true, false, false, HorizontalAlignment.Center);
+
+				int column = 1;
+				Dictionary<string, int> fields = new Dictionary<string, int>();
+				foreach (string team in fieldBreakdown[league].Keys)
+				{
+					foreach (string field in fieldBreakdown[league][team].Keys)
+					{
+						if(!fields.ContainsKey(field))
+						{
+							fields.Add(field, column);
+							column++;
+						}
+					}
+				}
+
+				foreach (string field in fields.Keys)
+				{
+					iExcelExporter.AddText(field, 1, true, false, false, HorizontalAlignment.Center);
+				}
+
+				int row = 0;
+				string[,] fieldGrid = new string[fieldBreakdown[league].Keys.Count, fields.Count + 1];
+
+				foreach (string team in fieldBreakdown[league].Keys)
+				{
+					fieldGrid[row, 0] = team;
+
+					foreach (string field in fieldBreakdown[league][team].Keys)
+					{
+						fieldGrid[row, fields[field]] = fieldBreakdown[league][team][field].ToString();
+					}
+					row++;
+				}
+
+				for (row = 0; row < fieldBreakdown[league].Keys.Count; row++)
+				{
+					iExcelExporter.AddRow();
+					for (column = 0; column < fields.Count + 1; column++)
+					{
+						if (column == 0)
+						{
+							iExcelExporter.AddText(fieldGrid[row, column], 1, true, false, false, HorizontalAlignment.Right);
+						}
+						else
+						{
+							iExcelExporter.AddText(fieldGrid[row, column], 1, false, false, false, HorizontalAlignment.Center);
+						}
+					}
+				}
+
+				iExcelExporter.AddRow();
+				iExcelExporter.AddRow();
+			}
+
+			iExcelExporter.AddRow();
+
+			foreach (string league in fieldBreakdown.Keys)
+			{
+				iExcelExporter.AddText(league, 1, true, false, false, HorizontalAlignment.Center);
+
+				int column = 1;
+				Dictionary<string, int> slots = new Dictionary<string, int>();
+
+				foreach (string team in slotBreakdown[league].Keys)
+				{
+					foreach (GameTime slot in slotBreakdown[league][team].Keys)
+					{
+						string slotText = slot.ToString();
+						if(!slots.ContainsKey(slotText))
+						{
+							slots.Add(slotText, column);
+							column++;
+						}
+					}
+				}
+
+				foreach (string slot in slots.Keys)
+				{
+					iExcelExporter.AddText(slot, 1, true, false, false, HorizontalAlignment.Center);
+				}
+
+				int row = 0;
+				string[,] slotGrid = new string[slotBreakdown[league].Keys.Count, slots.Count + 1];
+
+				foreach (string team in slotBreakdown[league].Keys)
+				{
+					slotGrid[row, 0] = team;
+
+					foreach (GameTime slot in slotBreakdown[league][team].Keys)
+					{
+						string slotText = slot.ToString();
+						slotGrid[row, slots[slotText]] = slotBreakdown[league][team][slot].ToString();
+					}
+					row++;
+				}
+
+				for (row = 0; row < slotBreakdown[league].Keys.Count; row++)
+				{
+					iExcelExporter.AddRow();
+					for (column = 0; column < slots.Count + 1; column++)
+					{
+						if (column == 0)
+						{
+							iExcelExporter.AddText(slotGrid[row, column], 1, true, false, false, HorizontalAlignment.Right);
+						}
+						else
+						{
+							iExcelExporter.AddText(slotGrid[row, column], 1, false, false, false, HorizontalAlignment.Center);
+						}
+					}
+				}
+
+				iExcelExporter.AddRow();
+				iExcelExporter.AddRow();
 			}
 
 			iExcelExporter.Finish();

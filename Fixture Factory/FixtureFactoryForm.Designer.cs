@@ -29,11 +29,11 @@
 		private void InitializeComponent()
 		{
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.FixtureMenuStrip = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -71,8 +71,6 @@
 			this.label20 = new System.Windows.Forms.Label();
 			this.label15 = new System.Windows.Forms.Label();
 			this.LeagueNonPlayingDatesDataGridView = new System.Windows.Forms.DataGridView();
-			this.calendarColumn1 = new Fixture_Factory.CalendarColumn();
-			this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.LeaguePlayingFieldsCheckedListBox = new System.Windows.Forms.CheckedListBox();
 			this.label11 = new System.Windows.Forms.Label();
 			this.label10 = new System.Windows.Forms.Label();
@@ -86,8 +84,6 @@
 			this.label17 = new System.Windows.Forms.Label();
 			this.label16 = new System.Windows.Forms.Label();
 			this.TeamNonPlayingDatesDataGridView = new System.Windows.Forms.DataGridView();
-			this.calendarColumn2 = new Fixture_Factory.CalendarColumn();
-			this.dataGridViewTextBoxColumn11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.PairedTeamsCheckedListBox = new System.Windows.Forms.CheckedListBox();
 			this.label13 = new System.Windows.Forms.Label();
 			this.TeamLeagueTextBox = new System.Windows.Forms.TextBox();
@@ -102,22 +98,27 @@
 			this.timeColumn1 = new Fixture_Factory.TimeColumn();
 			this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.SeasonNonPlayingDatesDataGridView = new System.Windows.Forms.DataGridView();
-			this.NonPlayingDatesColumn = new Fixture_Factory.CalendarColumn();
-			this.ReasonColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.GenerateFixturesButton = new System.Windows.Forms.Button();
 			this.label18 = new System.Windows.Forms.Label();
 			this.OtherFixturesDataGridView = new System.Windows.Forms.DataGridView();
+			this.FixtureTabControl = new System.Windows.Forms.TabControl();
+			this.SeasonTabPage = new System.Windows.Forms.TabPage();
+			this.EvenRoundsOnlyCheckBox = new System.Windows.Forms.CheckBox();
+			this.label19 = new System.Windows.Forms.Label();
+			this.SeasonGradesDataGridView = new System.Windows.Forms.DataGridView();
+			this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.calendarColumn2 = new Fixture_Factory.CalendarColumn();
+			this.dataGridViewTextBoxColumn11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.calendarColumn1 = new Fixture_Factory.CalendarColumn();
+			this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.OtherFixtureIDColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.OtherFixtureGameTimeColumn = new Fixture_Factory.CalendarColumn();
 			this.OtherFixtureFieldColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
 			this.OtherFixtureGradeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.OtherFixtureHomeTeamColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.OtherFixtureAwayTeamColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.FixtureTabControl = new System.Windows.Forms.TabControl();
-			this.SeasonTabPage = new System.Windows.Forms.TabPage();
-			this.label19 = new System.Windows.Forms.Label();
-			this.SeasonGradesDataGridView = new System.Windows.Forms.DataGridView();
-			this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.NonPlayingDatesColumn = new Fixture_Factory.CalendarColumn();
+			this.ReasonColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.FixtureMenuStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.TeamsDataGridView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.LeaguesDataGridView)).BeginInit();
@@ -505,26 +506,6 @@
 			this.LeagueNonPlayingDatesDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.LeagueNonPlayingDatesDataGridView_CellValueChanged);
 			this.LeagueNonPlayingDatesDataGridView.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.LeagueNonPlayingDatesDataGridView_RowsRemoved);
 			// 
-			// calendarColumn1
-			// 
-			this.calendarColumn1.DataPropertyName = "Date";
-			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-			dataGridViewCellStyle2.Format = "dd-MMM-yyyy HH:mm";
-			dataGridViewCellStyle2.NullValue = " ";
-			this.calendarColumn1.DefaultCellStyle = dataGridViewCellStyle2;
-			this.calendarColumn1.Format = "dd-MMM-yyyy HH:mm";
-			this.calendarColumn1.HeaderText = "Non-Playing Date";
-			this.calendarColumn1.Name = "calendarColumn1";
-			this.calendarColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-			this.calendarColumn1.Width = 105;
-			// 
-			// dataGridViewTextBoxColumn10
-			// 
-			this.dataGridViewTextBoxColumn10.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			this.dataGridViewTextBoxColumn10.DataPropertyName = "Reason";
-			this.dataGridViewTextBoxColumn10.HeaderText = "Reason";
-			this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
-			// 
 			// LeaguePlayingFieldsCheckedListBox
 			// 
 			this.LeaguePlayingFieldsCheckedListBox.FormattingEnabled = true;
@@ -658,26 +639,6 @@
 			this.TeamNonPlayingDatesDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.TeamNonPlayingDatesDataGridView_CellValueChanged);
 			this.TeamNonPlayingDatesDataGridView.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.TeamNonPlayingDatesDataGridView_RowsRemoved);
 			// 
-			// calendarColumn2
-			// 
-			this.calendarColumn2.DataPropertyName = "Date";
-			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-			dataGridViewCellStyle3.Format = "dd-MMM-yyyy HH:mm";
-			dataGridViewCellStyle3.NullValue = " ";
-			this.calendarColumn2.DefaultCellStyle = dataGridViewCellStyle3;
-			this.calendarColumn2.Format = "dd-MMM-yyyy HH:mm";
-			this.calendarColumn2.HeaderText = "Non-Playing Date";
-			this.calendarColumn2.Name = "calendarColumn2";
-			this.calendarColumn2.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-			this.calendarColumn2.Width = 105;
-			// 
-			// dataGridViewTextBoxColumn11
-			// 
-			this.dataGridViewTextBoxColumn11.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			this.dataGridViewTextBoxColumn11.DataPropertyName = "Reason";
-			this.dataGridViewTextBoxColumn11.HeaderText = "Reason";
-			this.dataGridViewTextBoxColumn11.Name = "dataGridViewTextBoxColumn11";
-			// 
 			// PairedTeamsCheckedListBox
 			// 
 			this.PairedTeamsCheckedListBox.FormattingEnabled = true;
@@ -792,26 +753,6 @@
 			this.SeasonNonPlayingDatesDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.SeasonNonPlayingDatesDataGridView_CellValueChanged);
 			this.SeasonNonPlayingDatesDataGridView.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.SeasonNonPlayingDatesDataGridView_RowsRemoved);
 			// 
-			// NonPlayingDatesColumn
-			// 
-			this.NonPlayingDatesColumn.DataPropertyName = "Date";
-			dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-			dataGridViewCellStyle5.Format = "dd-MMM-yyyy HH:mm";
-			dataGridViewCellStyle5.NullValue = " ";
-			this.NonPlayingDatesColumn.DefaultCellStyle = dataGridViewCellStyle5;
-			this.NonPlayingDatesColumn.Format = "dd-MMM-yyyy HH:mm";
-			this.NonPlayingDatesColumn.HeaderText = "Non-Playing Date";
-			this.NonPlayingDatesColumn.Name = "NonPlayingDatesColumn";
-			this.NonPlayingDatesColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-			this.NonPlayingDatesColumn.Width = 120;
-			// 
-			// ReasonColumn
-			// 
-			this.ReasonColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			this.ReasonColumn.DataPropertyName = "Reason";
-			this.ReasonColumn.HeaderText = "Reason";
-			this.ReasonColumn.Name = "ReasonColumn";
-			// 
 			// GenerateFixturesButton
 			// 
 			this.GenerateFixturesButton.Location = new System.Drawing.Point(987, 429);
@@ -853,51 +794,6 @@
 			this.OtherFixturesDataGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.OtherFixturesDataGridView_DataError);
 			this.OtherFixturesDataGridView.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.OtherFixturesDataGridView_RowsRemoved);
 			// 
-			// OtherFixtureIDColumn
-			// 
-			this.OtherFixtureIDColumn.DataPropertyName = "ID";
-			this.OtherFixtureIDColumn.HeaderText = "ID";
-			this.OtherFixtureIDColumn.Name = "OtherFixtureIDColumn";
-			this.OtherFixtureIDColumn.Visible = false;
-			// 
-			// OtherFixtureGameTimeColumn
-			// 
-			this.OtherFixtureGameTimeColumn.DataPropertyName = "GameTime";
-			dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-			dataGridViewCellStyle6.Format = "dd-MMM-yyyy HH:mm";
-			dataGridViewCellStyle6.NullValue = " ";
-			this.OtherFixtureGameTimeColumn.DefaultCellStyle = dataGridViewCellStyle6;
-			this.OtherFixtureGameTimeColumn.Format = "dd-MMM-yyyy HH:mm";
-			this.OtherFixtureGameTimeColumn.HeaderText = "Game Time";
-			this.OtherFixtureGameTimeColumn.Name = "OtherFixtureGameTimeColumn";
-			this.OtherFixtureGameTimeColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-			this.OtherFixtureGameTimeColumn.Width = 120;
-			// 
-			// OtherFixtureFieldColumn
-			// 
-			this.OtherFixtureFieldColumn.DataPropertyName = "FieldID";
-			this.OtherFixtureFieldColumn.HeaderText = "Field";
-			this.OtherFixtureFieldColumn.Name = "OtherFixtureFieldColumn";
-			// 
-			// OtherFixtureGradeColumn
-			// 
-			this.OtherFixtureGradeColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			this.OtherFixtureGradeColumn.DataPropertyName = "Grade";
-			this.OtherFixtureGradeColumn.HeaderText = "Grade";
-			this.OtherFixtureGradeColumn.Name = "OtherFixtureGradeColumn";
-			// 
-			// OtherFixtureHomeTeamColumn
-			// 
-			this.OtherFixtureHomeTeamColumn.DataPropertyName = "HomeTeam";
-			this.OtherFixtureHomeTeamColumn.HeaderText = "Home";
-			this.OtherFixtureHomeTeamColumn.Name = "OtherFixtureHomeTeamColumn";
-			// 
-			// OtherFixtureAwayTeamColumn
-			// 
-			this.OtherFixtureAwayTeamColumn.DataPropertyName = "AwayTeam";
-			this.OtherFixtureAwayTeamColumn.HeaderText = "Away";
-			this.OtherFixtureAwayTeamColumn.Name = "OtherFixtureAwayTeamColumn";
-			// 
 			// FixtureTabControl
 			// 
 			this.FixtureTabControl.Controls.Add(this.SeasonTabPage);
@@ -910,6 +806,7 @@
 			// 
 			// SeasonTabPage
 			// 
+			this.SeasonTabPage.Controls.Add(this.EvenRoundsOnlyCheckBox);
 			this.SeasonTabPage.Controls.Add(this.label19);
 			this.SeasonTabPage.Controls.Add(this.SeasonGradesDataGridView);
 			this.SeasonTabPage.Controls.Add(this.label1);
@@ -939,6 +836,16 @@
 			this.SeasonTabPage.Text = "Season Details";
 			this.SeasonTabPage.UseVisualStyleBackColor = true;
 			// 
+			// EvenRoundsOnlyCheckBox
+			// 
+			this.EvenRoundsOnlyCheckBox.AutoSize = true;
+			this.EvenRoundsOnlyCheckBox.Location = new System.Drawing.Point(987, 487);
+			this.EvenRoundsOnlyCheckBox.Name = "EvenRoundsOnlyCheckBox";
+			this.EvenRoundsOnlyCheckBox.Size = new System.Drawing.Size(115, 17);
+			this.EvenRoundsOnlyCheckBox.TabIndex = 23;
+			this.EvenRoundsOnlyCheckBox.Text = "Even Rounds Only";
+			this.EvenRoundsOnlyCheckBox.UseVisualStyleBackColor = true;
+			// 
 			// label19
 			// 
 			this.label19.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -967,6 +874,111 @@
 			this.dataGridViewTextBoxColumn13.DataPropertyName = "Value";
 			this.dataGridViewTextBoxColumn13.HeaderText = "Grade";
 			this.dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
+			// 
+			// calendarColumn2
+			// 
+			this.calendarColumn2.DataPropertyName = "Date";
+			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+			dataGridViewCellStyle3.Format = "dd-MMM-yyyy HH:mm";
+			dataGridViewCellStyle3.NullValue = " ";
+			this.calendarColumn2.DefaultCellStyle = dataGridViewCellStyle3;
+			this.calendarColumn2.Format = "dd-MMM-yyyy HH:mm";
+			this.calendarColumn2.HeaderText = "Non-Playing Date";
+			this.calendarColumn2.Name = "calendarColumn2";
+			this.calendarColumn2.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+			this.calendarColumn2.Width = 140;
+			// 
+			// dataGridViewTextBoxColumn11
+			// 
+			this.dataGridViewTextBoxColumn11.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+			this.dataGridViewTextBoxColumn11.DataPropertyName = "Reason";
+			this.dataGridViewTextBoxColumn11.HeaderText = "Reason";
+			this.dataGridViewTextBoxColumn11.Name = "dataGridViewTextBoxColumn11";
+			// 
+			// calendarColumn1
+			// 
+			this.calendarColumn1.DataPropertyName = "Date";
+			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+			dataGridViewCellStyle2.Format = "dd-MMM-yyyy HH:mm";
+			dataGridViewCellStyle2.NullValue = " ";
+			this.calendarColumn1.DefaultCellStyle = dataGridViewCellStyle2;
+			this.calendarColumn1.Format = "dd-MMM-yyyy HH:mm";
+			this.calendarColumn1.HeaderText = "Non-Playing Date";
+			this.calendarColumn1.Name = "calendarColumn1";
+			this.calendarColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+			this.calendarColumn1.Width = 140;
+			// 
+			// dataGridViewTextBoxColumn10
+			// 
+			this.dataGridViewTextBoxColumn10.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+			this.dataGridViewTextBoxColumn10.DataPropertyName = "Reason";
+			this.dataGridViewTextBoxColumn10.HeaderText = "Reason";
+			this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
+			// 
+			// OtherFixtureIDColumn
+			// 
+			this.OtherFixtureIDColumn.DataPropertyName = "ID";
+			this.OtherFixtureIDColumn.HeaderText = "ID";
+			this.OtherFixtureIDColumn.Name = "OtherFixtureIDColumn";
+			this.OtherFixtureIDColumn.Visible = false;
+			// 
+			// OtherFixtureGameTimeColumn
+			// 
+			this.OtherFixtureGameTimeColumn.DataPropertyName = "GameTime";
+			dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+			dataGridViewCellStyle6.Format = "dd-MMM-yyyy HH:mm";
+			dataGridViewCellStyle6.NullValue = " ";
+			this.OtherFixtureGameTimeColumn.DefaultCellStyle = dataGridViewCellStyle6;
+			this.OtherFixtureGameTimeColumn.Format = "dd-MMM-yyyy HH:mm";
+			this.OtherFixtureGameTimeColumn.HeaderText = "Game Time";
+			this.OtherFixtureGameTimeColumn.Name = "OtherFixtureGameTimeColumn";
+			this.OtherFixtureGameTimeColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+			this.OtherFixtureGameTimeColumn.Width = 140;
+			// 
+			// OtherFixtureFieldColumn
+			// 
+			this.OtherFixtureFieldColumn.DataPropertyName = "FieldID";
+			this.OtherFixtureFieldColumn.HeaderText = "Field";
+			this.OtherFixtureFieldColumn.Name = "OtherFixtureFieldColumn";
+			// 
+			// OtherFixtureGradeColumn
+			// 
+			this.OtherFixtureGradeColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+			this.OtherFixtureGradeColumn.DataPropertyName = "Grade";
+			this.OtherFixtureGradeColumn.HeaderText = "Grade";
+			this.OtherFixtureGradeColumn.Name = "OtherFixtureGradeColumn";
+			// 
+			// OtherFixtureHomeTeamColumn
+			// 
+			this.OtherFixtureHomeTeamColumn.DataPropertyName = "HomeTeam";
+			this.OtherFixtureHomeTeamColumn.HeaderText = "Home";
+			this.OtherFixtureHomeTeamColumn.Name = "OtherFixtureHomeTeamColumn";
+			// 
+			// OtherFixtureAwayTeamColumn
+			// 
+			this.OtherFixtureAwayTeamColumn.DataPropertyName = "AwayTeam";
+			this.OtherFixtureAwayTeamColumn.HeaderText = "Away";
+			this.OtherFixtureAwayTeamColumn.Name = "OtherFixtureAwayTeamColumn";
+			// 
+			// NonPlayingDatesColumn
+			// 
+			this.NonPlayingDatesColumn.DataPropertyName = "Date";
+			dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+			dataGridViewCellStyle5.Format = "dd-MMM-yyyy HH:mm";
+			dataGridViewCellStyle5.NullValue = " ";
+			this.NonPlayingDatesColumn.DefaultCellStyle = dataGridViewCellStyle5;
+			this.NonPlayingDatesColumn.Format = "dd-MMM-yyyy HH:mm";
+			this.NonPlayingDatesColumn.HeaderText = "Non-Playing Date";
+			this.NonPlayingDatesColumn.Name = "NonPlayingDatesColumn";
+			this.NonPlayingDatesColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+			this.NonPlayingDatesColumn.Width = 140;
+			// 
+			// ReasonColumn
+			// 
+			this.ReasonColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+			this.ReasonColumn.DataPropertyName = "Reason";
+			this.ReasonColumn.HeaderText = "Reason";
+			this.ReasonColumn.Name = "ReasonColumn";
 			// 
 			// FixtureFactoryForm
 			// 
@@ -1063,10 +1075,6 @@
 		private TimeColumn StartTimeColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn GameTimePriorityColumn;
 		private System.Windows.Forms.Button GenerateFixturesButton;
-		private CalendarColumn calendarColumn1;
-		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
-		private CalendarColumn calendarColumn2;
-		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn11;
 		private System.Windows.Forms.DataGridViewTextBoxColumn PlayingFieldIDColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn PlayingFieldNameColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn FieldPriorityColumn;
@@ -1074,12 +1082,6 @@
 		private System.Windows.Forms.Label label17;
 		private System.Windows.Forms.Label label18;
 		private System.Windows.Forms.DataGridView OtherFixturesDataGridView;
-		private System.Windows.Forms.DataGridViewTextBoxColumn OtherFixtureIDColumn;
-		private CalendarColumn OtherFixtureGameTimeColumn;
-		private System.Windows.Forms.DataGridViewComboBoxColumn OtherFixtureFieldColumn;
-		private System.Windows.Forms.DataGridViewTextBoxColumn OtherFixtureGradeColumn;
-		private System.Windows.Forms.DataGridViewTextBoxColumn OtherFixtureHomeTeamColumn;
-		private System.Windows.Forms.DataGridViewTextBoxColumn OtherFixtureAwayTeamColumn;
 		private System.Windows.Forms.ToolStripMenuItem seasonToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem newSeasonToolStripMenuItem;
 		private System.Windows.Forms.TabControl FixtureTabControl;
@@ -1089,8 +1091,19 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn13;
 		private System.Windows.Forms.ComboBox LeagueGradeComboBox;
 		private System.Windows.Forms.Label label20;
+		private System.Windows.Forms.CheckBox EvenRoundsOnlyCheckBox;
+		private CalendarColumn calendarColumn1;
+		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
+		private CalendarColumn calendarColumn2;
+		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn11;
 		private CalendarColumn NonPlayingDatesColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ReasonColumn;
+		private System.Windows.Forms.DataGridViewTextBoxColumn OtherFixtureIDColumn;
+		private CalendarColumn OtherFixtureGameTimeColumn;
+		private System.Windows.Forms.DataGridViewComboBoxColumn OtherFixtureFieldColumn;
+		private System.Windows.Forms.DataGridViewTextBoxColumn OtherFixtureGradeColumn;
+		private System.Windows.Forms.DataGridViewTextBoxColumn OtherFixtureHomeTeamColumn;
+		private System.Windows.Forms.DataGridViewTextBoxColumn OtherFixtureAwayTeamColumn;
 	}
 }
 
