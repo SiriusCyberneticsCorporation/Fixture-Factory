@@ -57,6 +57,10 @@ namespace Fixture_Factory.Data_Classes
 		}
 		public static int Comparison(GameTime gameTime1, GameTime gameTime2)
 		{
+			if(gameTime1.DayOfWeek == 0 || gameTime2.DayOfWeek == 0)
+			{
+				int x = 0;
+			}
 			// Sunday is greater than all other days
 			int dow1 = gameTime1.DayOfWeek == 0 ? 7 : gameTime1.DayOfWeek;
 			int dow2 = gameTime2.DayOfWeek == 0 ? 7 : gameTime2.DayOfWeek;

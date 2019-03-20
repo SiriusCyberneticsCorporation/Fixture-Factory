@@ -218,6 +218,28 @@ namespace Fixture_Factory
 					BreakdownDataGridView2.DataSource = fixtureBreakdown;
 				}
 
+				List<GameTime> timeSlots = new List<GameTime>();
+
+				foreach (string team in slotBreakdown[league].Keys)
+				{
+					foreach (GameTime slot in slotBreakdown[league][team].Keys)
+					{
+						if (!timeSlots.Contains(slot))
+						{
+							timeSlots.Add(slot);
+						}
+					}
+				}
+				timeSlots.Sort();
+
+				foreach (GameTime slot in timeSlots)
+				{
+					string slotText = slot.ToString();
+					if (!timeSlotBreakdown.Columns.Contains(slotText))
+					{
+						timeSlotBreakdown.Columns.Add(new DataColumn(slotText));
+					}
+				}
 
 				foreach (string team in slotBreakdown[league].Keys)
 				{

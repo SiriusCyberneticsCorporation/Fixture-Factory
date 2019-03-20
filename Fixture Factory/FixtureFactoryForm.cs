@@ -1292,11 +1292,13 @@ namespace Fixture_Factory
 
 						gameDate = gameSlot.Date;
 
-						if(LeagueNonPlayingDate(gameSlot, leagueID))
+						while(LeagueNonPlayingDate(gameSlot, leagueID))
 						{
 							pairedTeams.RemoveAt(0);
+							leagueID = pairedTeams[0].Key.LeagueID;
 						}
-						else if (EvenRoundsOnlyCheckBox.Checked && fixtureDetailsList[leagueID].FirstGameDate.Date > gameSlot.Date)
+
+						if (EvenRoundsOnlyCheckBox.Checked && fixtureDetailsList[leagueID].FirstGameDate.Date > gameSlot.Date)
 						{
 							Fixture friendly = new FixtureGeneralBye() { GameTime = gameDate, Reason = "Friendly", Grade = fixtureDetailsList[leagueID].m_league.LeagueName };
 
@@ -1390,9 +1392,22 @@ namespace Fixture_Factory
 						}
 						if (pairedTeams.Count > 0)
 						{
+							if (fixtureDetailsList[pairedTeams[0].Key.LeagueID].m_league.LeagueName.Contains("A2 Men"))
+							{
+								if (pairedTeams[0].Key.TeamName == "Cavs" || pairedTeams[0].Value.TeamName == "Cavs")
+								{
+									if (gameSlot.Hour == 15 )
+									{
+										int x = 0;
+									}
+								}
+							}
+
+
 							// If one of the teams cannot play in this time slot the find the first team that can play in this time slot 
 							// and move it to the start of the list.
-							if (!DesignatedGameTime(pairedTeams[0].Key, gameSlot) || !DesignatedGameTime(pairedTeams[0].Value, gameSlot))
+							if (!DesignatedGameTime(pairedTeams[0].Key, gameSlot) || !DesignatedGameTime(pairedTeams[0].Value, gameSlot) ||
+								LeagueNonPlayingDate(gameSlot, pairedTeams[0].Key.LeagueID) || LeagueNonPlayingDate(gameSlot, pairedTeams[0].Value.LeagueID))
 							{
 								for (int pti = 1; pti < pairedTeams.Count; pti++)
 								{
