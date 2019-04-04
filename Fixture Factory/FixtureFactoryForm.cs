@@ -49,6 +49,11 @@ namespace Fixture_Factory
 		BindingSource m_gameTimesBindingSource = null;
 		BindingSource m_otherFixturesBindingSource = null;
 
+		private Random m_randomiser = new Random();
+		private Dictionary<Guid, List<Team>> m_umpiringTeamDictionary = new Dictionary<Guid, List<Team>>();
+		private Dictionary<Guid, Dictionary<Team, int>> m_umpiringCountDictionary = new Dictionary<Guid, Dictionary<Team, int>>();
+		private Dictionary<string, List<DateTime>> m_allocatedFixtures = new Dictionary<string, List<DateTime>>();
+
 		public FixtureFactoryForm()
 		{
 			InitializeComponent();
@@ -83,6 +88,21 @@ namespace Fixture_Factory
 					}
 
 					m_currentSeason = seasons.Last();
+
+					bool save = false;
+					foreach(League iLeague in m_currentSeason.Leagues)
+					{
+						if(iLeague.Grade == "A2")
+						{
+							iLeague.Grade = "Senior";
+							save = true;
+						}
+					}
+					if (save)
+					{
+						Save();
+					}
+
 				}
 
 				if (m_currentSeason == null)
@@ -95,7 +115,7 @@ namespace Fixture_Factory
 						NonPlayingDates = new List<NonPlayingDate>(),
 						Leagues = new List<League>(),
 						OtherFixtures = new List<OtherFixture>(),
-						Grades = new List<StringValue>() { new StringValue("Year 3-5"), new StringValue("Year 6-8"), new StringValue("Year 9-12"), new StringValue("A2"), new StringValue("Masters") }
+						Grades = new List<StringValue>() { new StringValue("Year 3-5"), new StringValue("Year 6-8"), new StringValue("Year 9-12"), new StringValue("Senior"), new StringValue("Masters") }
 					};
 				}
 
@@ -116,7 +136,7 @@ namespace Fixture_Factory
 				NonPlayingDates = new List<NonPlayingDate>(),
 				Leagues = new List<League>(),
 				OtherFixtures = new List<OtherFixture>(),
-				Grades = new List<StringValue>() { new StringValue("Year 3-5"), new StringValue("Year 6-8"), new StringValue("Year 9-12"), new StringValue("A2"), new StringValue("Masters") }
+				Grades = new List<StringValue>() { new StringValue("Year 3-5"), new StringValue("Year 6-8"), new StringValue("Year 9-12"), new StringValue("Senior"), new StringValue("Masters") }
 			};
 
 			newSeason.Grades = m_currentSeason.Grades;
@@ -144,7 +164,7 @@ namespace Fixture_Factory
 				/*
 				foreach(League iLeague in m_currentSeason.Leagues)
 				{
-					if (iLeague.LeagueName != "Masters" && !iLeague.LeagueName.Contains("A2"))
+					if (iLeague.LeagueName != "Masters" && !iLeague.LeagueName.Contains("Senior"))
 					{
 						if(iLeague.NonPlayingDates == null)
 						{
@@ -163,7 +183,7 @@ namespace Fixture_Factory
 				SeasonEndDateTimePicker.DataBindings.Add("Value", m_currentSeason, "SeasonEndDate");
 
 
-				//m_currentSeason.Grades = new List<StringValue>() { new StringValue("Year 3-5"), new StringValue("Year 6-8"), new StringValue("Year 9-12"), new StringValue("A2"), new StringValue("Masters") };
+				//m_currentSeason.Grades = new List<StringValue>() { new StringValue("Year 3-5"), new StringValue("Year 6-8"), new StringValue("Year 9-12"), new StringValue("Senior"), new StringValue("Masters") };
 				BindingSource gradesBindingSource = new BindingSource() { DataSource = m_currentSeason.Grades };
 				SeasonGradesDataGridView.DataSource = gradesBindingSource;
 				SeasonGradesDataGridView.ClearSelection();
@@ -819,6 +839,16 @@ namespace Fixture_Factory
 				m_fixtures[league].Add(slot, new List<Fixture>());
 			}
 			m_fixtures[league][slot].Add(iFixture);
+
+			if (iFixture is FixtureGame)
+			{
+				string field = ((FixtureGame)iFixture).Field;
+				if (!m_allocatedFixtures.ContainsKey(field))
+				{
+					m_allocatedFixtures.Add(field, new List<DateTime>());
+				}
+				m_allocatedFixtures[field].Add(iFixture.GameTime);
+			}
 		}
 
 		private bool GameTimeMatch(DateTime slot1, DateTime slot2)
@@ -1006,6 +1036,7 @@ namespace Fixture_Factory
 		private void GenerateFixturesButton_Click(object sender, EventArgs e)
 		{
 			m_fixtures = new Dictionary<string, SortedDictionary<DateTime, List<Fixture>>>();
+			m_allocatedFixtures.Clear();
 
 			FixtureCalculator iFixtureCalculator = new FixtureCalculator();
 			List<Guid> leaguesScheduled = new List<Guid>();
@@ -1143,6 +1174,8 @@ namespace Fixture_Factory
 						{
 							foreach (Guid fieldID in iFixtureDetails.m_league.PlayingFields)
 							{
+								PlayingField field = GetField(fieldID);
+
 								foreach (GameTime iGameTime in iFixtureDetails.m_league.GameTimes)
 								{
 									DateTime gameTime = date.AddDays(GetDayShift(date, iGameTime.DayOfWeek));
@@ -1176,34 +1209,44 @@ namespace Fixture_Factory
 										}
 									}
 
+									if (m_allocatedFixtures.ContainsKey(field.FieldName))
+									{
+										if(m_allocatedFixtures[field.FieldName].Contains(gameTime))
+										{
+											addGameTime = false;
+										}
+									}
+
 									if (addGameTime)
 									{
 										if (!iFixtureDetails.nonPlayingDates.ContainsKey(gameTime.Date))
 										{
-											//foreach (Guid fieldID in iFixtureDetails.m_league.PlayingFields)
+											if (field.Priority == priority && iGameTime.Priority == priority)
 											{
-												if (GetField(fieldID).Priority == priority && iGameTime.Priority == priority)
+												bool alreadyAdded = false;
+												foreach (KeyValuePair<DateTime, Guid> existing in gameSlots)
 												{
-													bool alreadyAdded = false;
-													foreach (KeyValuePair<DateTime, Guid> existing in gameSlots)
+													if (GameTimeMatch(existing.Key, gameTime) && existing.Value == fieldID)
 													{
-														if (GameTimeMatch(existing.Key, gameTime) && existing.Value == fieldID)
-														{
-															alreadyAdded = true;
-															break;
-														}
-													}
-													if (!alreadyAdded)
-													{
-														gameSlots.Add(new KeyValuePair<DateTime, Guid>(gameTime, fieldID));
+														alreadyAdded = true;
+														break;
 													}
 												}
-											}
+												if (!alreadyAdded)
+												{
+													gameSlots.Add(new KeyValuePair<DateTime, Guid>(gameTime, fieldID));
+												}
+											}											
 										}
 									}
 								}
 							}
 						}
+					}
+
+					if (gameSlots.Count == 0)
+					{
+						continue;
 					}
 
 					bool roundComplete = false;
@@ -1284,18 +1327,46 @@ namespace Fixture_Factory
 
 					ShuffleTeamsToMeetNonPlayingDays(pairedTeams, gameSlots);
 
+					m_umpiringTeamDictionary.Clear();
+					foreach (KeyValuePair<Team, Team> teamPair in pairedTeams)
+					{
+						// Teams with a bye do not umpire
+						if (teamPair.Value != null)
+						{
+							if (!m_umpiringTeamDictionary.ContainsKey(teamPair.Key.LeagueID))
+							{
+								m_umpiringTeamDictionary.Add(teamPair.Key.LeagueID, new List<Team>());
+							}
+							m_umpiringTeamDictionary[teamPair.Key.LeagueID].Add(teamPair.Key);
+							m_umpiringTeamDictionary[teamPair.Key.LeagueID].Add(teamPair.Value);
+						}
+					}
+
+					int remainingSlots = gameSlots.Count + 1;
 					foreach (KeyValuePair<DateTime, Guid> slot in gameSlots)
 					{
 						DateTime gameSlot = slot.Key;
 						Guid fieldID = slot.Value;
 						Guid leagueID = pairedTeams[0].Key.LeagueID;
 
+						remainingSlots--;
 						gameDate = gameSlot.Date;
 
 						while(LeagueNonPlayingDate(gameSlot, leagueID))
 						{
 							pairedTeams.RemoveAt(0);
+
+							if (pairedTeams.Count == 0)
+							{
+								roundComplete = true;
+								break;
+							}
 							leagueID = pairedTeams[0].Key.LeagueID;
+						}
+						if (pairedTeams.Count == 0)
+						{
+							roundComplete = true;
+							break;
 						}
 
 						if (EvenRoundsOnlyCheckBox.Checked && fixtureDetailsList[leagueID].FirstGameDate.Date > gameSlot.Date)
@@ -1392,16 +1463,12 @@ namespace Fixture_Factory
 						}
 						if (pairedTeams.Count > 0)
 						{
-							if (fixtureDetailsList[pairedTeams[0].Key.LeagueID].m_league.LeagueName.Contains("A2 Men"))
+							
+							if (fixtureDetailsList[pairedTeams[0].Key.LeagueID].m_league.LeagueName.Contains("Senior"))
 							{
-								if (pairedTeams[0].Key.TeamName == "Cavs" || pairedTeams[0].Value.TeamName == "Cavs")
-								{
-									if (gameSlot.Hour == 15 )
-									{
 										int x = 0;
-									}
-								}
 							}
+							
 
 
 							// If one of the teams cannot play in this time slot the find the first team that can play in this time slot 
@@ -1409,6 +1476,7 @@ namespace Fixture_Factory
 							if (!DesignatedGameTime(pairedTeams[0].Key, gameSlot) || !DesignatedGameTime(pairedTeams[0].Value, gameSlot) ||
 								LeagueNonPlayingDate(gameSlot, pairedTeams[0].Key.LeagueID) || LeagueNonPlayingDate(gameSlot, pairedTeams[0].Value.LeagueID))
 							{
+								bool swapMade = false;
 								for (int pti = 1; pti < pairedTeams.Count; pti++)
 								{
 									if (pairedTeams[pti].Value != null &&
@@ -1418,8 +1486,14 @@ namespace Fixture_Factory
 										DesignatedGameTime(pairedTeams[pti].Value, gameSlot))
 									{
 										Swap(pairedTeams, 0, pti);
+										swapMade = true;
 										break;
 									}
+								}
+
+								if(!swapMade && remainingSlots >= pairedTeams.Count)
+								{
+									continue;
 								}
 								leagueID = pairedTeams[0].Key.LeagueID;
 							}
@@ -1431,8 +1505,12 @@ namespace Fixture_Factory
 								Grade = fixtureDetailsList[leagueID].m_league.LeagueName,
 								Field = GetField(fieldID).FieldName,
 								HomeTeam = pairedTeams[0].Key.TeamName,
-								AwayTeam = pairedTeams[0].Value.TeamName
+								AwayTeam = pairedTeams[0].Value.TeamName,
 							};
+							if(fixtureDetailsList[leagueID].m_league.LeagueName.Contains("Senior"))
+							{
+								((FixtureGame)fixture).UmpiringTeam = GetUmpiringTeam(pairedTeams);
+							}
 							previousHomeTeam = pairedTeams[0].Key;
 							previousAwayTeam = pairedTeams[0].Value;
 							pairedTeams.RemoveAt(0);
@@ -1451,7 +1529,12 @@ namespace Fixture_Factory
 						}						
 					}
 
-					if (gameSlots.Count > 0)
+					if(gameDate.Month == 8 && gameDate.Day == 31)
+					{
+						int x = 0;
+					}
+
+					//if (gameSlots.Count > 0)
 					{
 						// Add in any dangling teams as byes.
 						while (pairedTeams.Count > 0)
@@ -1498,6 +1581,9 @@ namespace Fixture_Factory
 					}
 				}
 			}
+
+			EvenOutTurfUsage(m_fixtures["Year 3-5"]);
+			EvenOutTurfUsage(m_fixtures["Year 6-8"]);			
 
 			int tabPageCount = FixtureTabControl.TabPages.Count;
 			while (tabPageCount > 1)
@@ -1586,6 +1672,310 @@ namespace Fixture_Factory
 					fixtureWriter.Close();
 				}
 			}
+		}
+
+		private void EvenOutTurfUsage(SortedDictionary<DateTime, List<Fixture>> fixtures)
+		{
+			int minGames = 999;
+			int maxGames = 0;
+			const string TURF = "Turf";
+			List<string> leagues = new List<string>();
+			List<DateTime> datesAltered = new List<DateTime>();
+
+			foreach (DateTime fixtureTime in fixtures.Keys)
+			{
+				foreach (Fixture iFixture in fixtures[fixtureTime])
+				{
+					if (iFixture.Round > 0 && iFixture is FixtureGame)
+					{
+						if (((FixtureGame)iFixture).Field == TURF)
+						{
+							string league = iFixture.Grade;
+
+							if (!leagues.Contains(league))
+							{
+								leagues.Add(league);
+							}
+						}
+					}
+				}
+			}
+
+			string previousMinTeam = string.Empty;
+			string previousMaxTeam = string.Empty;
+			List<string> teamsSwapped = new List<string>();
+
+			foreach (string league in leagues)
+			{
+				int repeatCount = 1;
+
+				while (true)
+				{
+					Dictionary<string, Dictionary<string, int>> turfGames = new Dictionary<string, Dictionary<string, int>>();
+
+					foreach (DateTime fixtureTime in fixtures.Keys)
+					{
+						foreach (Fixture iFixture in fixtures[fixtureTime])
+						{
+							if (iFixture.Round > 0 && iFixture is FixtureGame)
+							{
+								if (((FixtureGame)iFixture).Grade == league && ((FixtureGame)iFixture).Field == TURF)
+								{
+									string homeTeam = ((FixtureGame)iFixture).HomeTeam;
+									string awayTeam = ((FixtureGame)iFixture).AwayTeam;
+
+									if (!turfGames.ContainsKey(league))
+									{
+										turfGames.Add(league, new Dictionary<string, int>());
+									}
+									if (!turfGames[league].ContainsKey(homeTeam))
+									{
+										turfGames[league].Add(homeTeam, 0);
+									}
+									if (!turfGames[league].ContainsKey(awayTeam))
+									{
+										turfGames[league].Add(awayTeam, 0);
+									}
+									turfGames[league][homeTeam]++;
+									turfGames[league][awayTeam]++;
+								}
+							}
+						}
+					}
+
+					List<string> minGameTeams = new List<string>();
+					List<string> maxGameTeams = new List<string>();
+
+					minGames = 999;
+					maxGames = 0;
+
+					foreach (string team in turfGames[league].Keys)
+					{
+						if (turfGames[league][team] < minGames)
+						{
+							minGames = turfGames[league][team];
+						}
+						if (turfGames[league][team] > maxGames)
+						{
+							maxGames = turfGames[league][team];
+						}
+					}
+
+					if(Math.Abs(maxGames - minGames) <= 1)
+					{
+						break;
+					}
+
+					int tempMinGames = minGames;
+					int tempMaxGames = maxGames;
+
+					while (minGameTeams.Count == 0)
+					{
+						foreach (string team in turfGames[league].Keys)
+						{
+							if (turfGames[league][team] == tempMinGames && (repeatCount < 5 || !teamsSwapped.Contains(team)))
+							{
+								minGameTeams.Add(team);
+							}
+						}
+						tempMinGames++;
+					}
+					//minGameTeams = Randomize(minGameTeams);
+
+					while (maxGameTeams.Count == 0)
+					{
+						foreach (string team in turfGames[league].Keys)
+						{
+							if (turfGames[league][team] == tempMaxGames && (repeatCount < 5 || !teamsSwapped.Contains(team)))
+							{
+								maxGameTeams.Add(team);
+							}
+						}
+						tempMaxGames--;
+					}
+					//maxGameTeams = Randomize(maxGameTeams);
+
+					FixtureGame minTeamFixture = null;
+					FixtureGame maxTeamFixture = null;
+					DateTime previousGameDate = DateTime.MinValue.Date;
+					bool changeMade = false;
+
+					foreach (DateTime fixtureTime in fixtures.Keys)
+					{
+						if(datesAltered.Contains(fixtureTime.Date))
+						{
+							continue;
+						}
+						if (fixtureTime.Date != previousGameDate)
+						{
+							minTeamFixture = null;
+							maxTeamFixture = null;
+							previousGameDate = fixtureTime.Date;
+						}
+
+						foreach (Fixture iFixture in fixtures[fixtureTime])
+						{
+							if (iFixture.Round > 0 && iFixture is FixtureGame && ((FixtureGame)iFixture).Grade == league)
+							{
+								string homeTeam = ((FixtureGame)iFixture).HomeTeam;
+								string awayTeam = ((FixtureGame)iFixture).AwayTeam;
+								string field = ((FixtureGame)iFixture).Field;
+
+								if (field == TURF)
+								{
+									if (maxTeamFixture == null && 
+										(maxGameTeams[0] == homeTeam || maxGameTeams[0] == awayTeam) &&
+										!(minGameTeams[0] == homeTeam || minGameTeams[0] == awayTeam))
+									{
+										maxTeamFixture = (FixtureGame)iFixture;
+									}
+								}
+								else if (minTeamFixture == null)
+								{
+									if ((minGameTeams[0] == homeTeam || minGameTeams[0] == awayTeam) &&
+										!(maxGameTeams[0] == homeTeam || maxGameTeams[0] == awayTeam))
+									{
+										minTeamFixture = (FixtureGame)iFixture;
+									}
+								}
+							}
+						}
+
+						if (minTeamFixture != null && maxTeamFixture != null)
+						{
+							string maxHomeTeam = maxTeamFixture.HomeTeam;
+							string maxAwayTeam = maxTeamFixture.AwayTeam;
+
+							teamsSwapped.Clear();
+							teamsSwapped.Add(maxGameTeams[0]);
+							teamsSwapped.Add(minGameTeams[0]);
+
+							if (maxGameTeams.Contains(maxTeamFixture.HomeTeam))
+							{
+								maxGameTeams.Remove(maxTeamFixture.HomeTeam);
+							}
+							if (maxGameTeams.Contains(maxTeamFixture.AwayTeam))
+							{
+								maxGameTeams.Remove(maxTeamFixture.AwayTeam);
+							}
+
+							if (minGameTeams.Contains(minTeamFixture.HomeTeam))
+							{
+								minGameTeams.Remove(minTeamFixture.HomeTeam);
+							}
+							if (minGameTeams.Contains(minTeamFixture.AwayTeam))
+							{
+								minGameTeams.Remove(minTeamFixture.AwayTeam);
+							}
+							maxTeamFixture.HomeTeam = minTeamFixture.HomeTeam;
+							maxTeamFixture.AwayTeam = minTeamFixture.AwayTeam;
+
+							minTeamFixture.HomeTeam = maxHomeTeam;
+							minTeamFixture.AwayTeam = maxAwayTeam;
+
+							changeMade = true;
+							datesAltered.Add(fixtureTime.Date);
+							//if (maxGameTeams.Count == 0 || minGameTeams.Count == 0)
+							{
+								break;
+							}
+						}
+					}
+					if(!changeMade)
+					{
+						repeatCount++;
+						if(repeatCount > 10)
+						{
+							break;
+						}
+						datesAltered.Clear();
+					}
+				}
+			}
+		}
+
+		public List<string> Randomize(List<string> source)
+		{
+			Random rnd = new Random();
+			return source.OrderBy<string, int>((item) => rnd.Next()).ToList();
+		}
+
+		private string GetUmpiringTeam(List<KeyValuePair<Team, Team>> pairedTeams)
+		{
+			string umpiringTeam = string.Empty;
+			Guid teamLeague = pairedTeams[0].Key.LeagueID;
+
+			if (pairedTeams.Count > 0 && m_umpiringTeamDictionary.ContainsKey(teamLeague))
+			{
+				List<int> umpiresIndexList = new List<int>();
+
+				for (int index = 0; index < m_umpiringTeamDictionary[teamLeague].Count; index++)
+				{
+					if (m_umpiringTeamDictionary[teamLeague][index] != pairedTeams[0].Key &&
+						m_umpiringTeamDictionary[teamLeague][index] != pairedTeams[0].Value)
+					{
+						umpiresIndexList.Add(index);
+					}
+					if (umpiresIndexList.Count >= 2)
+					{
+						break;
+					}
+				}
+
+				if (umpiresIndexList.Count >= 2)
+				{
+					int team1Index = umpiresIndexList[0];
+					int team2Index = umpiresIndexList[1];
+
+					if (!m_umpiringCountDictionary.ContainsKey(teamLeague))
+					{
+						m_umpiringCountDictionary.Add(teamLeague, new Dictionary<Team, int>());
+					}
+					if (!m_umpiringCountDictionary[teamLeague].ContainsKey(m_umpiringTeamDictionary[teamLeague][team1Index]))
+					{
+						m_umpiringCountDictionary[teamLeague].Add(m_umpiringTeamDictionary[teamLeague][team1Index], 0);
+					}
+					if (!m_umpiringCountDictionary[teamLeague].ContainsKey(m_umpiringTeamDictionary[teamLeague][team2Index]))
+					{
+						m_umpiringCountDictionary[teamLeague].Add(m_umpiringTeamDictionary[teamLeague][team2Index], 0);
+					}
+
+					int count1 = m_umpiringCountDictionary[teamLeague][m_umpiringTeamDictionary[teamLeague][team1Index]];
+					int count2 = m_umpiringCountDictionary[teamLeague][m_umpiringTeamDictionary[teamLeague][team2Index]];
+
+					if (count1 > count2)
+					{
+						umpiringTeam = m_umpiringTeamDictionary[teamLeague][team2Index].TeamName;
+						m_umpiringCountDictionary[teamLeague][m_umpiringTeamDictionary[teamLeague][team2Index]]++;
+						m_umpiringTeamDictionary[teamLeague].RemoveAt(team2Index);
+					}
+					else
+					{
+						umpiringTeam = m_umpiringTeamDictionary[teamLeague][team1Index].TeamName;
+						m_umpiringCountDictionary[teamLeague][m_umpiringTeamDictionary[teamLeague][team1Index]]++;
+						m_umpiringTeamDictionary[teamLeague].RemoveAt(team1Index);
+					}
+				}
+				else
+				{
+					int team1Index = umpiresIndexList[0];
+
+					if (!m_umpiringCountDictionary.ContainsKey(teamLeague))
+					{
+						m_umpiringCountDictionary.Add(teamLeague, new Dictionary<Team, int>());
+					}
+					if (!m_umpiringCountDictionary[teamLeague].ContainsKey(m_umpiringTeamDictionary[teamLeague][team1Index]))
+					{
+						m_umpiringCountDictionary[teamLeague].Add(m_umpiringTeamDictionary[teamLeague][team1Index], 0);
+					}
+
+					umpiringTeam = m_umpiringTeamDictionary[teamLeague][team1Index].TeamName;
+					m_umpiringCountDictionary[teamLeague][m_umpiringTeamDictionary[teamLeague][team1Index]]++;
+					m_umpiringTeamDictionary[teamLeague].RemoveAt(team1Index);					
+				}
+			}
+
+			return umpiringTeam;
 		}
 
 		// If a team cannot play in one of the game slots them move that team pair to the front of the line in the

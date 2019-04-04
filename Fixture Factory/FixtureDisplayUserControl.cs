@@ -55,6 +55,7 @@ namespace Fixture_Factory
 							string league = iFixture.Grade;
 							string homeTeam = ((FixtureGame)iFixture).HomeTeam;
 							string awayTeam = ((FixtureGame)iFixture).AwayTeam;
+							string umpiringTeam = ((FixtureGame)iFixture).UmpiringTeam;
 							string field = ((FixtureGame)iFixture).Field;
 							GameTime slot = new GameTime() { DayOfWeek = (int)((FixtureGame)iFixture).GameTime.DayOfWeek, StartTime = ((FixtureGame)iFixture).GameTime };
 
@@ -67,11 +68,25 @@ namespace Fixture_Factory
 							{
 								fieldBreakdown[league].Add(homeTeam, new Dictionary<string, int>());
 							}
+
 							if (!fieldBreakdown[league][homeTeam].ContainsKey(field))
 							{
 								fieldBreakdown[league][homeTeam].Add(field, 0);
 							}
 							fieldBreakdown[league][homeTeam][field]++;
+
+							if (umpiringTeam != null)
+							{
+								if (!fieldBreakdown[league].ContainsKey(umpiringTeam))
+								{
+									fieldBreakdown[league].Add(umpiringTeam, new Dictionary<string, int>());
+								}
+								if (!fieldBreakdown[league][umpiringTeam].ContainsKey("Umpiring"))
+								{
+									fieldBreakdown[league][umpiringTeam].Add("Umpiring", 0);
+								}
+								fieldBreakdown[league][umpiringTeam]["Umpiring"]++;
+							}
 
 							if (awayTeam != null)
 							{
@@ -158,6 +173,10 @@ namespace Fixture_Factory
 						row.Field = ((FixtureGame)iFixture).Field;
 						row.Home = ((FixtureGame)iFixture).HomeTeam;
 						row.Away = ((FixtureGame)iFixture).AwayTeam;
+						if (((FixtureGame)iFixture).UmpiringTeam != null)
+						{
+							row.Umpiring = ((FixtureGame)iFixture).UmpiringTeam;
+						}
 						m_fixtureDisplay.Add(row);
 					}
 					else if (iFixture is FixtureGeneralBye)
@@ -181,6 +200,11 @@ namespace Fixture_Factory
 					}
 				}				
 			}
+			foreach (FixtureDisplay byeRow in byes)
+			{
+				m_fixtureDisplay.Add(byeRow);
+			}
+			byes.Clear();
 
 			BindingSource fixtureBindingSource = new BindingSource() { DataSource = m_fixtureDisplay };
 			FixtureDataGridView.DataSource = fixtureBindingSource;
