@@ -1010,7 +1010,12 @@ namespace Fixture_Factory
 			{
 				foreach(NonPlayingDate npd in iTeam.NonPlayingDates)
 				{
-					if (gameSlot.Date == npd.Date.Date &&
+					if(npd.Date.Hour == 0 && npd.Date.Minute == 0 && gameSlot.Date == npd.Date.Date)
+					{
+						slotAvailable = false;
+						break;
+					}
+					else if (gameSlot.Date == npd.Date.Date &&
 						gameSlot.Hour == npd.Date.Hour &&
 						gameSlot.Minute == npd.Date.Minute)
 					{
@@ -1024,6 +1029,14 @@ namespace Fixture_Factory
 				int x = 0;
 			}
 			return slotAvailable;
+		}
+
+
+		public static void MoveToTop<T>(IList<T> list, int indexA, int indexB)
+		{
+			T tmp = list[indexB];
+			list.RemoveAt(indexB);
+			list.Insert(0, tmp);
 		}
 
 		public static void Swap<T>(IList<T> list, int indexA, int indexB)
@@ -1464,7 +1477,8 @@ namespace Fixture_Factory
 						if (pairedTeams.Count > 0)
 						{
 							
-							if (fixtureDetailsList[pairedTeams[0].Key.LeagueID].m_league.LeagueName.Contains("Senior"))
+							if (fixtureDetailsList[pairedTeams[0].Key.LeagueID].m_league.LeagueName.Contains("9-12") &&
+								gameSlot.Day == 7 && gameSlot.Month == 6)
 							{
 										int x = 0;
 							}
@@ -1485,7 +1499,7 @@ namespace Fixture_Factory
 										DesignatedGameTime(pairedTeams[pti].Key, gameSlot) &&
 										DesignatedGameTime(pairedTeams[pti].Value, gameSlot))
 									{
-										Swap(pairedTeams, 0, pti);
+										MoveToTop(pairedTeams, 0, pti);
 										swapMade = true;
 										break;
 									}
@@ -1996,7 +2010,12 @@ namespace Fixture_Factory
 						{
 							foreach (KeyValuePair<DateTime, Guid> slot in gameSlots)
 							{
-								if (slot.Key.Date == npd.Date.Date &&
+								if (slot.Key.Date == npd.Date.Date && npd.Date.Hour == 0 && npd.Date.Minute == 0)
+								{
+									npdIndex = index;
+									break;
+								}
+								else if (slot.Key.Date == npd.Date.Date &&
 									slot.Key.Hour == npd.Date.Hour &&
 									slot.Key.Minute == npd.Date.Minute)
 								{
@@ -2020,7 +2039,12 @@ namespace Fixture_Factory
 						{
 							foreach (KeyValuePair<DateTime, Guid> slot in gameSlots)
 							{
-								if (slot.Key.Date == npd.Date.Date &&
+								if (slot.Key.Date == npd.Date.Date && npd.Date.Hour == 0 && npd.Date.Minute == 0)
+								{
+									npdIndex = index;
+									break;
+								}
+								else if (slot.Key.Date == npd.Date.Date &&
 									slot.Key.Hour == npd.Date.Hour &&
 									slot.Key.Minute == npd.Date.Minute)
 								{

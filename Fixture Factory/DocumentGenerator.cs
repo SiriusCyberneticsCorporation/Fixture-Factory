@@ -320,12 +320,26 @@ namespace Fixture_Factory
 			{
 				iExcelExporter.AddText(league, 1, true, false, false, HorizontalAlignment.Center);
 
-				int column = 1;
-				Dictionary<string, int> slots = new Dictionary<string, int>();
+				List<GameTime> timeSlots = new List<GameTime>();
 
 				foreach (string team in slotBreakdown[league].Keys)
 				{
 					foreach (GameTime slot in slotBreakdown[league][team].Keys)
+					{
+						if (!timeSlots.Contains(slot))
+						{
+							timeSlots.Add(slot);
+						}
+					}
+				}
+				timeSlots.Sort();
+
+				int column = 1;
+				Dictionary<string, int> slots = new Dictionary<string, int>();
+
+				//foreach (string team in slotBreakdown[league].Keys)
+				{
+					foreach (GameTime slot in timeSlots)
 					{
 						string slotText = slot.ToString();
 						if(!slots.ContainsKey(slotText))
