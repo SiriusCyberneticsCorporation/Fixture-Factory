@@ -27,7 +27,7 @@ namespace Fixture_Factory
 
 		public DocumentGenerator(string grade, SortedDictionary<DateTime, List<Fixture>> fixtures)
 		{
-			List<float> columnWidths = new List<float>() { 8, 6, 10, 10, 8, 15, 16, 16, 16, 16 };
+			List<float> columnWidths = new List<float>() { 8, 6, 10, 10, 8, 17, 16, 16, 16, 16 };
 			ExcelExporter iExcelExporter = new ExcelExporter(grade + ".xlsx", "Fixtures", grade + " Fixtures", "", DateTime.Now.ToLongDateString(), true, columnWidths);
 
 			iExcelExporter.AddRow();

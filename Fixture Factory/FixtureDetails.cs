@@ -15,6 +15,8 @@ namespace Fixture_Factory
 		public int Round = 1;
 		public int PreviousRound = 1;
 		public int Rounds = 0;
+		public bool EvenRound = false;
+		public bool AllowIncrementRound = false;
 		public bool Friendly = false;
 		//public int Friendlies = 0;
 		public DateTime FirstGameDate;

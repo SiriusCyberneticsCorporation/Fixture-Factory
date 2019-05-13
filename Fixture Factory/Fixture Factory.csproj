@@ -88,6 +88,12 @@
     <Compile Include="Data Classes\Team.cs" />
     <Compile Include="DocumentGenerator.cs" />
     <Compile Include="ExcelExporter.cs" />
+    <Compile Include="FixtureBreakdownUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FixtureBreakdownUserControl.Designer.cs">
+      <DependentUpon>FixtureBreakdownUserControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="FixtureCalculator.cs" />
     <Compile Include="FixtureDetails.cs" />
     <Compile Include="FixtureDisplayUserControl.cs">
@@ -118,8 +124,12 @@
     <Compile Include="ResizableTableLayoutPanel.Designer.cs">
       <DependentUpon>ResizableTableLayoutPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Settings.cs" />
     <Compile Include="TimeCell.cs" />
     <Compile Include="TimeColumn.cs" />
+    <EmbeddedResource Include="FixtureBreakdownUserControl.resx">
+      <DependentUpon>FixtureBreakdownUserControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FixtureDisplayUserControl.resx">
       <DependentUpon>FixtureDisplayUserControl.cs</DependentUpon>
     </EmbeddedResource>

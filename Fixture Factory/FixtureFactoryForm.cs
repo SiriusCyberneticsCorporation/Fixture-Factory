@@ -63,6 +63,12 @@ namespace Fixture_Factory
 		{
 			m_fixturesDatabase = new LiteDatabase(FIXTURE_DATABASE);
 			m_seasons = m_fixturesDatabase.GetCollection<Season>();
+
+			if (Properties.Settings.Default.Grades == null || Properties.Settings.Default.Grades.Count == 0)
+			{
+				Properties.Settings.Default.Grades = new List<StringValue>() { new StringValue("Year 3-5"), new StringValue("Year 6-8"), new StringValue("Year 9-12"), new StringValue("Senior"), new StringValue("Masters") };
+				Properties.Settings.Default.Save();
+			}
 			//m_leagues = m_fixturesDatabase.GetCollection<League>();
 			//m_teams = m_fixturesDatabase.GetCollection<Team>();
 			//m_gameTimes = m_fixturesDatabase.GetCollection<GameTime>();
@@ -115,7 +121,7 @@ namespace Fixture_Factory
 						NonPlayingDates = new List<NonPlayingDate>(),
 						Leagues = new List<League>(),
 						OtherFixtures = new List<OtherFixture>(),
-						Grades = new List<StringValue>() { new StringValue("Year 3-5"), new StringValue("Year 6-8"), new StringValue("Year 9-12"), new StringValue("Senior"), new StringValue("Masters") }
+						Grades = Properties.Settings.Default.Grades
 					};
 				}
 
@@ -136,7 +142,7 @@ namespace Fixture_Factory
 				NonPlayingDates = new List<NonPlayingDate>(),
 				Leagues = new List<League>(),
 				OtherFixtures = new List<OtherFixture>(),
-				Grades = new List<StringValue>() { new StringValue("Year 3-5"), new StringValue("Year 6-8"), new StringValue("Year 9-12"), new StringValue("Senior"), new StringValue("Masters") }
+				Grades = Properties.Settings.Default.Grades
 			};
 
 			newSeason.Grades = m_currentSeason.Grades;
@@ -183,7 +189,6 @@ namespace Fixture_Factory
 				SeasonEndDateTimePicker.DataBindings.Add("Value", m_currentSeason, "SeasonEndDate");
 
 
-				//m_currentSeason.Grades = new List<StringValue>() { new StringValue("Year 3-5"), new StringValue("Year 6-8"), new StringValue("Year 9-12"), new StringValue("Senior"), new StringValue("Masters") };
 				BindingSource gradesBindingSource = new BindingSource() { DataSource = m_currentSeason.Grades };
 				SeasonGradesDataGridView.DataSource = gradesBindingSource;
 				SeasonGradesDataGridView.ClearSelection();
@@ -1132,6 +1137,7 @@ namespace Fixture_Factory
 			{
 				Dictionary<Guid, FixtureDetails> fixtureDetailsList = leagueDictionary[leagueName];
 
+				// For each week in the playing season
 				for (DateTime date = m_currentSeason.SeasonStartDate; date <= m_currentSeason.SeasonEndDate; date = date.AddDays(7))
 				{
 					// Ensure that the hours, minutes and seconds are zero.
@@ -1147,18 +1153,24 @@ namespace Fixture_Factory
 					foreach (Guid leagueID in leagueDictionary[leagueName].Keys)
 					{
 						FixtureDetails iFixtureDetails = leagueDictionary[leagueName][leagueID];
+
+						// Start with AllowIncrementRound = false. It will be changed to true if games are allocated to the league.
+						// This is a rather clunky way of handling the situation where a league skips a week but the other leagues
+						// in the same grade complete the round. E.G. Senior Women and 9-12 Girls miss a week due to Country Week.
+						iFixtureDetails.AllowIncrementRound = false;
+
 						List<KeyValuePair<Team, Team>> teamPairList = new List<KeyValuePair<Team, Team>>();
 
 						int round = (iFixtureDetails.Round - 1) % iFixtureDetails.Fixtures.Count;
 						int index = 0;
-
+												
 						foreach (KeyValuePair<int, int> teams in iFixtureDetails.Fixtures[round])
 						{
 							if (teams.Value == -1)
 							{
 								teamPairList.Add(new KeyValuePair<Team, Team>(iFixtureDetails.RoundTeams[teams.Key], null));
 							}
-							else if (round >= iFixtureDetails.Fixtures.Count)
+							else if (iFixtureDetails.EvenRound)//round >= iFixtureDetails.Fixtures.Count)
 							{
 								teamPairList.Add(new KeyValuePair<Team, Team>(iFixtureDetails.RoundTeams[teams.Value], iFixtureDetails.RoundTeams[teams.Key]));
 							}
@@ -1512,6 +1524,8 @@ namespace Fixture_Factory
 								leagueID = pairedTeams[0].Key.LeagueID;
 							}
 
+							fixtureDetailsList[leagueID].AllowIncrementRound = true;
+
 							Fixture fixture = new FixtureGame()
 							{
 								GameTime = gameSlot,
@@ -1586,9 +1600,14 @@ namespace Fixture_Factory
 						// Increment the round.
 						foreach (Guid leagueID in leagueDictionary[leagueName].Keys)
 						{
-							if (!fixtureDetailsList[leagueID].Friendly)
+							if (!fixtureDetailsList[leagueID].Friendly && fixtureDetailsList[leagueID].AllowIncrementRound)
 							{
 								fixtureDetailsList[leagueID].Round++;
+
+								if ((fixtureDetailsList[leagueID].Round - 1) % fixtureDetailsList[leagueID].Fixtures.Count == 0)
+								{
+									fixtureDetailsList[leagueID].EvenRound = !fixtureDetailsList[leagueID].EvenRound;
+								}
 							}
 							fixtureDetailsList[leagueID].Friendly = false;
 						}
@@ -1620,6 +1639,47 @@ namespace Fixture_Factory
 
 				DocumentGenerator iDocumentGenerator = new DocumentGenerator(leagueName, m_fixtures[leagueName]);
 			}
+
+
+			SortedDictionary<DateTime, List<Fixture>> turfFixtures = new SortedDictionary<DateTime, List<Fixture>>();
+			foreach (string leagueName in leagueDictionary.Keys)
+			{
+				foreach (DateTime fixtureTime in m_fixtures[leagueName].Keys)
+				{
+					foreach (Fixture iFixture in m_fixtures[leagueName][fixtureTime])
+					{
+						//if (iFixture.Round > 0)
+						{
+							if (iFixture is FixtureGame)
+							{
+								if (((FixtureGame)iFixture).Field == "Turf" /*&& !iFixture.Grade.Contains("6-8")*/ && !iFixture.Grade.Contains("Master"))
+								{
+									if (!turfFixtures.ContainsKey(fixtureTime))
+									{
+										turfFixtures.Add(fixtureTime, new List<Fixture>());
+									}
+									if (!ContainsFixture(turfFixtures[fixtureTime], (FixtureGame)iFixture))
+									{
+										turfFixtures[fixtureTime].Add(iFixture);
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+
+			TabPage turfTabPage = new TabPage("Turf");
+			FixtureDisplayUserControl turfFixtureDisplay = new FixtureDisplayUserControl();
+			turfFixtureDisplay.Dock = DockStyle.Fill;
+
+			turfTabPage.Controls.Add(turfFixtureDisplay);
+
+			FixtureTabControl.TabPages.Add(turfTabPage);
+
+			turfFixtureDisplay.Initialise(turfFixtures);
+
+			DocumentGenerator turfDocumentGenerator = new DocumentGenerator("Turf", turfFixtures);
 
 			foreach (string leagueName in leagueDictionary.Keys)
 			{
@@ -1686,6 +1746,28 @@ namespace Fixture_Factory
 					fixtureWriter.Close();
 				}
 			}
+		}
+
+		private bool ContainsFixture(List<Fixture> fixtures, FixtureGame testFixture)
+		{
+			bool containsFixture = false;
+
+			foreach(Fixture iFixture in fixtures)
+			{
+				FixtureGame gameFixture = ((FixtureGame)iFixture);
+
+				if (gameFixture.HomeTeam == testFixture.HomeTeam &&
+					gameFixture.AwayTeam == testFixture.AwayTeam &&
+					gameFixture.Grade == testFixture.Grade &&
+					gameFixture.Field == testFixture.Field &&
+					gameFixture.GameTime == testFixture.GameTime)
+				{
+					containsFixture = true;
+					break;
+				}
+			}
+
+			return containsFixture;
 		}
 
 		private void EvenOutTurfUsage(SortedDictionary<DateTime, List<Fixture>> fixtures)
