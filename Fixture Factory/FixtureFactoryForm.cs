@@ -31,6 +31,16 @@ namespace Fixture_Factory
 			new WeekDay() { ID = (int)DayOfWeek.Wednesday, Name = DayOfWeek.Wednesday.ToString() },
 		};
 
+		private List<StringValue> Grades = new List<StringValue>() 
+		{ 
+			new StringValue("PP-2"), 
+			new StringValue("Year 3-5"), 
+			new StringValue("Year 6-8"), 
+			new StringValue("Year 9-12"), 
+			new StringValue("Senior"), 
+			new StringValue("Masters") 
+		};
+
 		private const string FIXTURE_DATABASE = "Fixtures.db";
 
 		private bool m_loadingData = false;
@@ -64,11 +74,8 @@ namespace Fixture_Factory
 			m_fixturesDatabase = new LiteDatabase(FIXTURE_DATABASE);
 			m_seasons = m_fixturesDatabase.GetCollection<Season>();
 
-			if (Properties.Settings.Default.Grades == null || Properties.Settings.Default.Grades.Count == 0)
-			{
-				Properties.Settings.Default.Grades = new List<StringValue>() { new StringValue("Year 3-5"), new StringValue("Year 6-8"), new StringValue("Year 9-12"), new StringValue("Senior"), new StringValue("Masters") };
-				Properties.Settings.Default.Save();
-			}
+			EvenRoundsOnlyCheckBox.Checked = Properties.Settings.Default.EvenRoundsOnly;
+
 			//m_leagues = m_fixturesDatabase.GetCollection<League>();
 			//m_teams = m_fixturesDatabase.GetCollection<Team>();
 			//m_gameTimes = m_fixturesDatabase.GetCollection<GameTime>();
@@ -85,19 +92,38 @@ namespace Fixture_Factory
 
 				if (seasons.Count() > 0)
 				{
+					Season selectSeason = null;
+
 					foreach (Season iSeason in seasons)
 					{
 						ToolStripMenuItem seasonItem = new ToolStripMenuItem(iSeason.SeasonTitle);
 						seasonItem.Tag = iSeason;
 						seasonItem.Click += SeasonItem_Click;
 						seasonToolStripMenuItem.DropDownItems.Add(seasonItem);
+
+						if(iSeason.SeasonTitle == Properties.Settings.Default.DefaultSeason)
+						{
+							selectSeason = iSeason;
+						}
 					}
 
-					m_currentSeason = seasons.Last();
+					if(selectSeason != null)
+					{
+						m_currentSeason = selectSeason;
+					}
+					else
+					{
+						m_currentSeason = seasons.Last();
+					}
 
 					bool save = false;
 					foreach(League iLeague in m_currentSeason.Leagues)
 					{
+						if(iLeague.Grade == null)
+						{
+							iLeague.Grade = "PP-2";
+							save = true;
+						}
 						if(iLeague.Grade == "A2")
 						{
 							iLeague.Grade = "Senior";
@@ -108,7 +134,7 @@ namespace Fixture_Factory
 					{
 						Save();
 					}
-
+					
 				}
 
 				if (m_currentSeason == null)
@@ -121,7 +147,7 @@ namespace Fixture_Factory
 						NonPlayingDates = new List<NonPlayingDate>(),
 						Leagues = new List<League>(),
 						OtherFixtures = new List<OtherFixture>(),
-						Grades = Properties.Settings.Default.Grades
+						Grades = Grades
 					};
 				}
 
@@ -138,18 +164,13 @@ namespace Fixture_Factory
 				ID = Guid.NewGuid(),
 				SeasonStartDate = DateTime.Now,
 				SeasonEndDate = DateTime.Now,
-				PlayingFields = new List<PlayingField>(),
-				NonPlayingDates = new List<NonPlayingDate>(),
-				Leagues = new List<League>(),
-				OtherFixtures = new List<OtherFixture>(),
-				Grades = Properties.Settings.Default.Grades
+				PlayingFields = m_currentSeason.PlayingFields,
+				NonPlayingDates = m_currentSeason.NonPlayingDates,
+				Leagues = m_currentSeason.Leagues,
+				OtherFixtures = m_currentSeason.OtherFixtures,
+				Grades = m_currentSeason.Grades
 			};
 
-			newSeason.Grades = m_currentSeason.Grades;
-			newSeason.Leagues = m_currentSeason.Leagues;
-			newSeason.NonPlayingDates = m_currentSeason.NonPlayingDates;
-			newSeason.OtherFixtures = m_currentSeason.OtherFixtures;
-			newSeason.PlayingFields = m_currentSeason.PlayingFields;
 			m_currentSeason = newSeason;
 
 			m_seasons.Insert(m_currentSeason);
@@ -249,6 +270,8 @@ namespace Fixture_Factory
 					((Season)seasonItem.Tag).PlayingFields = m_currentSeason.PlayingFields;
 					*/
 					m_currentSeason = (Season)seasonItem.Tag;
+					Properties.Settings.Default.DefaultSeason = m_currentSeason.SeasonTitle;
+					Properties.Settings.Default.Save();
 					DisplayCurrentSeason();
 				}
 			}
@@ -1062,6 +1085,12 @@ namespace Fixture_Factory
 
 			foreach (League iLeague in m_currentSeason.Leagues)
 			{
+				/*
+				if(iLeague.Grade == null)
+				{
+					iLeague.Grade = "PP-2";
+				}
+				*/
 				int playingWeeks = 0;
 				List<DateTime> gameDates = new List<DateTime>();
 				FixtureDetails iFixtureDetails = new FixtureDetails() { m_league = iLeague };
@@ -1281,6 +1310,26 @@ namespace Fixture_Factory
 
 					List<KeyValuePair<Team, Team>> pairedTeams = new List<KeyValuePair<Team, Team>>();
 
+					if (leagueName.Contains("6-8"))
+					{
+						int x = 1;
+					}
+
+					if (leagueName.Contains("9-12"))
+					{
+						int x = 1;
+					}
+
+					if (leagueName.Contains("Senior"))
+					{
+						int x = 1;
+					}
+
+					if(date.Month == 3 && date.Day == 28)
+					{
+						int x = 1;
+					}
+
 					if (teamPairLists.Count == 1)
 					{
 						pairedTeams.AddRange(teamPairLists[0]);
@@ -1294,15 +1343,164 @@ namespace Fixture_Factory
 
 						int sourceLeague = 0;
 						int pairedLeague = 1;
+						int gameSlotIndex = 0;
+						List<int> standAloneSlots = new List<int>();
 
-						foreach (KeyValuePair<Team, Team> teamPair in teamPairLists[sourceLeague])
+						// Add the first team pair from the source league.
+						KeyValuePair<Team, Team> teamPair = teamPairLists[sourceLeague][0];
+						teamPairLists[sourceLeague].RemoveAt(0);
+						pairedTeams.Add(teamPair);
+						gameSlotIndex++;
+
+						while (teamPairLists[sourceLeague].Count > 0 && teamPairLists[pairedLeague].Count > 0)
 						{
-							pairedTeams.Add(teamPair);
+							bool added = false;
 
+							teamPair = teamPairLists[pairedLeague][0];
+							teamPairLists[pairedLeague].RemoveAt(0);
+
+							if (teamPair.Value != null)
+							{
+								// Try to find a match for both teams
+								int index = 0;
+								foreach (KeyValuePair<Team, Team> existing in pairedTeams)
+								{
+									// If both teams have a paired team of the source league then add them as the next pair.
+									if ((existing.Key.PairedTeams.Contains(teamPair.Key.ID) && existing.Value.PairedTeams.Contains(teamPair.Value.ID)) ||
+										(existing.Key.PairedTeams.Contains(teamPair.Value.ID) && existing.Value.PairedTeams.Contains(teamPair.Key.ID)))
+									{
+										added = true;
+
+										if(index < pairedTeams.Count-1)
+										{
+											pairedTeams.Insert(index, teamPair);
+										}
+										else
+										{
+											pairedTeams.Add(teamPair);
+										}
+
+										if (gameSlotIndex > 0 &&
+											gameSlots[gameSlotIndex - 1].Key.Date != gameSlots[gameSlotIndex].Key.Date)
+										{
+											standAloneSlots.Add(gameSlotIndex - 1);
+										}
+										gameSlotIndex++;
+										break;
+									}
+									index++;
+								}
+
+								// If we cannot find a match for both teams then try for just the home team.
+								if(!added)
+								{
+									index = 0;
+									foreach (KeyValuePair<Team, Team> existing in pairedTeams)
+									{
+										// If both teams have a paired team of the source league then add them as the next pair.
+										if (existing.Key.PairedTeams.Contains(teamPair.Key.ID) || 
+											existing.Value.PairedTeams.Contains(teamPair.Key.ID))
+										{
+											added = true;
+
+											if (index < pairedTeams.Count - 1)
+											{
+												pairedTeams.Insert(index, teamPair);
+											}
+											else
+											{
+												pairedTeams.Add(teamPair);
+											}
+
+											if (gameSlotIndex > 0 &&
+												gameSlots[gameSlotIndex - 1].Key.Date != gameSlots[gameSlotIndex].Key.Date)
+											{
+												standAloneSlots.Add(gameSlotIndex - 1);
+											}
+											gameSlotIndex++;
+											break;
+										}
+										index++;
+									}
+								}
+
+								// If we cannot find a match for both teams then try for just the away team.
+								if (!added)
+								{
+									index = 0;
+									foreach (KeyValuePair<Team, Team> existing in pairedTeams)
+									{
+										// If both teams have a paired team of the source league then add them as the next pair.
+										if (existing.Key.PairedTeams.Contains(teamPair.Value.ID) ||
+											existing.Value.PairedTeams.Contains(teamPair.Value.ID))
+										{
+											added = true;
+
+											if (index < pairedTeams.Count - 1)
+											{
+												pairedTeams.Insert(index, teamPair);
+											}
+											else
+											{
+												pairedTeams.Add(teamPair);
+											}
+
+											if (gameSlotIndex > 0 &&
+												gameSlots[gameSlotIndex - 1].Key.Date != gameSlots[gameSlotIndex].Key.Date)
+											{
+												standAloneSlots.Add(gameSlotIndex - 1);
+											}
+											gameSlotIndex++;
+											break;
+										}
+										index++;
+									}
+								}
+							}
+							
+							if (!added)
+							{
+								if (teamPair.Value != null && standAloneSlots.Count > 0)
+								{
+									pairedTeams.Insert(standAloneSlots[0], teamPair);
+									standAloneSlots.RemoveAt(0);
+								}
+								else
+								{
+									pairedTeams.Add(teamPair);
+								}								
+								gameSlotIndex++;
+							}
+
+							int temp = pairedLeague;
+							pairedLeague = sourceLeague;
+							sourceLeague = temp;
+						}
+						/*
+						while (teamPairLists[sourceLeague].Count > 0 && teamPairLists[pairedLeague].Count > 0)
+						{
+							bool added = false;
+							bool nextSlotDifferentDay = false;
+
+							if(gameSlotIndex+1 < gameSlots.Count)
+							{
+								nextSlotDifferentDay = gameSlots[gameSlotIndex].Key.Date != gameSlots[gameSlotIndex + 1].Key.Date;
+							}
+
+							if(gameSlots[gameSlotIndex].Key.Month == 6 && gameSlots[gameSlotIndex].Key.Day == 12)
+							{
+								int x = 1;
+							}
 							// Ignore byes
 							if (teamPair.Value != null)
 							{								
-								// Try to match paired teams...
+								
+
+
+
+
+
+								// Try to match paired teams where both teams match...
 								for (int pi = 0; pi < teamPairLists[pairedLeague].Count; pi++)
 								{
 									KeyValuePair<Team, Team> possiblePair = teamPairLists[pairedLeague][pi];
@@ -1314,35 +1512,159 @@ namespace Fixture_Factory
 										if ((possiblePair.Key.PairedTeams.Contains(teamPair.Key.ID) && possiblePair.Value.PairedTeams.Contains(teamPair.Value.ID)) ||
 											(possiblePair.Key.PairedTeams.Contains(teamPair.Value.ID) && possiblePair.Value.PairedTeams.Contains(teamPair.Key.ID)))
 										{
+											added = true;
 											pairedTeams.Add(possiblePair);
 											teamPairLists[pairedLeague].RemoveAt(pi);
+
+											if(gameSlotIndex > 0 &&
+												gameSlots[gameSlotIndex-1].Key.Date != gameSlots[gameSlotIndex].Key.Date)
+											{
+												standAloneSlots.Add(gameSlotIndex - 1);
+											}
+											gameSlotIndex++;
+
+											// If both teams matched then there is no point trying to find a match 
+											// with the entry just added. So move to the next available team pair.
+											if (teamPairLists[sourceLeague].Count > 0)
+											{
+												teamPair = teamPairLists[sourceLeague][0];
+												teamPairLists[sourceLeague].RemoveAt(0);
+												pairedTeams.Add(teamPair);
+												gameSlotIndex++;
+											}
+											else if (teamPairLists[pairedLeague].Count > 0)
+											{
+												teamPair = teamPairLists[pairedLeague][0];
+												teamPairLists[pairedLeague].RemoveAt(0);
+												pairedTeams.Add(teamPair);
+												gameSlotIndex++;
+											}
 											break;
 										}
 									}
 								}
-								for (int pi = 0; pi < teamPairLists[pairedLeague].Count; pi++)
+								// If not double team match found the try to match paired teams where one of the teams match...
+								if(!added)
 								{
-									KeyValuePair<Team, Team> possiblePair = teamPairLists[pairedLeague][pi];
-
-									// Ignore byes
-									if (possiblePair.Value != null)
+									for (int pi = 0; pi < teamPairLists[pairedLeague].Count; pi++)
 									{
-										// If either team has a paired team of the source league then add them as the next pair.
-										if ((possiblePair.Key.PairedTeams.Contains(teamPair.Key.ID) || possiblePair.Value.PairedTeams.Contains(teamPair.Key.ID)) ||
-											(possiblePair.Key.PairedTeams.Contains(teamPair.Value.ID) || possiblePair.Value.PairedTeams.Contains(teamPair.Value.ID)))
+										KeyValuePair<Team, Team> possiblePair = teamPairLists[pairedLeague][pi];
+
+										// Ignore byes
+										if (possiblePair.Value != null)
 										{
-											pairedTeams.Add(possiblePair);											
-											teamPairLists[pairedLeague].RemoveAt(pi);
-											//break;
+											// If either team has a paired team of the source league then add them as the next pair.
+											if ((possiblePair.Key.PairedTeams.Contains(teamPair.Key.ID) || possiblePair.Value.PairedTeams.Contains(teamPair.Key.ID)) ||
+												(possiblePair.Key.PairedTeams.Contains(teamPair.Value.ID) || possiblePair.Value.PairedTeams.Contains(teamPair.Value.ID)))
+											{
+												added = true;
+												teamPair = possiblePair;
+												pairedTeams.Add(possiblePair);
+												teamPairLists[pairedLeague].RemoveAt(pi);
+												
+												if (gameSlotIndex > 0 &&
+													gameSlots[gameSlotIndex - 1].Key.Date != gameSlots[gameSlotIndex].Key.Date)
+												{
+													standAloneSlots.Add(gameSlotIndex - 1);
+												}
+												gameSlotIndex++;
+												//break;
+											}
 										}
 									}
-								}
+								}								
 							}
+							// If no match was found then move to the next team in the paired list.
+							if (!added)
+							{
+								teamPair = teamPairLists[pairedLeague][0];
+								teamPairLists[pairedLeague].RemoveAt(0);
+
+								if(teamPair.Value != null && standAloneSlots.Count > 0)
+								{
+									pairedTeams.Insert(standAloneSlots[0], teamPair);
+									standAloneSlots.RemoveAt(0);
+								}
+								else
+								{
+									pairedTeams.Add(teamPair);
+								}
+								gameSlotIndex++;
+							}
+
+							int temp = pairedLeague;
+							pairedLeague = sourceLeague;
+							sourceLeague = temp;
 						}
+						*/
 						// Add any remaining matches to the end.
+						for (int pi = 0; pi < teamPairLists[sourceLeague].Count; pi++)
+						{
+							int index = 0;
+							bool added = false;
+
+							teamPair = teamPairLists[sourceLeague][0];
+							teamPairLists[sourceLeague].RemoveAt(0);
+
+							foreach (KeyValuePair<Team, Team> existing in pairedTeams)
+							{
+								// If both teams have a paired team of the source league then add them as the next pair.
+								if (existing.Value != null &&
+									(existing.Key.PairedTeams.Contains(teamPair.Key.ID) ||
+									 existing.Value.PairedTeams.Contains(teamPair.Key.ID)))
+								{
+									added = true;
+
+									if (index < pairedTeams.Count - 1)
+									{
+										pairedTeams.Insert(index, teamPair);
+									}
+									else
+									{
+										pairedTeams.Add(teamPair);
+									}
+									break;
+								}
+								index++;
+							}
+							if (!added)
+							{
+								pairedTeams.Add(teamPair);
+							}							
+						}
 						for (int pi = 0; pi < teamPairLists[pairedLeague].Count; pi++)
 						{
-							pairedTeams.Add(teamPairLists[pairedLeague][pi]);
+							int index = 0;
+							bool added = false;
+
+							teamPair = teamPairLists[pairedLeague][0];
+							teamPairLists[pairedLeague].RemoveAt(0);
+
+							foreach (KeyValuePair<Team, Team> existing in pairedTeams)
+							{
+								// If both teams have a paired team of the source league then add them as the next pair.
+								if (existing.Value != null &&
+									(existing.Key.PairedTeams.Contains(teamPair.Key.ID) ||
+									 existing.Value.PairedTeams.Contains(teamPair.Key.ID)))
+								{
+									added = true;
+
+									if (index < pairedTeams.Count - 1)
+									{
+										pairedTeams.Insert(index, teamPair);
+									}
+									else
+									{
+										pairedTeams.Add(teamPair);
+									}
+									break;
+								}
+								index++;
+							}
+							if (!added)
+							{
+								pairedTeams.Add(teamPair);
+							}
 						}
 					}
 					else
@@ -1350,6 +1672,67 @@ namespace Fixture_Factory
 						throw new NotImplementedException();
 					}
 
+					//--------------------------------------------------------------------------------------
+					// Move byes to the end
+					//--------------------------------------------------------------------------------------
+					int numberOfByes = 0;
+					for (int i = 0; i < pairedTeams.Count; i++)
+					{
+						if (pairedTeams[i].Value == null)
+						{
+							numberOfByes++;
+						}
+					}
+
+					while (true)
+					{
+						int moveIndex = -1;
+
+						for (int i = 0; i < pairedTeams.Count - numberOfByes; i++)
+						{
+							if(pairedTeams[i].Value == null)
+							{
+								moveIndex = i;
+								break;
+							}
+						}
+
+						if (moveIndex >= 0)
+						{
+							KeyValuePair<Team, Team> teamBye = pairedTeams[moveIndex];
+							pairedTeams.RemoveAt(moveIndex);
+							pairedTeams.Add(teamBye);
+						}
+						else
+						{
+							break;
+						}
+					}
+
+					for (int i = 0; i < pairedTeams.Count - 1; i++)
+					{
+						// If we have two consecutive games for paired teams and
+						// they fall on different days
+						// then swap the first game with the one after the second game
+						if (pairedTeams[i].Value != null && pairedTeams[i+1].Value != null &&
+							(pairedTeams[i].Key.PairedTeams.Contains(pairedTeams[i + 1].Key.ID) ||
+							 pairedTeams[i].Value.PairedTeams.Contains(pairedTeams[i + 1].Key.ID)))
+
+						{
+							if(gameSlots[i].Key.Date != gameSlots[i+1].Key.Date)
+							{
+								KeyValuePair<Team, Team> teamMove = pairedTeams[i];
+								pairedTeams[i] = pairedTeams[i + 2];
+								pairedTeams[i + 2] = teamMove;
+							}
+						}
+					}
+
+
+					if (leagueName.Contains("9-12"))
+					{
+						int x = 1;
+					}
 					ShuffleTeamsToMeetNonPlayingDays(pairedTeams, gameSlots);
 
 					m_umpiringTeamDictionary.Clear();
@@ -2052,7 +2435,7 @@ namespace Fixture_Factory
 						m_umpiringTeamDictionary[teamLeague].RemoveAt(team1Index);
 					}
 				}
-				else
+				else if(umpiresIndexList.Count > 0)
 				{
 					int team1Index = umpiresIndexList[0];
 
@@ -2291,6 +2674,12 @@ namespace Fixture_Factory
 			{
 				Save();
 			}
+		}
+
+		private void EvenRoundsOnlyCheckBox_CheckedChanged(object sender, EventArgs e)
+		{
+			Properties.Settings.Default.EvenRoundsOnly = EvenRoundsOnlyCheckBox.Checked;
+			Properties.Settings.Default.Save();
 		}
 	}
 }

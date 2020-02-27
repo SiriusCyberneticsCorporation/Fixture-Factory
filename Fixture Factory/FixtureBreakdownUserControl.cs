@@ -19,9 +19,9 @@ namespace Fixture_Factory
 		}
 
 		public void Initialise(string league,
-								Dictionary<string, Dictionary<string, int>> fieldBreakdown,
+								SortedDictionary<string, SortedDictionary<string, int>> fieldBreakdown,
 								SortedDictionary<string, SortedDictionary<string, int>> teamBreakdown,
-								Dictionary<string, SortedDictionary<GameTime, int>> slotBreakdown)
+								SortedDictionary<string, SortedDictionary<GameTime, int>> slotBreakdown)
 		{
 			DataTable fieldBreakdownDataTable = new DataTable();
 			DataTable teamBreakdownDataTable = new DataTable();

@@ -12,7 +12,7 @@ namespace Fixture_Factory.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.9.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.4.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -25,12 +25,25 @@ namespace Fixture_Factory.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Collections.Generic.List<Data_Classes.StringValue> Grades {
+        [global::System.Configuration.DefaultSettingValueAttribute("2020")]
+        public string DefaultSeason {
             get {
-                return ((global::System.Collections.Generic.List<Data_Classes.StringValue>)(this["Grades"]));
+                return ((string)(this["DefaultSeason"]));
             }
             set {
-                this["Grades"] = value;
+                this["DefaultSeason"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool EvenRoundsOnly {
+            get {
+                return ((bool)(this["EvenRoundsOnly"]));
+            }
+            set {
+                this["EvenRoundsOnly"] = value;
             }
         }
     }

@@ -107,12 +107,6 @@
 			this.GenerateFixturesButton = new System.Windows.Forms.Button();
 			this.label18 = new System.Windows.Forms.Label();
 			this.OtherFixturesDataGridView = new System.Windows.Forms.DataGridView();
-			this.FixtureTabControl = new System.Windows.Forms.TabControl();
-			this.SeasonTabPage = new System.Windows.Forms.TabPage();
-			this.EvenRoundsOnlyCheckBox = new System.Windows.Forms.CheckBox();
-			this.label19 = new System.Windows.Forms.Label();
-			this.SeasonGradesDataGridView = new System.Windows.Forms.DataGridView();
-			this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.OtherFixtureIDColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.OtherFixtureGameTimeColumn = new Fixture_Factory.CalendarColumn();
 			this.OtherFixtureFieldColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
@@ -120,6 +114,12 @@
 			this.OtherFixtureHomeTeamColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.OtherFixtureAwayTeamColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.OtherFixtureTechBenchTeamColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.FixtureTabControl = new System.Windows.Forms.TabControl();
+			this.SeasonTabPage = new System.Windows.Forms.TabPage();
+			this.EvenRoundsOnlyCheckBox = new System.Windows.Forms.CheckBox();
+			this.label19 = new System.Windows.Forms.Label();
+			this.SeasonGradesDataGridView = new System.Windows.Forms.DataGridView();
+			this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.FixtureMenuStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.TeamsDataGridView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.LeaguesDataGridView)).BeginInit();
@@ -158,7 +158,7 @@
 			// exitToolStripMenuItem
 			// 
 			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-			this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
+			this.exitToolStripMenuItem.Size = new System.Drawing.Size(93, 22);
 			this.exitToolStripMenuItem.Text = "Exit";
 			// 
 			// seasonToolStripMenuItem
@@ -856,6 +856,57 @@
 			this.OtherFixturesDataGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.OtherFixturesDataGridView_DataError);
 			this.OtherFixturesDataGridView.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.OtherFixturesDataGridView_RowsRemoved);
 			// 
+			// OtherFixtureIDColumn
+			// 
+			this.OtherFixtureIDColumn.DataPropertyName = "ID";
+			this.OtherFixtureIDColumn.HeaderText = "ID";
+			this.OtherFixtureIDColumn.Name = "OtherFixtureIDColumn";
+			this.OtherFixtureIDColumn.Visible = false;
+			// 
+			// OtherFixtureGameTimeColumn
+			// 
+			this.OtherFixtureGameTimeColumn.DataPropertyName = "GameTime";
+			dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+			dataGridViewCellStyle6.Format = "dd-MMM-yyyy HH:mm";
+			dataGridViewCellStyle6.NullValue = " ";
+			this.OtherFixtureGameTimeColumn.DefaultCellStyle = dataGridViewCellStyle6;
+			this.OtherFixtureGameTimeColumn.Format = "dd-MMM-yyyy HH:mm";
+			this.OtherFixtureGameTimeColumn.HeaderText = "Game Time";
+			this.OtherFixtureGameTimeColumn.Name = "OtherFixtureGameTimeColumn";
+			this.OtherFixtureGameTimeColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+			this.OtherFixtureGameTimeColumn.Width = 140;
+			// 
+			// OtherFixtureFieldColumn
+			// 
+			this.OtherFixtureFieldColumn.DataPropertyName = "FieldID";
+			this.OtherFixtureFieldColumn.HeaderText = "Field";
+			this.OtherFixtureFieldColumn.Name = "OtherFixtureFieldColumn";
+			// 
+			// OtherFixtureGradeColumn
+			// 
+			this.OtherFixtureGradeColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+			this.OtherFixtureGradeColumn.DataPropertyName = "Grade";
+			this.OtherFixtureGradeColumn.HeaderText = "Grade";
+			this.OtherFixtureGradeColumn.Name = "OtherFixtureGradeColumn";
+			// 
+			// OtherFixtureHomeTeamColumn
+			// 
+			this.OtherFixtureHomeTeamColumn.DataPropertyName = "HomeTeam";
+			this.OtherFixtureHomeTeamColumn.HeaderText = "Home";
+			this.OtherFixtureHomeTeamColumn.Name = "OtherFixtureHomeTeamColumn";
+			// 
+			// OtherFixtureAwayTeamColumn
+			// 
+			this.OtherFixtureAwayTeamColumn.DataPropertyName = "AwayTeam";
+			this.OtherFixtureAwayTeamColumn.HeaderText = "Away";
+			this.OtherFixtureAwayTeamColumn.Name = "OtherFixtureAwayTeamColumn";
+			// 
+			// OtherFixtureTechBenchTeamColumn
+			// 
+			this.OtherFixtureTechBenchTeamColumn.DataPropertyName = "TechBenchTeam";
+			this.OtherFixtureTechBenchTeamColumn.HeaderText = "Tech Bench";
+			this.OtherFixtureTechBenchTeamColumn.Name = "OtherFixtureTechBenchTeamColumn";
+			// 
 			// FixtureTabControl
 			// 
 			this.FixtureTabControl.Controls.Add(this.SeasonTabPage);
@@ -907,6 +958,7 @@
 			this.EvenRoundsOnlyCheckBox.TabIndex = 23;
 			this.EvenRoundsOnlyCheckBox.Text = "Even Rounds Only";
 			this.EvenRoundsOnlyCheckBox.UseVisualStyleBackColor = true;
+			this.EvenRoundsOnlyCheckBox.CheckedChanged += new System.EventHandler(this.EvenRoundsOnlyCheckBox_CheckedChanged);
 			// 
 			// label19
 			// 
@@ -936,57 +988,6 @@
 			this.dataGridViewTextBoxColumn13.DataPropertyName = "Value";
 			this.dataGridViewTextBoxColumn13.HeaderText = "Grade";
 			this.dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
-			// 
-			// OtherFixtureIDColumn
-			// 
-			this.OtherFixtureIDColumn.DataPropertyName = "ID";
-			this.OtherFixtureIDColumn.HeaderText = "ID";
-			this.OtherFixtureIDColumn.Name = "OtherFixtureIDColumn";
-			this.OtherFixtureIDColumn.Visible = false;
-			// 
-			// OtherFixtureGameTimeColumn
-			// 
-			this.OtherFixtureGameTimeColumn.DataPropertyName = "GameTime";
-			dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-			dataGridViewCellStyle6.Format = "dd-MMM-yyyy HH:mm";
-			dataGridViewCellStyle6.NullValue = " ";
-			this.OtherFixtureGameTimeColumn.DefaultCellStyle = dataGridViewCellStyle6;
-			this.OtherFixtureGameTimeColumn.Format = "dd-MMM-yyyy HH:mm";
-			this.OtherFixtureGameTimeColumn.HeaderText = "Game Time";
-			this.OtherFixtureGameTimeColumn.Name = "OtherFixtureGameTimeColumn";
-			this.OtherFixtureGameTimeColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-			this.OtherFixtureGameTimeColumn.Width = 140;
-			// 
-			// OtherFixtureFieldColumn
-			// 
-			this.OtherFixtureFieldColumn.DataPropertyName = "FieldID";
-			this.OtherFixtureFieldColumn.HeaderText = "Field";
-			this.OtherFixtureFieldColumn.Name = "OtherFixtureFieldColumn";
-			// 
-			// OtherFixtureGradeColumn
-			// 
-			this.OtherFixtureGradeColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			this.OtherFixtureGradeColumn.DataPropertyName = "Grade";
-			this.OtherFixtureGradeColumn.HeaderText = "Grade";
-			this.OtherFixtureGradeColumn.Name = "OtherFixtureGradeColumn";
-			// 
-			// OtherFixtureHomeTeamColumn
-			// 
-			this.OtherFixtureHomeTeamColumn.DataPropertyName = "HomeTeam";
-			this.OtherFixtureHomeTeamColumn.HeaderText = "Home";
-			this.OtherFixtureHomeTeamColumn.Name = "OtherFixtureHomeTeamColumn";
-			// 
-			// OtherFixtureAwayTeamColumn
-			// 
-			this.OtherFixtureAwayTeamColumn.DataPropertyName = "AwayTeam";
-			this.OtherFixtureAwayTeamColumn.HeaderText = "Away";
-			this.OtherFixtureAwayTeamColumn.Name = "OtherFixtureAwayTeamColumn";
-			// 
-			// OtherFixtureTechBenchTeamColumn
-			// 
-			this.OtherFixtureTechBenchTeamColumn.DataPropertyName = "TechBenchTeam";
-			this.OtherFixtureTechBenchTeamColumn.HeaderText = "Tech Bench";
-			this.OtherFixtureTechBenchTeamColumn.Name = "OtherFixtureTechBenchTeamColumn";
 			// 
 			// FixtureFactoryForm
 			// 

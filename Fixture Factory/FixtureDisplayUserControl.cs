@@ -41,9 +41,9 @@ namespace Fixture_Factory
 			DateTime lastDate = DateTime.MinValue;
 			DateTime roundDate = DateTime.MinValue;
 			List<FixtureDisplay> byes = new List<FixtureDisplay>();
-			Dictionary<string, Dictionary<string, Dictionary<string, int>>> fieldBreakdown = new Dictionary<string, Dictionary<string, Dictionary<string, int>>>();
+			Dictionary<string, SortedDictionary<string, SortedDictionary<string, int>>> fieldBreakdown = new Dictionary<string, SortedDictionary<string, SortedDictionary<string, int>>>();
 			Dictionary<string, SortedDictionary<string, SortedDictionary<string, int>>> teamBreakdown = new Dictionary<string, SortedDictionary<string, SortedDictionary<string, int>>>();
-			Dictionary<string, Dictionary<string, SortedDictionary<GameTime, int>>> slotBreakdown = new Dictionary<string, Dictionary<string, SortedDictionary<GameTime, int>>>();
+			Dictionary<string, SortedDictionary<string, SortedDictionary<GameTime, int>>> slotBreakdown = new Dictionary<string, SortedDictionary<string, SortedDictionary<GameTime, int>>>();
 
 			foreach (DateTime fixtureTime in fixtures.Keys)
 			{
@@ -62,12 +62,12 @@ namespace Fixture_Factory
 
 							if (!fieldBreakdown.ContainsKey(league))
 							{
-								fieldBreakdown.Add(league, new Dictionary<string, Dictionary<string, int>>());
+								fieldBreakdown.Add(league, new SortedDictionary<string, SortedDictionary<string, int>>());
 							}
 
 							if (!fieldBreakdown[league].ContainsKey(homeTeam))
 							{
-								fieldBreakdown[league].Add(homeTeam, new Dictionary<string, int>());
+								fieldBreakdown[league].Add(homeTeam, new SortedDictionary<string, int>());
 							}
 
 							if (!fieldBreakdown[league][homeTeam].ContainsKey(field))
@@ -80,7 +80,7 @@ namespace Fixture_Factory
 							{
 								if (!fieldBreakdown[league].ContainsKey(umpiringTeam))
 								{
-									fieldBreakdown[league].Add(umpiringTeam, new Dictionary<string, int>());
+									fieldBreakdown[league].Add(umpiringTeam, new SortedDictionary<string, int>());
 								}
 								if (!fieldBreakdown[league][umpiringTeam].ContainsKey("Umpiring"))
 								{
@@ -93,7 +93,7 @@ namespace Fixture_Factory
 							{
 								if (!fieldBreakdown[league].ContainsKey(awayTeam))
 								{
-									fieldBreakdown[league].Add(awayTeam, new Dictionary<string, int>());
+									fieldBreakdown[league].Add(awayTeam, new SortedDictionary<string, int>());
 								}
 								if (!fieldBreakdown[league][awayTeam].ContainsKey(field))
 								{
@@ -130,7 +130,7 @@ namespace Fixture_Factory
 
 							if (!slotBreakdown.ContainsKey(league))
 							{
-								slotBreakdown.Add(league, new Dictionary<string, SortedDictionary<GameTime, int>>());
+								slotBreakdown.Add(league, new SortedDictionary<string, SortedDictionary<GameTime, int>>());
 							}
 
 							if (!slotBreakdown[league].ContainsKey(homeTeam))
@@ -163,11 +163,11 @@ namespace Fixture_Factory
 
 							if (!fieldBreakdown.ContainsKey(league))
 							{
-								fieldBreakdown.Add(league, new Dictionary<string, Dictionary<string, int>>());
+								fieldBreakdown.Add(league, new SortedDictionary<string, SortedDictionary<string, int>>());
 							}
 							if (!fieldBreakdown[league].ContainsKey(teamWithBye))
 							{
-								fieldBreakdown[league].Add(teamWithBye, new Dictionary<string, int>());
+								fieldBreakdown[league].Add(teamWithBye, new SortedDictionary<string, int>());
 							}
 							if (!fieldBreakdown[league][teamWithBye].ContainsKey("Bye"))
 							{

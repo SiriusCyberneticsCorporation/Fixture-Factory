@@ -27,7 +27,7 @@ namespace Fixture_Factory
 
 		public DocumentGenerator(string grade, SortedDictionary<DateTime, List<Fixture>> fixtures)
 		{
-			List<float> columnWidths = new List<float>() { 8, 6, 10, 10, 8, 17, 16, 16, 16, 16 };
+			List<float> columnWidths = new List<float>() { 8, 6, 10, 10, 8, 17, 16, 16, 16, 16, 16, 16 };
 			ExcelExporter iExcelExporter = new ExcelExporter(grade + ".xlsx", "Fixtures", grade + " Fixtures", "", DateTime.Now.ToLongDateString(), true, columnWidths);
 
 			iExcelExporter.AddRow();
@@ -37,8 +37,10 @@ namespace Fixture_Factory
 			iExcelExporter.AddText("Time", 1, true, false, false, HorizontalAlignment.Center);
 			iExcelExporter.AddText("Field", 1, true, false, false, HorizontalAlignment.Center);
 			iExcelExporter.AddText("Grade", 1, true, false, false, HorizontalAlignment.Center);
+			iExcelExporter.AddText("Round", 1, true, false, false, HorizontalAlignment.Center);
 			iExcelExporter.AddText("Home", 1, true, false, false, HorizontalAlignment.Center);
 			iExcelExporter.AddText("Away", 1, true, false, false, HorizontalAlignment.Center);
+			iExcelExporter.AddText("", 1, true, false, false, HorizontalAlignment.Center);
 			iExcelExporter.AddText("Umpiring", 1, true, false, false, HorizontalAlignment.Center);
 			iExcelExporter.AddText("Tech Bench", 1, true, false, false, HorizontalAlignment.Center);
 
@@ -223,11 +225,11 @@ namespace Fixture_Factory
 					}
 					if (row.Grade.Contains("9-12 Boys"))
 					{
-						backgroundColour = System.Drawing.Color.Violet;
+						backgroundColour = System.Drawing.Color.LightCyan;
 					}
 					else if (row.Grade.Contains("9-12 Girls"))
 					{
-						backgroundColour = System.Drawing.Color.Turquoise;
+						backgroundColour = System.Drawing.Color.LavenderBlush;
 					}
 					else if (row.Grade.Contains("Men"))
 					{
@@ -246,8 +248,10 @@ namespace Fixture_Factory
 				iExcelExporter.AddText(row.Time, 1, false, false, false, HorizontalAlignment.Center, backgroundColour);
 				iExcelExporter.AddText(row.Field, 1, false, false, false, HorizontalAlignment.Center, backgroundColour);
 				iExcelExporter.AddText(row.Grade, 1, false, false, false, HorizontalAlignment.Center, backgroundColour);
+				iExcelExporter.AddText(row.Round, 1, false, false, false, HorizontalAlignment.Center, backgroundColour);
 				iExcelExporter.AddText(row.Home, 1, false, false, false, HorizontalAlignment.Center, backgroundColour);
 				iExcelExporter.AddText(row.Away, 1, false, false, false, HorizontalAlignment.Center, backgroundColour);
+				iExcelExporter.AddText("", 1, false, false, false, HorizontalAlignment.Center, backgroundColour);
 				iExcelExporter.AddText(row.Umpiring, 1, false, false, false, HorizontalAlignment.Center, backgroundColour);
 				iExcelExporter.AddText(row.TechBench, 1, false, false, false, HorizontalAlignment.Center, backgroundColour);
 			}
