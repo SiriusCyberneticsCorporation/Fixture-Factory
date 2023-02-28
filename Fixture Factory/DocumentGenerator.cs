@@ -215,7 +215,39 @@ namespace Fixture_Factory
 				System.Drawing.Color backgroundColour = System.Drawing.Color.White;
 				if (row.Grade != null)
 				{
-					if (row.Grade.Contains("6-8 Boys"))
+					if (row.Grade.Contains("Over 35 Men"))
+					{
+						backgroundColour = System.Drawing.Color.LightGreen;
+					}
+					else if (row.Grade.Contains("Over 35 Women A"))
+					{
+						backgroundColour = System.Drawing.Color.LightYellow;
+					}
+					else if (row.Grade.Contains("Over 35 Women B"))
+					{
+						backgroundColour = System.Drawing.Color.LightCyan;
+					}
+					else if (row.Grade.Contains("Over 45 Men A"))
+					{
+						backgroundColour = System.Drawing.Color.LavenderBlush;
+					}
+					else if (row.Grade.Contains("Over 45 Men B"))
+					{
+						backgroundColour = System.Drawing.Color.LightBlue;
+					}
+					else if (row.Grade.Contains("Over 45 Women A"))
+					{
+						backgroundColour = System.Drawing.Color.LightPink;
+					}
+					else if (row.Grade.Contains("Over 45 Women B"))
+					{
+						backgroundColour = System.Drawing.Color.Crimson;
+					}
+					else if (row.Grade.Contains("Over 45 Women Opals"))
+					{
+						backgroundColour = System.Drawing.Color.IndianRed;
+					}
+					else if (row.Grade.Contains("6-8 Boys"))
 					{
 						backgroundColour = System.Drawing.Color.LightGreen;
 					}
@@ -223,7 +255,7 @@ namespace Fixture_Factory
 					{
 						backgroundColour = System.Drawing.Color.LightYellow;
 					}
-					if (row.Grade.Contains("9-12 Boys"))
+					else if (row.Grade.Contains("9-12 Boys"))
 					{
 						backgroundColour = System.Drawing.Color.LightCyan;
 					}
